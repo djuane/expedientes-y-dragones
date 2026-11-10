@@ -1,0 +1,19 @@
+{
+  "id": "mp-020",
+  "materia": "Civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿Cuál de estos NO es un atributo de la propiedad?",
+  "opciones": [
+    "Usar",
+    "Prescribir",
+    "Disfrutar",
+    "Reivindicar"
+  ],
+  "indice_correcto": 1,
+  "explicacion": "La propiedad permite usar, disfrutar, disponer y reivindicar un bien.",
+  "base_legal": "Código Civil, art. 923 (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

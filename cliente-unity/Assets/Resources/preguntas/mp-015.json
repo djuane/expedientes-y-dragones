@@ -1,0 +1,19 @@
+{
+  "id": "mp-015",
+  "materia": "Civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿Qué pone fin a la persona?",
+  "opciones": [
+    "La incapacidad",
+    "La ausencia",
+    "La muerte",
+    "La quiebra"
+  ],
+  "indice_correcto": 2,
+  "explicacion": "La muerte pone fin a la persona.",
+  "base_legal": "Código Civil, art. 61 (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

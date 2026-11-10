@@ -1,0 +1,19 @@
+{
+  "id": "mp-013",
+  "materia": "Civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿Desde cuándo la persona humana es sujeto de derecho?",
+  "opciones": [
+    "Desde su nacimiento",
+    "Desde los 18 años",
+    "Desde su inscripción en el RENIEC",
+    "Desde que tiene DNI"
+  ],
+  "indice_correcto": 0,
+  "explicacion": "Se es sujeto de derecho desde el nacimiento; el concebido lo es para todo cuanto le favorece.",
+  "base_legal": "Código Civil, art. 1 (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

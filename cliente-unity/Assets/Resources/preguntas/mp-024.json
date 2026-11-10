@@ -1,0 +1,19 @@
+{
+  "id": "mp-024",
+  "materia": "Civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "Según el principio de publicidad registral, se presume sin admitir prueba en contrario que…",
+  "opciones": [
+    "El registrador nunca se equivoca",
+    "Todos conocen lo inscrito",
+    "Lo inscrito no puede cambiar",
+    "Solo el titular conoce la inscripción"
+  ],
+  "indice_correcto": 1,
+  "explicacion": "Se presume, sin prueba en contrario, que toda persona conoce el contenido de las inscripciones.",
+  "base_legal": "Código Civil, art. 2012 (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

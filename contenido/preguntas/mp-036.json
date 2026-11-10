@@ -1,0 +1,19 @@
+{
+  "id": "mp-036",
+  "materia": "Administrativo",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "Si el último día del plazo es inhábil, ¿qué pasa?",
+  "opciones": [
+    "El plazo vence igual",
+    "Se prorroga al primer día hábil siguiente",
+    "Se pierde el derecho",
+    "Se adelanta al día hábil anterior"
+  ],
+  "indice_correcto": 1,
+  "explicacion": "Si el último día es inhábil o no hay atención normal, el plazo se prorroga al primer día hábil siguiente.",
+  "base_legal": "TUO de la Ley 27444 (D.S. 006-2026-JUS), art. 134.2",
+  "enlace_oficial": "https://www.gob.pe/institucion/minjus/informes-publicaciones/8441836-primera-edicion-oficial-del-texto-unico-ordenado-de-la-ley-n-27444-ley-del-procedimiento-administrativo-general-aprobado-por-el-decreto-supremo-n-006-2026-jus-actualizada-al-8-07-2026",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

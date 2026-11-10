@@ -1,0 +1,19 @@
+{
+  "id": "mp-017",
+  "materia": "Civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿Cómo se perfeccionan los contratos, como regla general?",
+  "opciones": [
+    "Por el consentimiento",
+    "Con la firma notarial",
+    "Con la entrega del bien",
+    "Con la inscripción registral"
+  ],
+  "indice_correcto": 0,
+  "explicacion": "Regla general: el contrato se perfecciona por el consentimiento, salvo forma solemne.",
+  "base_legal": "Código Civil, art. 1352 (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

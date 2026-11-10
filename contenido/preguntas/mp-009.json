@@ -1,0 +1,19 @@
+{
+  "id": "mp-009",
+  "materia": "Procesal civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿Cuál es el plazo para interponer el recurso de reposición?",
+  "opciones": [
+    "1 día",
+    "3 días",
+    "5 días",
+    "10 días"
+  ],
+  "indice_correcto": 1,
+  "explicacion": "Reposición: 3 días desde la notificación del decreto.",
+  "base_legal": "Código Procesal Civil, art. 363 (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "https://www.leyes.congreso.gob.pe/documentos/decretoslegislativos/00768.pdf",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

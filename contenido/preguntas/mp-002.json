@@ -1,0 +1,19 @@
+{
+  "id": "mp-002",
+  "materia": "Procesal civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "En un proceso de conocimiento, ¿cuántos días tiene el demandado para contestar la demanda?",
+  "opciones": [
+    "5 días",
+    "10 días",
+    "15 días",
+    "30 días"
+  ],
+  "indice_correcto": 3,
+  "explicacion": "El conocimiento es la vía más larga: 30 días para contestar y reconvenir.",
+  "base_legal": "Código Procesal Civil, art. 478 inc. 5 (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "https://www.leyes.congreso.gob.pe/documentos/decretoslegislativos/00768.pdf",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

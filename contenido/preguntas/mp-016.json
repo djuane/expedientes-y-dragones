@@ -1,0 +1,19 @@
+{
+  "id": "mp-016",
+  "materia": "Civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "El contrato es un acuerdo para crear, regular, modificar o extinguir una relación jurídica…",
+  "opciones": [
+    "Familiar",
+    "Patrimonial",
+    "Penal",
+    "Laboral"
+  ],
+  "indice_correcto": 1,
+  "explicacion": "El contrato siempre recae sobre una relación jurídica patrimonial.",
+  "base_legal": "Código Civil, art. 1351 (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

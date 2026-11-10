@@ -1,0 +1,19 @@
+{
+  "id": "mp-004",
+  "materia": "Procesal civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "En un proceso sumarísimo, ¿cuántos días tiene el demandado para contestar?",
+  "opciones": [
+    "3 días",
+    "5 días",
+    "10 días",
+    "30 días"
+  ],
+  "indice_correcto": 1,
+  "explicacion": "Sumarísimo, el más rápido: 5 días para contestar. Escalera: 30, 10 y 5.",
+  "base_legal": "Código Procesal Civil, art. 554 (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "https://www.leyes.congreso.gob.pe/documentos/decretoslegislativos/00768.pdf",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

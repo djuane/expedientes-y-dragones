@@ -1,0 +1,19 @@
+{
+  "id": "mp-012",
+  "materia": "Procesal civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿Cuál de estos NO es un medio probatorio típico?",
+  "opciones": [
+    "La pericia",
+    "El indicio",
+    "La inspección judicial",
+    "Los documentos"
+  ],
+  "indice_correcto": 1,
+  "explicacion": "Típicos: declaración de parte, testigos, documentos, pericia e inspección judicial. El indicio es un sucedáneo.",
+  "base_legal": "Código Procesal Civil, arts. 192 y 276 (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "https://www.leyes.congreso.gob.pe/documentos/decretoslegislativos/00768.pdf",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

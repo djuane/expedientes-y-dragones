@@ -1,0 +1,19 @@
+{
+  "id": "mp-023",
+  "materia": "Civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿Qué extingue la caducidad?",
+  "opciones": [
+    "Solo la acción",
+    "Solo la pretensión",
+    "El derecho y la acción",
+    "Nada, solo suspende"
+  ],
+  "indice_correcto": 2,
+  "explicacion": "Diferencia clave: la prescripción extingue la acción; la caducidad extingue el derecho y la acción.",
+  "base_legal": "Código Civil, arts. 1989 y 2003 (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

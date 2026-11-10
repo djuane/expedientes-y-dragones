@@ -1,0 +1,19 @@
+{
+  "id": "mp-025",
+  "materia": "Civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿Desde cuándo se transmiten los bienes de una persona a sus sucesores?",
+  "opciones": [
+    "Desde la muerte",
+    "Desde la lectura del testamento",
+    "Desde la declaratoria de herederos",
+    "Desde la inscripción en Registros"
+  ],
+  "indice_correcto": 0,
+  "explicacion": "Desde el momento de la muerte, los bienes, derechos y obligaciones que forman la herencia se transmiten a los sucesores.",
+  "base_legal": "Código Civil, art. 660 (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

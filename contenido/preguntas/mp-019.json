@@ -1,0 +1,19 @@
+{
+  "id": "mp-019",
+  "materia": "Civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "Quien por dolo o culpa causa un daño a otro está obligado a…",
+  "opciones": [
+    "Pedir disculpas",
+    "Pagar una multa al Estado",
+    "Indemnizarlo",
+    "Nada, si no hay contrato"
+  ],
+  "indice_correcto": 2,
+  "explicacion": "Responsabilidad extracontractual: quien causa daño por dolo o culpa debe indemnizar.",
+  "base_legal": "Código Civil, art. 1969 (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

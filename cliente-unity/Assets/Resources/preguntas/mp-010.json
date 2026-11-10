@@ -1,0 +1,19 @@
+{
+  "id": "mp-010",
+  "materia": "Procesal civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿Qué recurso procede si el juez declara improcedente tu apelación?",
+  "opciones": [
+    "Reposición",
+    "Casación",
+    "Nulidad",
+    "Queja"
+  ],
+  "indice_correcto": 3,
+  "explicacion": "La queja sirve para reexaminar la resolución que declara inadmisible o improcedente una apelación o casación.",
+  "base_legal": "Código Procesal Civil, art. 401 (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "https://www.leyes.congreso.gob.pe/documentos/decretoslegislativos/00768.pdf",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}
