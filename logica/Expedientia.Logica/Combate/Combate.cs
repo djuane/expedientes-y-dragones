@@ -37,8 +37,13 @@ namespace Expedientia.Logica.Combate
         public IReadOnlyList<Combatiente> Orden => _orden;
         public Combatiente Actual => _orden[_indice];
 
-        public Combate(IGeneradorAleatorio azar, IEnumerable<Combatiente> combatientes)
+        /// <summary>Mecánica especial del jefe de la sala, si la hay.</summary>
+        public IMecanicaDeJefe? Mecanica { get; }
+        internal IGeneradorAleatorio Azar => _azar;
+
+        public Combate(IGeneradorAleatorio azar, IEnumerable<Combatiente> combatientes, IMecanicaDeJefe? mecanica = null)
         {
+            Mecanica = mecanica;
             _azar = azar ?? throw new ArgumentNullException(nameof(azar));
             _todos = combatientes.ToList();
             if (_todos.Select(c => c.Id).Distinct().Count() != _todos.Count) throw new ArgumentException("Ids repetidos.");
@@ -171,7 +176,8 @@ namespace Expedientia.Logica.Combate
             if (Terminado) throw new InvalidOperationException("El combate terminó.");
             var eventos = new List<EventoCombate>();
             var yo = Actual;
-            yo.TurnosSinActuar = _actuoEsteTurno ? 0 : yo.TurnosSinActuar + 1;
+            // Solo cuenta el silencio voluntario: estar inmovilizado no es "no actuar".
+            yo.TurnosSinActuar = _actuoEsteTurno || yo.Inmovilizado ? 0 : yo.TurnosSinActuar + 1;
             if (yo.TurnosInmovilizado > 0) yo.TurnosInmovilizado--;
             if (RevisarSilencioAdministrativo(eventos)) return eventos;
 
@@ -197,6 +203,28 @@ namespace Expedientia.Logica.Combate
             yo.ReaccionDisponible = true;
             _actuoEsteTurno = false;
             eventos.Add(new InicioDeTurno(yo.Id, Ronda));
+            if (Mecanica != null && Mecanica.JefeId == yo.Id && !yo.Inmovilizado && !yo.Caido)
+                Mecanica.AlInicioDelTurnoDelJefe(this, eventos);
+        }
+
+        /// <summary>Casillas libres de la cuadrícula, en orden de fila y columna.</summary>
+        public IEnumerable<Casilla> CasillasLibres()
+        {
+            for (var y = 0; y < Cuadricula.Filas; y++)
+                for (var x = 0; x < Cuadricula.Columnas; x++)
+                {
+                    var c = new Casilla(x, y);
+                    if (!_todos.Any(o => !o.Caido && o.Posicion == c)) yield return c;
+                }
+        }
+
+        /// <summary>Suma un combatiente a mitad del combate; actúa al final de la ronda.</summary>
+        internal void AgregarRefuerzo(Combatiente nuevo, List<EventoCombate> eventos)
+        {
+            if (_todos.Any(c => c.Id == nuevo.Id)) throw new ArgumentException("Id repetido.");
+            _todos.Add(nuevo);
+            _orden.Add(nuevo);
+            eventos.Add(new Aparecio(nuevo.Id, nuevo.Ficha.Nombre, nuevo.Posicion));
         }
 
         private ResultadoAccion Inmovilizar(Combatiente yo, Especialidad requerida, Habilidad h, string objetivoId)
@@ -204,6 +232,9 @@ namespace Expedientia.Logica.Combate
             if (yo.Ficha.Especialidad != requerida) return ResultadoAccion.Rechazada($"{h} es de la especialidad {requerida}.");
             var rechazo = ValidarAccion(yo) ?? ValidarObjetivoEnemigo(yo, objetivoId, ReglasHabilidades.AlcanceDeHabilidad);
             if (rechazo != null) return ResultadoAccion.Rechazada(rechazo);
+            if (yo.RondaUltimaHabilidad.HasValue && Ronda - yo.RondaUltimaHabilidad.Value < ReglasHabilidades.EnfriamientoEnRondas)
+                return ResultadoAccion.Rechazada("La habilidad se está recargando.");
+            yo.RondaUltimaHabilidad = Ronda;
             yo.AccionDisponible = false;
             _actuoEsteTurno = true;
             var obj = Buscar(objetivoId);

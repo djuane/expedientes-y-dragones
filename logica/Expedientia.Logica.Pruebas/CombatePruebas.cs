@@ -119,15 +119,36 @@ public class CombatePruebas
     [Fact]
     public void Silencio_administrativo_gana_la_sala_si_el_enemigo_no_actua_dos_turnos()
     {
-        // adm primero; Queja inmoviliza a f1 dos turnos → no actúa → victoria
-        var c = Preparar(new[] { 10, 1, 10, 1 }, Administrativista(new Casilla(0, 3)), Formalismo(new Casilla(0, 0), paciencia: 50));
-        Assert.True(c.UsarHabilidad(Habilidad.Queja, "f1").Valida);
-        c.TerminarTurno();  // f1 (1)
+        // Un enemigo sin movimiento y fuera de alcance no actúa por voluntad propia: silencio.
+        var quieto = new Combatiente(new FichaCombatiente("s1", "Silencio Eterno", Bando.Sistema, Especialidad.Ninguna, Base(agilidad: 1), 1, 50, 10, 0, Atributo.Firmeza), new Casilla(0, 0));
+        var c = Preparar(new[] { 10, 1, 10, 1 }, Administrativista(new Casilla(5, 7)), quieto);
         c.TerminarTurno();  // adm
-        c.TerminarTurno();  // f1 (2)
-        var fin = c.TerminarTurno();
+        c.TerminarTurno();  // s1 (1)
+        c.TerminarTurno();  // adm
+        var fin = c.TerminarTurno();  // s1 (2)
         Assert.True(c.Terminado);
         Assert.Equal("Silencio administrativo", fin.OfType<FinDeCombate>().Single().Motivo);
+    }
+
+    [Fact]
+    public void Estar_inmovilizado_no_cuenta_como_silencio()
+    {
+        var c = Preparar(new[] { 10, 1, 10, 1 }, Administrativista(new Casilla(0, 3)), Formalismo(new Casilla(0, 0), paciencia: 50));
+        Assert.True(c.UsarHabilidad(Habilidad.Queja, "f1").Valida);
+        for (var i = 0; i < 4; i++) c.TerminarTurno();
+        Assert.False(c.Terminado);
+    }
+
+    [Fact]
+    public void Las_habilidades_se_recargan_en_tres_rondas()
+    {
+        var c = Preparar(new[] { 10, 1, 10, 1 }, Civilista(new Casilla(0, 3)), Formalismo(new Casilla(0, 0), paciencia: 50));
+        Assert.True(c.UsarHabilidad(Habilidad.MedidaCautelar, "f1").Valida);
+        c.TerminarTurno(); c.TerminarTurno(); // ronda 2
+        Assert.Equal("La habilidad se está recargando.", c.UsarHabilidad(Habilidad.MedidaCautelar, "f1").Motivo);
+        c.TerminarTurno(); c.TerminarTurno(); // ronda 3
+        c.TerminarTurno(); c.TerminarTurno(); // ronda 4
+        Assert.True(c.UsarHabilidad(Habilidad.MedidaCautelar, "f1").Valida);
     }
 
     [Fact]

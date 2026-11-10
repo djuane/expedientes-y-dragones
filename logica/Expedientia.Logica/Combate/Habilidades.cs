@@ -20,5 +20,7 @@ namespace Expedientia.Logica.Combate
         /// <summary>Pasiva Silencio administrativo: si un enemigo no actúa 2 turnos, el equipo gana la sala.</summary>
         public const int TurnosDeSilencio = 2;
         public const int DificultadCasacion = 18;
+        /// <summary>Medida cautelar y Queja se recargan en 3 rondas, para que no se encadenen sin fin.</summary>
+        public const int EnfriamientoEnRondas = 3;
     }
 }

@@ -55,6 +55,9 @@ namespace Expedientia.Logica.Combate
         /// <summary>Turnos seguidos sin actuar (para la pasiva Silencio administrativo).</summary>
         public int TurnosSinActuar { get; internal set; }
 
+        /// <summary>Ronda en que usó por última vez una habilidad con enfriamiento.</summary>
+        public int? RondaUltimaHabilidad { get; internal set; }
+
         public bool AccionDisponible { get; internal set; }
         public int MovimientoRestante { get; internal set; }
         public bool ReaccionDisponible { get; internal set; }

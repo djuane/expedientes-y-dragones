@@ -18,5 +18,6 @@ namespace Expedientia.Logica.Combate
     public sealed class Cayo : EventoCombate { public string Id { get; } public Cayo(string id) { Id = id; } }
     public sealed class UsoHabilidad : EventoCombate { public string Id { get; } public Habilidad Habilidad { get; } public string? Objetivo { get; } public UsoHabilidad(string id, Habilidad h, string? o) { Id = id; Habilidad = h; Objetivo = o; } }
     public sealed class Inmovilizado : EventoCombate { public string Id { get; } public int Turnos { get; } public Inmovilizado(string id, int t) { Id = id; Turnos = t; } }
+    public sealed class Aparecio : EventoCombate { public string Id { get; } public string Nombre { get; } public Casilla Casilla { get; } public Aparecio(string id, string n, Casilla c) { Id = id; Nombre = n; Casilla = c; } }
     public sealed class FinDeCombate : EventoCombate { public Bando Ganador { get; } public string Motivo { get; } public FinDeCombate(Bando g, string m) { Ganador = g; Motivo = m; } }
 }
