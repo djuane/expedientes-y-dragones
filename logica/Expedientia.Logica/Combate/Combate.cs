@@ -24,6 +24,7 @@ namespace Expedientia.Logica.Combate
     {
         private readonly IGeneradorAleatorio _azar;
         private readonly List<Combatiente> _todos;
+        private readonly Dictionary<string, Combatiente> _porId;
         private List<Combatiente> _orden = new List<Combatiente>();
         private int _indice;
         private bool _actuoEsteTurno;
@@ -53,18 +54,19 @@ namespace Expedientia.Logica.Combate
             Mecanica = mecanica;
             _azar = azar ?? throw new ArgumentNullException(nameof(azar));
             _todos = combatientes.ToList();
+            _porId = new Dictionary<string, Combatiente>(StringComparer.Ordinal);
             if (_todos.Select(c => c.Id).Distinct().Count() != _todos.Count) throw new ArgumentException("Ids repetidos.");
             if (_todos.Any(c => !Cuadricula.Contiene(c.Posicion))) throw new ArgumentException("Hay combatientes fuera de la cuadrícula.");
             if (_todos.Select(c => c.Posicion).Distinct().Count() != _todos.Count) throw new ArgumentException("Dos combatientes en la misma casilla.");
             if (!_todos.Any(c => c.Bando == Bando.Estudio) || !_todos.Any(c => c.Bando == Bando.Sistema)) throw new ArgumentException("Faltan combatientes de un bando.");
+            foreach (var c in _todos) _porId[c.Id] = c;
         }
 
         public IReadOnlyList<EventoCombate> Iniciar()
         {
             if (Ronda != 0) throw new InvalidOperationException("El combate ya empezó.");
-            var porId = _todos.ToDictionary(c => c.Id);
             _orden = Iniciativa.Ordenar(_azar, _todos.Select(c => new Participante(c.Id, c.Ficha.Atributos.Modificador(Atributo.AgilidadProcesal))))
-                .Select(t => porId[t.Participante.Id]).ToList();
+                .Select(t => _porId[t.Participante.Id]).ToList();
             Ronda = 1;
             _indice = 0;
             var eventos = new List<EventoCombate>();
@@ -72,7 +74,32 @@ namespace Expedientia.Logica.Combate
             return eventos;
         }
 
-        public Combatiente Buscar(string id) => _todos.FirstOrDefault(c => c.Id == id) ?? throw new ArgumentException($"No existe {id}.");
+        public Combatiente Buscar(string id) => _porId.TryGetValue(id, out var c) ? c : throw new ArgumentException($"No existe {id}.");
+
+        // Mapa de ocupación y de movimiento restante, reutilizados en cada consulta (sin reservar memoria).
+        private readonly byte[] _ocupacion = new byte[Rutas.Casillas];
+        private readonly int[] _restante = new int[Rutas.Casillas];
+
+        /// <summary>Marca quién ocupa cada casilla, visto desde el bando de <paramref name="yo"/>.</summary>
+        private void MarcarOcupacion(Combatiente? yo)
+        {
+            Array.Clear(_ocupacion, 0, _ocupacion.Length);
+            foreach (var c in _todos)
+            {
+                if (c.Caido || c == yo) continue;
+                _ocupacion[Rutas.Indice(c.Posicion)] = yo == null || c.Bando != yo.Bando ? Rutas.Rival : Rutas.Aliado;
+            }
+        }
+
+        /// <summary>Calcula, para el combatiente en turno, cuánto movimiento le sobra al llegar a cada casilla.</summary>
+        private void CalcularAlcance()
+        {
+            var yo = Actual;
+            MarcarOcupacion(yo);
+            Rutas.Explorar(yo.Posicion, yo.Inmovilizado ? 0 : yo.MovimientoRestante, _ocupacion, _restante);
+        }
+
+        private bool Ocupada(Casilla c) => _ocupacion[Rutas.Indice(c)] != Rutas.Libre;
 
         public bool PuedeMoverA(Casilla destino, out string? motivo)
         {
@@ -81,20 +108,34 @@ namespace Expedientia.Logica.Combate
             if (Terminado) motivo = "El combate terminó.";
             else if (yo.Inmovilizado) motivo = "Está inmovilizado.";
             else if (!Cuadricula.Contiene(destino)) motivo = "Fuera de la cuadrícula.";
-            else if (_todos.Any(c => !c.Caido && c.Posicion == destino)) motivo = "Casilla ocupada.";
-            else if (yo.Posicion.DistanciaA(destino) > yo.MovimientoRestante) motivo = "No le alcanza el movimiento.";
+            else
+            {
+                CalcularAlcance();
+                if (destino == yo.Posicion) motivo = "Ya está ahí.";
+                else if (Ocupada(destino)) motivo = "Casilla ocupada.";
+                else if (_restante[Rutas.Indice(destino)] < 0)
+                    motivo = yo.Posicion.DistanciaA(destino) > yo.MovimientoRestante ? "No le alcanza el movimiento." : "El camino está bloqueado.";
+            }
             return motivo == null;
         }
 
-        /// <summary>Casillas a las que puede moverse ahora (para iluminarlas en la interfaz).</summary>
-        public IEnumerable<Casilla> CasillasValidas()
+        /// <summary>Casillas a las que puede moverse ahora (para iluminarlas en la interfaz). Una sola búsqueda para todo el tablero.</summary>
+        public IReadOnlyList<Casilla> CasillasValidas()
         {
-            for (var x = 0; x < Cuadricula.Columnas; x++)
-                for (var y = 0; y < Cuadricula.Filas; y++)
-                {
-                    var c = new Casilla(x, y);
-                    if (c != Actual.Posicion && PuedeMoverA(c, out _)) yield return c;
-                }
+            var yo = Actual;
+            if (Terminado || yo.Inmovilizado || yo.MovimientoRestante <= 0) return Array.Empty<Casilla>();
+            CalcularAlcance();
+            var lista = new List<Casilla>();
+            for (var i = 0; i < Rutas.Casillas; i++)
+                if (_restante[i] >= 0 && _ocupacion[i] == Rutas.Libre && i != Rutas.Indice(yo.Posicion)) lista.Add(Rutas.Casilla(i));
+            return lista;
+        }
+
+        /// <summary>Movimiento que le sobraría al combatiente en turno si fuera a <paramref name="destino"/> (-1 si no puede).</summary>
+        public int MovimientoAlLlegar(Casilla destino)
+        {
+            if (!PuedeMoverA(destino, out _)) return -1;
+            return _restante[Rutas.Indice(destino)];
         }
 
         public ResultadoAccion Mover(Casilla destino)
@@ -102,7 +143,7 @@ namespace Expedientia.Logica.Combate
             if (!PuedeMoverA(destino, out var motivo)) return ResultadoAccion.Rechazada(motivo!);
             var yo = Actual;
             var desde = yo.Posicion;
-            yo.MovimientoRestante -= desde.DistanciaA(destino);
+            yo.MovimientoRestante = _restante[Rutas.Indice(destino)];
             yo.Posicion = destino;
             _actuoEsteTurno = true;
             return ResultadoAccion.Ok(new List<EventoCombate> { new Movio(yo.Id, desde, destino) });
@@ -264,18 +305,18 @@ namespace Expedientia.Logica.Combate
         /// <summary>Casillas libres de la cuadrícula, en orden de fila y columna.</summary>
         public IEnumerable<Casilla> CasillasLibres()
         {
-            for (var y = 0; y < Cuadricula.Filas; y++)
-                for (var x = 0; x < Cuadricula.Columnas; x++)
-                {
-                    var c = new Casilla(x, y);
-                    if (!_todos.Any(o => !o.Caido && o.Posicion == c)) yield return c;
-                }
+            MarcarOcupacion(null);
+            var libres = new List<Casilla>();
+            for (var i = 0; i < Rutas.Casillas; i++)
+                if (_ocupacion[i] == Rutas.Libre) libres.Add(Rutas.Casilla(i));
+            return libres;
         }
 
         /// <summary>Suma un combatiente a mitad del combate; actúa al final de la ronda.</summary>
         internal void AgregarRefuerzo(Combatiente nuevo, List<EventoCombate> eventos)
         {
-            if (_todos.Any(c => c.Id == nuevo.Id)) throw new ArgumentException("Id repetido.");
+            if (_porId.ContainsKey(nuevo.Id)) throw new ArgumentException("Id repetido.");
+            _porId[nuevo.Id] = nuevo;
             _todos.Add(nuevo);
             _orden.Add(nuevo);
             eventos.Add(new Aparecio(nuevo.Id, nuevo.Ficha.Nombre, nuevo.Posicion));
@@ -394,28 +435,26 @@ namespace Expedientia.Logica.Combate
 
         private void RevisarFin(List<EventoCombate> eventos)
         {
-            foreach (var bando in new[] { Bando.Estudio, Bando.Sistema })
-            {
-                if (_todos.Where(c => c.Bando == bando).All(c => c.Caido))
-                {
-                    var ganador = bando == Bando.Estudio ? Bando.Sistema : Bando.Estudio;
-                    Finalizar(ganador, ganador == Bando.Estudio ? "Fundado: el equipo venció" : "El equipo cayó", eventos);
-                    return;
-                }
-            }
+            bool estudioEnPie = false, sistemaEnPie = false;
+            foreach (var c in _todos)
+                if (!c.Caido) { if (c.Bando == Bando.Estudio) estudioEnPie = true; else sistemaEnPie = true; }
+            if (!estudioEnPie) Finalizar(Bando.Sistema, "El equipo cayó", eventos);
+            else if (!sistemaEnPie) Finalizar(Bando.Estudio, "Fundado: el equipo venció", eventos);
         }
 
         /// <summary>Pasiva del Administrativista: un enemigo que no actúa 2 turnos seguidos le da la sala al equipo.</summary>
         private bool RevisarSilencioAdministrativo(List<EventoCombate> eventos)
         {
-            var hayAdministrativista = _todos.Any(c => c.Bando == Bando.Estudio && !c.Caido && c.Ficha.Especialidad == Especialidad.Administrativista);
-            if (!hayAdministrativista) return false;
-            if (_todos.Any(c => c.Bando == Bando.Sistema && !c.Caido && c.TurnosSinActuar >= ReglasHabilidades.TurnosDeSilencio))
+            bool hayAdministrativista = false, haySilencio = false;
+            foreach (var c in _todos)
             {
-                Finalizar(Bando.Estudio, "Silencio administrativo", eventos);
-                return true;
+                if (c.Caido) continue;
+                if (c.Bando == Bando.Estudio && c.Ficha.Especialidad == Especialidad.Administrativista) hayAdministrativista = true;
+                else if (c.Bando == Bando.Sistema && c.TurnosSinActuar >= ReglasHabilidades.TurnosDeSilencio) haySilencio = true;
             }
-            return false;
+            if (!hayAdministrativista || !haySilencio) return false;
+            Finalizar(Bando.Estudio, "Silencio administrativo", eventos);
+            return true;
         }
 
         private void Finalizar(Bando ganador, string motivo, List<EventoCombate> eventos)
@@ -437,8 +476,7 @@ namespace Expedientia.Logica.Combate
 
         private string? ValidarObjetivoEnemigo(Combatiente yo, string objetivoId, int alcance)
         {
-            var obj = _todos.FirstOrDefault(c => c.Id == objetivoId);
-            if (obj == null) return "Objetivo inexistente.";
+            if (objetivoId == null || !_porId.TryGetValue(objetivoId, out var obj)) return "Objetivo inexistente.";
             if (obj.Bando == yo.Bando) return "El objetivo es un aliado.";
             if (obj.Caido) return "El objetivo ya cayó.";
             if (yo.Posicion.DistanciaA(obj.Posicion) > alcance) return "Fuera de alcance.";

@@ -31,12 +31,14 @@ namespace Expedientia.Logica.Combate
                     var actual = yo.Posicion.DistanciaA(objetivo.Posicion);
                     if (actual < minimo || actual > maximo)
                     {
-                        var mejor = combate.CasillasValidas()
-                            .OrderBy(c => Desvio(c.DistanciaA(objetivo.Posicion), minimo, maximo))
-                            .ThenBy(c => yo.Posicion.DistanciaA(c))
-                            .ThenBy(c => c.Fila).ThenBy(c => c.Columna)
-                            .Cast<Casilla?>()
-                            .FirstOrDefault();
+                        // Una pasada sobre las casillas alcanzables (sin ordenar ni reservar listas intermedias).
+                        Casilla? mejor = null;
+                        var mejorClave = (int.MaxValue, int.MaxValue, int.MaxValue, int.MaxValue);
+                        foreach (var c in combate.CasillasValidas())
+                        {
+                            var clave = (Desvio(c.DistanciaA(objetivo.Posicion), minimo, maximo), yo.Posicion.DistanciaA(c), c.Fila, c.Columna);
+                            if (clave.CompareTo(mejorClave) < 0) { mejorClave = clave; mejor = c; }
+                        }
                         if (mejor.HasValue && Desvio(mejor.Value.DistanciaA(objetivo.Posicion), minimo, maximo) < Desvio(actual, minimo, maximo))
                             eventos.AddRange(combate.Mover(mejor.Value).Eventos);
                     }
