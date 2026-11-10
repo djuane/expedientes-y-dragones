@@ -1,0 +1,14 @@
+{
+  "id": "mp-000",
+  "materia": "Procesal civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "Texto breve de la pregunta",
+  "opciones": ["Opción A", "Opción B", "Opción C", "Opción D"],
+  "indice_correcto": 0,
+  "explicacion": "Explicación de dos líneas que ve el jugador después de responder.",
+  "base_legal": "Norma, artículo y texto vigente citado",
+  "enlace_oficial": "",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}
