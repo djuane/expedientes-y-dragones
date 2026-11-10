@@ -73,7 +73,7 @@ public class ServidorPruebas : IClassFixture<Fabrica>
     public async Task Lista_los_casos_del_prototipo()
     {
         var casos = await _f.CreateClient().GetFromJsonAsync<JsonArray>("/api/casos");
-        Assert.Equal(2, casos!.Count);
+        Assert.Equal(3, casos!.Count);
     }
 
     [Fact]

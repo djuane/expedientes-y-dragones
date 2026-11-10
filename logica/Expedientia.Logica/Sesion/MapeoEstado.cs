@@ -20,6 +20,11 @@ namespace Expedientia.Logica.Sesion
                     Columna = c.Posicion.Columna, Fila = c.Posicion.Fila, Paciencia = c.Paciencia, PacienciaMaxima = c.Ficha.PacienciaMaxima,
                     Defensa = c.Ficha.Defensa, Caido = c.Caido, TurnosInmovilizado = c.TurnosInmovilizado,
                     EsBot = m?.EsBot ?? true, JugadorId = m?.JugadorId,
+                    Clave = c.Ficha.Clave, Rasgo = c.Ficha.Rasgo.ToString(),
+                    TurnosParaVencer = c.Ficha.Rasgo == Rasgo.Vence && !c.Caido ? Math.Max(0, ReglasHabilidades.TurnosDelPlazo - c.TurnosJugados) : (int?)null,
+                    RecargaHabilidad = e.CombateActual?.RecargaHabilidad(c) ?? 0,
+                    RecargaNulidad = e.CombateActual?.RecargaNulidad(c) ?? 0,
+                    ReaccionDisponible = c.ReaccionDisponible,
                 };
             }
             CombateEstado? combate = null;
@@ -31,6 +36,9 @@ namespace Expedientia.Logica.Sesion
                     Combatientes = k.Combatientes.Select(Dto).ToList(),
                     CasillasValidas = k.Terminado ? new System.Collections.Generic.List<int[]>() : k.CasillasValidas().Select(c => new[] { c.Columna, c.Fila }).ToList(),
                     AccionDisponible = k.Actual.AccionDisponible, MovimientoRestante = k.Actual.MovimientoRestante, CasacionUsada = k.CasacionUsada,
+                    NulidadPosible = k.HayAccionEnemigaQueAnular,
+                    Requisito = k.Requisito is { Visible: true } rq ? rq.RequisitoActual : null,
+                    RequisitoDescripcion = k.Requisito == null ? null : k.Requisito.Visible ? k.Requisito.DescripcionActual : "Nadie sabe qué exige ahora. Un golpe observado lo revela.",
                 };
             }
             var s = e.Sentencia;
@@ -38,7 +46,7 @@ namespace Expedientia.Logica.Sesion
             {
                 Id = id, CasoId = e.Caso.Id, Titulo = e.Caso.Titulo, Premisa = e.Caso.Premisa,
                 Salas = e.Salas.Select(x => x.ToString()).ToList(), IndiceSala = e.IndiceSala,
-                SalaActual = e.IndiceSala >= 0 ? e.SalaActual.ToString() : null, SalaResuelta = e.SalaResuelta,
+                SalaActual = e.IndiceSala >= 0 ? e.SalaActual.ToString() : null, SalaResuelta = e.SalaResuelta, TextoSala = e.TextoSala,
                 MinutosRestantes = e.MinutosRestantes,
                 PruebasJuridicasRestantes = ControlPruebasJuridicas.MaximoPorPartida - e.PruebasJuridicas.Usadas,
                 TieneEscritoPreFirmado = e.TieneEscritoPreFirmado, TieneCodigoAnotado = e.TieneCodigoAnotado,

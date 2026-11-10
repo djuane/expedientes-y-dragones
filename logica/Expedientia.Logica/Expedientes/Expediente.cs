@@ -47,6 +47,7 @@ namespace Expedientia.Logica.Expedientes
         public const int CostoCodigoAnotado = 40;
 
         private readonly IGeneradorAleatorio _azar;
+        private readonly int _semilla;
         private readonly List<TipoSala> _salas;
         private readonly Dictionary<string, Combatiente> _equipo;
         private int _contadorEnemigos;
@@ -68,6 +69,9 @@ namespace Expedientia.Logica.Expedientes
         public ControlPruebasJuridicas PruebasJuridicas { get; } = new ControlPruebasJuridicas();
         public IReadOnlyCollection<Combatiente> Equipo => _equipo.Values;
 
+        /// <summary>Cómo se ve la sala actual (trama); la capa visual lo muestra tal cual.</summary>
+        public string TextoSala { get; private set; } = "";
+
         public Expediente(Caso caso, int semilla, IEnumerable<MiembroDelEquipo> miembros, EstadoEstudio? estudio = null)
         {
             Caso = caso ?? throw new ArgumentNullException(nameof(caso));
@@ -76,6 +80,7 @@ namespace Expedientia.Logica.Expedientes
             if (Miembros.Any(m => m.Ficha.Bando != Bando.Estudio)) throw new ArgumentException("El equipo es del estudio.");
             Estudio = estudio ?? new EstadoEstudio();
             _azar = new GeneradorConSemilla(semilla);
+            _semilla = semilla;
             _equipo = Miembros.ToDictionary(m => m.Ficha.Id, m => new Combatiente(m.Ficha, new Casilla(0, 0)));
             _salas = GenerarSalas(_azar);
             MinutosRestantes = caso.MinutosDePlazo;
@@ -112,49 +117,89 @@ namespace Expedientia.Logica.Expedientes
             if (IndiceSala >= 0 && !SalaResuelta) throw new InvalidOperationException("La sala actual no está resuelta.");
             var eventos = new List<EventoCombate>();
             if (IndiceSala == _salas.Count - 1) { Cerrar(true, "Expediente cerrado: Fundado", eventos); return eventos; }
+            var guion = Guion.De(Caso.Id);
+            if (IndiceSala < 0) Decir(guion.Llegada, eventos);
             IndiceSala++;
             SalaResuelta = false;
             CombateActual = null;
+            TextoSala = Guion.DescribirSala(Caso.Id, SalaActual, _semilla, IndiceSala);
             eventos.Add(new SalaIniciada(IndiceSala, SalaActual));
             switch (SalaActual)
             {
                 case TipoSala.Combate:
-                    PrepararCombate(eventos, NuevosEnemigos(1 + (Miembros.Count + 1) / 2), null);
+                    PrepararCombate(eventos, NuevosEnemigos(CantidadDeEnemigos()), null);
                     break;
                 case TipoSala.RedDelCoimero:
-                    PrepararCombate(eventos, NuevosEnemigos(2 + (Miembros.Count + 1) / 2), null);
+                {
+                    var red = new List<FichaCombatiente>();
+                    for (var i = 0; i < CantidadDeEnemigos() + 1; i++) red.Add(Catalogo.Tramitador($"e{++_contadorEnemigos}"));
+                    var aliados = new List<FichaCombatiente>();
+                    if (Estudio.AliadosHonestosDisponibles)
+                    {
+                        aliados.Add(Catalogo.SuboficialQuispe("quispe"));
+                        eventos.Add(new Dialogo(Guion.QuispeLlega.Personaje, Guion.QuispeLlega.Texto));
+                    }
+                    PrepararCombate(eventos, red, null, aliados);
                     break;
+                }
                 case TipoSala.Jefe:
-                    var jefe = Catalogo.ColaInfinita("jefe");
-                    PrepararCombate(eventos, new List<FichaCombatiente> { jefe },
-                        new ColaInfinita(jefe.Id, Catalogo.EsbirroDeLaCola, maximo: 3 + Miembros.Count));
-                    eventos.Add(new ComentarioDeDonEusebio("Doctores, esa cola no avanza desde 1998. Suerte."));
+                    PrepararJefe(eventos, guion);
                     break;
                 case TipoSala.Coimero:
-                    eventos.Add(new ComentarioDeDonEusebio("Un señor muy amable ofrece \"agilizar\" el trámite. Ustedes deciden."));
+                    eventos.Add(new Dialogo(Guion.Coimero, "Doctor, por una propina su escrito entra primero. Nadie se entera."));
                     break;
             }
             return eventos;
         }
 
+        private void PrepararJefe(List<EventoCombate> eventos, GuionDeCaso guion)
+        {
+            if (Caso.Jefe == CatalogoCasos.JefeRequisitoImposible)
+            {
+                var jefe = Catalogo.RequisitoImposible("jefe", 16 + 6 * Miembros.Count);
+                var conMendoza = Estudio.AliadosHonestosDisponibles;
+                var inicial = new[] { RequisitoImposible.EnPersona, RequisitoImposible.Virtual }[_azar.Entre(0, 1)];
+                var mecanica = new RequisitoImposible(jefe.Id, inicial, n => Catalogo.Formalismo($"req-{n}"), conMendoza, maximoDeRefuerzos: Math.Max(1, Miembros.Count / 2));
+                TextoSala = "Jefe: El Requisito Imposible. Cada 2 rondas cambia lo que exige para recibir daño.";
+                Decir(guion.Jefe, eventos);
+                if (conMendoza) eventos.Add(new Dialogo(Guion.MendozaRevela.Personaje, Guion.MendozaRevela.Texto));
+                PrepararCombate(eventos, new List<FichaCombatiente> { jefe }, mecanica);
+            }
+            else
+            {
+                var jefe = Catalogo.ColaInfinita("jefe", 18 + 6 * Miembros.Count);
+                TextoSala = "Jefe: La Cola Infinita. Cada turno se suma un usuario a la fila.";
+                Decir(guion.Jefe, eventos);
+                PrepararCombate(eventos, new List<FichaCombatiente> { jefe },
+                    new ColaInfinita(jefe.Id, Catalogo.EsbirroDeLaCola, maximo: 3 + Miembros.Count));
+            }
+        }
+
+        private static void Decir(IEnumerable<LineaDeGuion> lineas, List<EventoCombate> eventos)
+        {
+            foreach (var l in lineas) eventos.Add(new Dialogo(l.Personaje, l.Texto));
+        }
+
+        /// <summary>Enemigos por sala de combate según el tamaño del equipo (ajustado con la simulación de partidas).</summary>
+        private int CantidadDeEnemigos() => Miembros.Count switch { 1 => 1, 2 => 2, 3 => 3, _ => 5 };
+
         private List<FichaCombatiente> NuevosEnemigos(int cantidad)
         {
             var lista = new List<FichaCombatiente>();
+            var contrataciones = Caso.Calabozo == CatalogoCasos.SalaDeContrataciones;
             for (var i = 0; i < cantidad; i++)
             {
                 _contadorEnemigos++;
                 var id = $"e{_contadorEnemigos}";
-                lista.Add(_azar.Entre(1, 3) switch
-                {
-                    1 => Catalogo.PlazoQueVence(id),
-                    2 => Catalogo.NotificacionDefectuosa(id),
-                    _ => Catalogo.Formalismo(id),
-                });
+                var tirada = _azar.Entre(1, 3);
+                lista.Add(contrataciones
+                    ? tirada switch { 1 => Catalogo.VuelvaManiana(id), 2 => Catalogo.Fraccionador(id), _ => Catalogo.Formalismo(id) }
+                    : tirada switch { 1 => Catalogo.PlazoQueVence(id), 2 => Catalogo.NotificacionDefectuosa(id), _ => Catalogo.Formalismo(id) });
             }
             return lista;
         }
 
-        private void PrepararCombate(List<EventoCombate> eventos, List<FichaCombatiente> enemigos, IMecanicaDeJefe? mecanica)
+        private void PrepararCombate(List<EventoCombate> eventos, List<FichaCombatiente> enemigos, IMecanicaDeJefe? mecanica, List<FichaCombatiente>? aliados = null)
         {
             var vivos = _equipo.Values.Where(c => !c.Caido).ToList();
             var columnasEquipo = new[] { 1, 4, 2, 3 };
@@ -167,6 +212,10 @@ namespace Expedientia.Logica.Expedientes
             }
             var columnasEnemigo = new[] { 2, 0, 5, 3, 1, 4 };
             var participantes = new List<Combatiente>(vivos);
+            var columnasAliados = new[] { 0, 5 };
+            if (aliados != null)
+                for (var i = 0; i < aliados.Count; i++)
+                    participantes.Add(new Combatiente(aliados[i], new Casilla(columnasAliados[i % 2], Cuadricula.Filas - 1 - i / 2)));
             for (var i = 0; i < enemigos.Count; i++)
                 participantes.Add(new Combatiente(enemigos[i], new Casilla(columnasEnemigo[i % 6], i / 6)));
             CombateActual = new CombateMotor(_azar, participantes, mecanica);
@@ -188,7 +237,7 @@ namespace Expedientia.Logica.Expedientes
                 // Respiro tras la victoria: los caídos se reincorporan con un cuarto de su paciencia.
                 foreach (var m in _equipo.Values.Where(x => x.Caido)) m.Paciencia = Math.Max(1, m.Ficha.PacienciaMaxima / 4);
                 eventos.Add(new SalaSuperada(IndiceSala, "Combate ganado"));
-                ConsumirMinutos(5 + rondas * 2, eventos);
+                ConsumirMinutos(4 + rondas * 2, eventos);
             }
             else
             {
@@ -316,7 +365,7 @@ namespace Expedientia.Logica.Expedientes
                     Estudio.CambiarReputacion(+2);
                     _salas.Insert(IndiceSala + 1, TipoSala.RedDelCoimero);
                     eventos.Add(new SalaSuperada(IndiceSala, "Denunciaron: la red del Coimero los espera"));
-                    eventos.Add(new ComentarioDeDonEusebio("Bien hecho, doctores. Ahora prepárense."));
+                    eventos.Add(new Dialogo(Guion.Eusebio, "Bien hecho, doctores. Ahora prepárense: la red no se va a dejar."));
                     break;
             }
             SalaResuelta = true;
@@ -350,7 +399,6 @@ namespace Expedientia.Logica.Expedientes
             eventos.Add(new RelojAvanzo(MinutosRestantes.Value));
             if (MinutosRestantes == 0)
             {
-                eventos.Add(new ComentarioDeDonEusebio("Para la próxima, doctor, el cargo de recepción se pide el mismo día."));
                 Cerrar(false, "Improcedente por extemporáneo", eventos);
             }
         }
@@ -365,8 +413,10 @@ namespace Expedientia.Logica.Expedientes
             if (Estudio.ExpedienteDisciplinario >= 30 && _azar.Entre(1, 2) == 1)
             {
                 honorarios /= 2;
-                eventos.Add(new ComentarioDeDonEusebio("Llegó una investigación disciplinaria. La multa sale de los honorarios."));
+                eventos.Add(new Dialogo(Guion.Eusebio, "Llegó una investigación disciplinaria. La multa sale de los honorarios."));
             }
+            var guion = Guion.De(Caso.Id);
+            Decir(fundada ? guion.Victoria : guion.Derrota, eventos);
             Sentencia = new Sentencia(fundada, motivo, honorarios, experiencia);
             Estudio.Honorarios += honorarios;
             Estudio.Experiencia += experiencia;

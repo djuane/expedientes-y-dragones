@@ -7,4 +7,6 @@ namespace Expedientia.Logica.Expedientes
     public sealed class RelojAvanzo : EventoCombate { public int MinutosRestantes { get; } public RelojAvanzo(int m) { MinutosRestantes = m; } }
     public sealed class ComentarioDeDonEusebio : EventoCombate { public string Texto { get; } public ComentarioDeDonEusebio(string t) { Texto = t; } }
     public sealed class SentenciaDictada : EventoCombate { public Sentencia Sentencia { get; } public SentenciaDictada(Sentencia s) { Sentencia = s; } }
+    /// <summary>Una línea de la trama: la capa visual la muestra con el retrato del personaje.</summary>
+    public sealed class Dialogo : EventoCombate { public string Personaje { get; } public string Texto { get; } public Dialogo(string p, string t) { Personaje = p; Texto = t; } }
 }

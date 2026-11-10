@@ -100,7 +100,7 @@ namespace Expedientia.Logica.Sesion
                                 eventos.AddRange(combate.TerminarTurno());
                                 break;
                             default:
-                                eventos.AddRange(Bot.JugarTurno(combate));
+                                eventos.AddRange(Bot.JugarTurno(combate, ManejaUnBot));
                                 break;
                         }
                         if (r != null)
@@ -117,6 +117,17 @@ namespace Expedientia.Logica.Sesion
                         var adm = Expediente.Miembros.FirstOrDefault(m => m.JugadorId == jugadorId && m.Ficha.Especialidad == Especialidad.Administrativista);
                         if (adm == null) return Rechazo("Solo el Administrativista apela.");
                         var r = combate.RecursoDeApelacion(adm.Ficha.Id, a.Objetivo ?? "");
+                        if (!r.Valida) return Rechazo(r.Motivo!);
+                        eventos.AddRange(r.Eventos);
+                        break;
+                    }
+
+                    case "nulidad":
+                    {
+                        if (combate == null) return Rechazo("No hay combate en curso.");
+                        var civ = Expediente.Miembros.FirstOrDefault(m => m.JugadorId == jugadorId && m.Ficha.Especialidad == Especialidad.Civilista);
+                        if (civ == null) return Rechazo("Solo la Civilista deduce nulidad.");
+                        var r = combate.Nulidad(civ.Ficha.Id);
                         if (!r.Valida) return Rechazo(r.Motivo!);
                         eventos.AddRange(r.Eventos);
                         break;
@@ -224,10 +235,13 @@ namespace Expedientia.Logica.Sesion
         {
             var c = Expediente.CombateActual;
             if (Expediente.Terminado || c == null || c.Terminado || ahora - InicioDelTurno < TiempoPorTurno) return null;
-            var eventos = new List<EventoCombate>(Bot.JugarTurno(c));
+            var eventos = new List<EventoCombate>(Bot.JugarTurno(c, ManejaUnBot));
             AutoJugar(eventos, ahora);
             return Cerrar(eventos, null);
         }
+
+        /// <summary>Los aliados de paso (Suboficial Quispe) y los miembros sin jugador los maneja un bot.</summary>
+        private bool ManejaUnBot(string id) => Expediente.Miembros.FirstOrDefault(m => m.Ficha.Id == id)?.EsBot ?? true;
 
         public EstadoPartida Estado() => MapeoEstado.Estado(Id, Expediente, Version);
 
@@ -260,7 +274,7 @@ namespace Expedientia.Logica.Sesion
                 if (c.Terminado) { eventos.AddRange(Expediente.RevisarCombate()); break; }
                 var m = Expediente.Miembros.FirstOrDefault(x => x.Ficha.Id == c.Actual.Id);
                 if (m != null && !m.EsBot) break;
-                eventos.AddRange(Bot.JugarTurno(c));
+                eventos.AddRange(Bot.JugarTurno(c, ManejaUnBot));
             }
             var turno = Expediente.CombateActual?.Actual.Id;
             if (turno != _turnoAnterior) { _turnoAnterior = turno; InicioDelTurno = ahora; }
