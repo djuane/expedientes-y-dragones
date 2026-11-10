@@ -22,6 +22,14 @@ Autor: Leonel Díaz.
 - Atributos con nombre de oficio (Firmeza, Agilidad procesal, Aguante, Doctrina, Criterio, Oratoria), modificadores y competencia por nivel del SRD 5.2, y títulos de carrera.
 - Iniciativa con desempate determinista.
 - Prueba jurídica: máximo 3 por partida, 20 segundos, acierto da ventaja y fallo da tirada normal; solo entran preguntas verificadas.
+- Combate por turnos en cuadrícula de 6 × 8: 1 acción, movimiento y 1 reacción por ronda; alcance; casillas válidas para iluminar en la interfaz.
+- Habilidades del prototipo: Medida cautelar (Civilista), Queja, Recurso de apelación y pasiva Silencio administrativo (Administrativista), y Casación una vez por partida.
+- Bots que completan el equipo y manejan a los enemigos, con las mismas reglas que un jugador.
+- La lógica solo emite eventos (atacó, Fundado, cayó…) para que la capa visual 2D o 3D los anime.
+
+## Versiones
+
+Ver `CHANGELOG.md`.
 
 ## Cómo probar
 
