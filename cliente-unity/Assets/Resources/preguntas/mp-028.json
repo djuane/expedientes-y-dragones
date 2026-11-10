@@ -1,0 +1,19 @@
+{
+  "id": "mp-028",
+  "materia": "Administrativo",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿Qué plazo tiene el administrado para subsanar una observación de mesa de partes?",
+  "opciones": [
+    "1 día hábil",
+    "2 días hábiles",
+    "5 días hábiles",
+    "10 días hábiles"
+  ],
+  "indice_correcto": 1,
+  "explicacion": "La unidad de recepción invita a subsanar dentro de un plazo máximo de 2 días hábiles.",
+  "base_legal": "TUO de la Ley 27444 (D.S. 006-2026-JUS), art. 125.1",
+  "enlace_oficial": "https://www.gob.pe/institucion/minjus/informes-publicaciones/8441836-primera-edicion-oficial-del-texto-unico-ordenado-de-la-ley-n-27444-ley-del-procedimiento-administrativo-general-aprobado-por-el-decreto-supremo-n-006-2026-jus-actualizada-al-8-07-2026",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

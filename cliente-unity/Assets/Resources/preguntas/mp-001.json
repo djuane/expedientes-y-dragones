@@ -3,11 +3,16 @@
   "materia": "Procesal civil",
   "calabozo": "Mesa de Partes",
   "pregunta": "En un proceso de conocimiento, ¿cuál es el plazo para apelar la sentencia?",
-  "opciones": ["3 días", "5 días", "10 días", "15 días"],
+  "opciones": [
+    "3 días",
+    "5 días",
+    "10 días",
+    "15 días"
+  ],
   "indice_correcto": 2,
-  "explicacion": "Ejemplo del GDD en borrador. No entra al juego hasta que un abogado verifique la norma en SPIJ.",
-  "base_legal": "Código Procesal Civil, art. 373 (por verificar en SPIJ)",
-  "enlace_oficial": "",
+  "explicacion": "En conocimiento se apela la sentencia en 10 días. Regla fácil: conocimiento 10, abreviado 5.",
+  "base_legal": "Código Procesal Civil, art. 478 inc. 13 (y art. 373) (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "https://www.leyes.congreso.gob.pe/documentos/decretoslegislativos/00768.pdf",
   "verificado_por": "",
   "fecha_verificacion": "",
   "estado": "borrador"

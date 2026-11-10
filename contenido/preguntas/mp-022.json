@@ -1,0 +1,19 @@
+{
+  "id": "mp-022",
+  "materia": "Civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿En qué plazo prescribe la acción personal?",
+  "opciones": [
+    "2 años",
+    "5 años",
+    "10 años",
+    "15 años"
+  ],
+  "indice_correcto": 2,
+  "explicacion": "Prescriben a los 10 años la acción personal, la real, la que nace de una ejecutoria y la de nulidad del acto jurídico.",
+  "base_legal": "Código Civil, art. 2001 inc. 1 (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

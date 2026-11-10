@@ -1,0 +1,19 @@
+{
+  "id": "mp-047",
+  "materia": "Administrativo",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "Tu expediente está paralizado sin razón. ¿Qué puedes presentar?",
+  "opciones": [
+    "Recurso de apelación",
+    "Recurso de reconsideración",
+    "Queja por defectos de tramitación",
+    "Demanda de amparo"
+  ],
+  "indice_correcto": 2,
+  "explicacion": "La queja procede en cualquier momento contra la paralización o el incumplimiento de plazos; va al superior jerárquico.",
+  "base_legal": "TUO de la Ley 27444 (D.S. 006-2026-JUS), art. 158",
+  "enlace_oficial": "https://www.gob.pe/institucion/minjus/informes-publicaciones/8441836-primera-edicion-oficial-del-texto-unico-ordenado-de-la-ley-n-27444-ley-del-procedimiento-administrativo-general-aprobado-por-el-decreto-supremo-n-006-2026-jus-actualizada-al-8-07-2026",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

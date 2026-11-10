@@ -1,0 +1,19 @@
+{
+  "id": "mp-043",
+  "materia": "Administrativo",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿Cuál es el plazo para interponer un recurso administrativo?",
+  "opciones": [
+    "5 días",
+    "10 días",
+    "15 días perentorios",
+    "30 días"
+  ],
+  "indice_correcto": 2,
+  "explicacion": "Recursos: 15 días perentorios para presentarlos; se resuelven en 30 (la reconsideración en 15).",
+  "base_legal": "TUO de la Ley 27444 (D.S. 006-2026-JUS), art. 207.2",
+  "enlace_oficial": "https://www.gob.pe/institucion/minjus/informes-publicaciones/8441836-primera-edicion-oficial-del-texto-unico-ordenado-de-la-ley-n-27444-ley-del-procedimiento-administrativo-general-aprobado-por-el-decreto-supremo-n-006-2026-jus-actualizada-al-8-07-2026",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

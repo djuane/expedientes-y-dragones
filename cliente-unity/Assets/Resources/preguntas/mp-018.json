@@ -1,0 +1,19 @@
+{
+  "id": "mp-018",
+  "materia": "Civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿Qué principio recoge la frase «los contratos son obligatorios en cuanto se haya expresado en ellos»?",
+  "opciones": [
+    "Rebus sic stantibus",
+    "Non bis in idem",
+    "In dubio pro reo",
+    "Pacta sunt servanda"
+  ],
+  "indice_correcto": 3,
+  "explicacion": "Lo pactado obliga: pacta sunt servanda.",
+  "base_legal": "Código Civil, art. 1361 (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

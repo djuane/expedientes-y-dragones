@@ -1,0 +1,19 @@
+{
+  "id": "mp-021",
+  "materia": "Civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "Sin justo título ni buena fe, ¿en cuántos años se adquiere un inmueble por prescripción?",
+  "opciones": [
+    "5 años",
+    "10 años",
+    "15 años",
+    "20 años"
+  ],
+  "indice_correcto": 1,
+  "explicacion": "Posesión continua, pacífica y pública como propietario por 10 años. Con justo título y buena fe bastan 5.",
+  "base_legal": "Código Civil, art. 950 (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

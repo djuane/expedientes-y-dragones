@@ -1,0 +1,19 @@
+{
+  "id": "mp-011",
+  "materia": "Procesal civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿Qué derecho garantiza el artículo I del Título Preliminar del Código Procesal Civil?",
+  "opciones": [
+    "Doble instancia",
+    "Gratuidad",
+    "Tutela jurisdiccional efectiva",
+    "Publicidad"
+  ],
+  "indice_correcto": 2,
+  "explicacion": "Toda persona tiene derecho a la tutela jurisdiccional efectiva, con sujeción a un debido proceso.",
+  "base_legal": "Código Procesal Civil, Título Preliminar, art. I (por verificar vigencia en SPIJ)",
+  "enlace_oficial": "https://www.leyes.congreso.gob.pe/documentos/decretoslegislativos/00768.pdf",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

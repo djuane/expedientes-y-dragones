@@ -1,0 +1,19 @@
+{
+  "id": "mp-029",
+  "materia": "Administrativo",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "Si el administrado no subsana la observación a tiempo, su pedido…",
+  "opciones": [
+    "Se tiene por no presentado",
+    "Se aprueba igual",
+    "Pasa a silencio positivo",
+    "Se envía al superior"
+  ],
+  "indice_correcto": 0,
+  "explicacion": "La observación advierte que, si no se subsana, se tendrá por no presentada la petición.",
+  "base_legal": "TUO de la Ley 27444 (D.S. 006-2026-JUS), art. 125.2",
+  "enlace_oficial": "https://www.gob.pe/institucion/minjus/informes-publicaciones/8441836-primera-edicion-oficial-del-texto-unico-ordenado-de-la-ley-n-27444-ley-del-procedimiento-administrativo-general-aprobado-por-el-decreto-supremo-n-006-2026-jus-actualizada-al-8-07-2026",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "mp-026",
+  "materia": "Administrativo",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿En qué horario atiende la mesa de partes digital de una entidad?",
+  "opciones": [
+    "8 horas, de lunes a viernes",
+    "12 horas, todos los días",
+    "Solo en horario de oficina",
+    "24 horas, los 7 días"
+  ],
+  "indice_correcto": 3,
+  "explicacion": "Toda entidad cuenta con mesa de partes digital que atiende 24 horas, los 7 días de la semana.",
+  "base_legal": "TUO de la Ley 27444 (D.S. 006-2026-JUS), art. 117.1",
+  "enlace_oficial": "https://www.gob.pe/institucion/minjus/informes-publicaciones/8441836-primera-edicion-oficial-del-texto-unico-ordenado-de-la-ley-n-27444-ley-del-procedimiento-administrativo-general-aprobado-por-el-decreto-supremo-n-006-2026-jus-actualizada-al-8-07-2026",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

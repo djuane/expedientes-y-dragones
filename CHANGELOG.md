@@ -1,5 +1,11 @@
 # Cambios
 
+## v0.7.0 (10/11/2026)
+- 50 preguntas del calabozo Mesa de Partes (mp-001 a mp-050): 25 del Civilista y 25 del Administrativista, en borrador hasta la validación del revisor.
+- Las 25 de Administrativo citan el nuevo TUO de la Ley 27444 (D.S. 006-2026-JUS) y su edición oficial del MINJUS.
+- mp-001 corrige su base legal: el plazo para apelar la sentencia en conocimiento está en el art. 478 inc. 13 del Código Procesal Civil.
+- Preguntas copiadas al cliente Unity.
+
 ## v0.6.0 (10/11/2026)
 - Motor de partida compartido (Expedientia.Logica.Sesion): el servidor y el celular juegan con las mismas reglas y el mismo protocolo de acciones.
 - Cliente Unity 6: menú del estudio, tablero 6 × 8 vertical, dado animado con «Fundado» e «Improcedente», prueba jurídica de 20 segundos con corrección y enlace oficial, salas de trámite, audiencia, librería, cafetería y Coimero, y sentencia.

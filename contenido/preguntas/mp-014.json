@@ -1,0 +1,19 @@
+{
+  "id": "mp-014",
+  "materia": "Civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿A partir de qué edad se tiene plena capacidad de ejercicio?",
+  "opciones": [
+    "16 años",
+    "18 años",
+    "21 años",
+    "25 años"
+  ],
+  "indice_correcto": 1,
+  "explicacion": "Toda persona mayor de 18 años tiene plena capacidad de ejercicio, incluidas las personas con discapacidad.",
+  "base_legal": "Código Civil, art. 42, modificado por el D. Leg. 1384 (El Peruano, 04/09/2018)",
+  "enlace_oficial": "https://cdn.www.gob.pe/uploads/document/file/192139/DL_1384.pdf",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

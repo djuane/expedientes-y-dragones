@@ -1,0 +1,19 @@
+{
+  "id": "mp-035",
+  "materia": "Administrativo",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "Cuando un plazo administrativo se fija en días, ¿cómo se cuenta?",
+  "opciones": [
+    "Días calendario",
+    "Solo lunes a jueves",
+    "Días hábiles consecutivos",
+    "Días útiles del juzgado"
+  ],
+  "indice_correcto": 2,
+  "explicacion": "Los plazos en días son hábiles consecutivos; se excluyen los no laborables y feriados.",
+  "base_legal": "TUO de la Ley 27444 (D.S. 006-2026-JUS), art. 134.1",
+  "enlace_oficial": "https://www.gob.pe/institucion/minjus/informes-publicaciones/8441836-primera-edicion-oficial-del-texto-unico-ordenado-de-la-ley-n-27444-ley-del-procedimiento-administrativo-general-aprobado-por-el-decreto-supremo-n-006-2026-jus-actualizada-al-8-07-2026",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "mp-050",
+  "materia": "Administrativo",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿En qué plazo prescribe la facultad de declarar la nulidad de oficio de un acto?",
+  "opciones": [
+    "6 meses",
+    "1 año",
+    "2 años",
+    "4 años"
+  ],
+  "indice_correcto": 2,
+  "explicacion": "La nulidad de oficio prescribe a los 2 años desde que el acto quedó consentido.",
+  "base_legal": "TUO de la Ley 27444 (D.S. 006-2026-JUS), art. 202.3",
+  "enlace_oficial": "https://www.gob.pe/institucion/minjus/informes-publicaciones/8441836-primera-edicion-oficial-del-texto-unico-ordenado-de-la-ley-n-27444-ley-del-procedimiento-administrativo-general-aprobado-por-el-decreto-supremo-n-006-2026-jus-actualizada-al-8-07-2026",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

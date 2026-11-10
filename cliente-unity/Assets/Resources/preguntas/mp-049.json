@@ -1,0 +1,19 @@
+{
+  "id": "mp-049",
+  "materia": "Administrativo",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿Para qué sirve el silencio administrativo negativo?",
+  "opciones": [
+    "Habilita a presentar recursos y acciones judiciales",
+    "Aprueba el pedido",
+    "Sanciona al funcionario",
+    "Cierra el caso para siempre"
+  ],
+  "indice_correcto": 0,
+  "explicacion": "El silencio negativo permite impugnar; la entidad sigue obligada a resolver.",
+  "base_legal": "TUO de la Ley 27444 (D.S. 006-2026-JUS), art. 188.3 y 188.4",
+  "enlace_oficial": "https://www.gob.pe/institucion/minjus/informes-publicaciones/8441836-primera-edicion-oficial-del-texto-unico-ordenado-de-la-ley-n-27444-ley-del-procedimiento-administrativo-general-aprobado-por-el-decreto-supremo-n-006-2026-jus-actualizada-al-8-07-2026",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

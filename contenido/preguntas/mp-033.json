@@ -1,0 +1,19 @@
+{
+  "id": "mp-033",
+  "materia": "Administrativo",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "Sin plazo especial, ¿cuánto tiempo tiene el administrado para entregar la información que le pide la autoridad?",
+  "opciones": [
+    "2 días",
+    "3 días",
+    "7 días",
+    "10 días"
+  ],
+  "indice_correcto": 3,
+  "explicacion": "Los actos a cargo del administrado, como entregar información, se cumplen dentro de los 10 días de solicitados.",
+  "base_legal": "TUO de la Ley 27444 (D.S. 006-2026-JUS), art. 132.4",
+  "enlace_oficial": "https://www.gob.pe/institucion/minjus/informes-publicaciones/8441836-primera-edicion-oficial-del-texto-unico-ordenado-de-la-ley-n-27444-ley-del-procedimiento-administrativo-general-aprobado-por-el-decreto-supremo-n-006-2026-jus-actualizada-al-8-07-2026",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

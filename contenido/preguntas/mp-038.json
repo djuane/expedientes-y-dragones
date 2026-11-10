@@ -1,0 +1,19 @@
+{
+  "id": "mp-038",
+  "materia": "Administrativo",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "¿En qué plazo máximo debe notificarse un acto administrativo?",
+  "opciones": [
+    "1 día",
+    "3 días",
+    "5 días",
+    "15 días"
+  ],
+  "indice_correcto": 2,
+  "explicacion": "Toda notificación se practica a más tardar dentro de 5 días desde la expedición del acto.",
+  "base_legal": "TUO de la Ley 27444 (D.S. 006-2026-JUS), art. 24.1",
+  "enlace_oficial": "https://www.gob.pe/institucion/minjus/informes-publicaciones/8441836-primera-edicion-oficial-del-texto-unico-ordenado-de-la-ley-n-27444-ley-del-procedimiento-administrativo-general-aprobado-por-el-decreto-supremo-n-006-2026-jus-actualizada-al-8-07-2026",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

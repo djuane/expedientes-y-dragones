@@ -1,0 +1,19 @@
+{
+  "id": "mp-027",
+  "materia": "Administrativo",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "Llega a mesa de partes un escrito al que le falta un requisito. ¿Qué debe hacer la entidad?",
+  "opciones": [
+    "Rechazarlo de plano",
+    "Devolverlo sin sello",
+    "Recibirlo y anotar la observación",
+    "Archivarlo"
+  ],
+  "indice_correcto": 2,
+  "explicacion": "Deben recibirse todos los escritos aunque incumplan requisitos; se observan en un solo acto y por única vez.",
+  "base_legal": "TUO de la Ley 27444 (D.S. 006-2026-JUS), art. 125.1",
+  "enlace_oficial": "https://www.gob.pe/institucion/minjus/informes-publicaciones/8441836-primera-edicion-oficial-del-texto-unico-ordenado-de-la-ley-n-27444-ley-del-procedimiento-administrativo-general-aprobado-por-el-decreto-supremo-n-006-2026-jus-actualizada-al-8-07-2026",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}
