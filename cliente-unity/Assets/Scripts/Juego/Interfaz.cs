@@ -31,6 +31,39 @@ namespace Expedientia.Cliente
             return (RectTransform)go.transform;
         }
 
+        /// <summary>Panel con esquinas redondeadas.</summary>
+        public static RectTransform PanelRedondeado(Transform padre, string nombre, Color fondo)
+        {
+            var r = Panel(padre, nombre, fondo);
+            var img = r.GetComponent<Image>();
+            img.sprite = Arte.Redondeado;
+            img.type = Image.Type.Sliced;
+            return r;
+        }
+
+        /// <summary>Imagen del arte del juego; si falta el dibujo, queda transparente.</summary>
+        public static Image Imagen(Transform padre, string nombre, Sprite? sprite, bool conservarProporcion = true)
+        {
+            var go = new GameObject(nombre, typeof(RectTransform), typeof(Image));
+            go.transform.SetParent(padre, false);
+            var img = go.GetComponent<Image>();
+            img.sprite = sprite;
+            img.color = sprite == null ? Color.clear : Color.white;
+            img.preserveAspect = conservarProporcion;
+            img.raycastTarget = false;
+            ((RectTransform)go.transform).Anclar(0, 0, 1, 1);
+            return img;
+        }
+
+        /// <summary>Sombra suave para que el texto se lea sobre las ilustraciones.</summary>
+        public static Text ConSombra(this Text t, float distancia = 3)
+        {
+            var s = t.gameObject.AddComponent<Shadow>();
+            s.effectColor = new Color(0, 0, 0, 0.75f);
+            s.effectDistance = new Vector2(distancia, -distancia);
+            return t;
+        }
+
         public static RectTransform Vacio(Transform padre, string nombre)
         {
             var go = new GameObject(nombre, typeof(RectTransform));
@@ -67,8 +100,11 @@ namespace Expedientia.Cliente
             go.transform.SetParent(padre, false);
             var img = go.GetComponent<Image>();
             img.color = fondo ?? Noche;
+            img.sprite = Arte.Redondeado;
+            img.type = Image.Type.Sliced;
             var b = go.GetComponent<Button>();
             b.targetGraphic = img;
+            b.onClick.AddListener(() => Sonido.Tocar("paso", 1.4f, 0.4f));
             b.onClick.AddListener(alPulsar);
             Texto(go.transform, texto, tamano, color ?? Dorado, TextAnchor.MiddleCenter, FontStyle.Bold);
             return b;

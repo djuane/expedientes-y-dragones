@@ -14,6 +14,7 @@ Autor: Leonel Díaz.
 | `cliente-unity/` | Proyecto Unity 6 (2D): juego sin conexión o en línea (ver `cliente-unity/LEEME.md`) |
 | `infraestructura/` | Script 28 para la VM del servidor en Proxmox |
 | `contenido/preguntas/` | Banco de preguntas jurídicas |
+| `arte/` | Arte original del prototipo (SVG) y su conversión a PNG para Unity |
 
 ## Lo que ya hace la lógica
 
@@ -23,7 +24,9 @@ Autor: Leonel Díaz.
 - Iniciativa con desempate determinista.
 - Prueba jurídica: máximo 3 por partida, 20 segundos, acierto da ventaja y fallo da tirada normal; solo entran preguntas verificadas.
 - Combate por turnos en cuadrícula de 6 × 8: 1 acción, movimiento y 1 reacción por ronda; alcance; casillas válidas para iluminar en la interfaz.
-- Habilidades del prototipo: Medida cautelar (Civilista), Queja, Recurso de apelación y pasiva Silencio administrativo (Administrativista), y Casación una vez por partida.
+- Habilidades del prototipo: Medida cautelar y Nulidad (Civilista), Queja, Recurso de apelación y pasiva Silencio administrativo (Administrativista), y Casación una vez por partida.
+- Enemigos con mecánica propia (Plazo que Vence, Notificación Defectuosa, Formalismo, Vuelva Mañana, Fraccionador) y dos jefes: La Cola Infinita y El Requisito Imposible.
+- Tres casos del prototipo con su guion (Acto 1), aliados honestos según la Reputación y descripciones de sala.
 - Bots que completan el equipo y manejan a los enemigos, con las mismas reglas que un jugador.
 - La lógica solo emite eventos (atacó, Fundado, cayó…) para que la capa visual 2D o 3D los anime.
 

@@ -19,3 +19,11 @@ Unity.exe -batchmode -quit -projectPath cliente-unity -executeMethod Expedientia
 El APK queda en `cliente-unity/Builds/`.
 
 Después de cambiar la lógica o las preguntas: `./cliente-unity/actualizar-logica.sh`.
+
+## Arte, animación y audio (v0.8.0)
+
+- **Arte:** `Assets/Resources/arte` (fichas, retratos, escenas de cada sala y portada). Se genera desde `arte/` en la raíz del repositorio. `Arte.cs` lo carga; si falta un dibujo, la interfaz sigue con colores planos.
+- **Animación:** las fichas se deslizan al moverse, embisten al atacar, tiemblan al recibir daño, muestran el daño flotando y caen girando; el dado es un d20 con sello de «¡Fundado!» o «Improcedente».
+- **Trama:** cuadro de diálogo con retrato y texto que aparece letra por letra. El prólogo sale la primera vez y se puede volver a ver desde la portada.
+- **Audio:** `Sonido.cs` sintetiza por código los efectos (dado, sello, golpe, ventanilla, monedas y voces) y un tema de menú original en escala pentatónica. No usa archivos ni música de terceros. Se silencia desde la portada.
+- `Assets/link.xml` evita que IL2CPP recorte la lógica, que se serializa por reflexión.

@@ -1,5 +1,28 @@
 # Cambios
 
+## v0.8.0 (10/11/2026)
+Revisión general de gráficos, trama y jugabilidad.
+
+**Jugabilidad**
+- Cada enemigo tiene la mecánica del GDD: el Plazo que Vence explota en su tercer turno (inmovilizado, su plazo se suspende); la Notificación Defectuosa ataca a quien no corresponde; el Formalismo recibe la mitad del daño sin el «requisito correcto» (ventaja).
+- Atacar a un enemigo inmovilizado es con ventaja (SRD), así Medida cautelar y Queja preparan el golpe.
+- Nueva habilidad de la Civilista: Nulidad (reacción que anula la última acción enemiga y devuelve la paciencia quitada).
+- Caso 3 «La buena pro imposible» en la Sala de Contrataciones, con Vuelva Mañana, Fraccionador y el jefe El Requisito Imposible, que cambia lo que exige cada 2 rondas.
+- Con Reputación alta aparecen aliados: la Especialista Mendoza revela el requisito del jefe y el Suboficial Quispe pelea contra la red del Coimero.
+- Dificultad ajustada con 1,000 partidas simuladas por caso y tamaño de equipo; los jefes escalan con el equipo.
+- El turno termina solo cuando ya no queda acción ni movimiento; los botones muestran la recarga de las habilidades.
+
+**Trama**
+- Prólogo del Acto 1 y guion de cada caso: llegada, jefe, epílogo de victoria o derrota y descripciones de sala que varían entre partidas.
+- Los colegas bot tienen nombre (Dra. Arce y Dr. Benítez).
+
+**Gráficos y audio**
+- 30 dibujos originales: fichas de personajes y monstruos, retratos de la trama, escenas de cada sala, portada, dado d20 y sello.
+- Animaciones de movimiento, ataque, daño, caída, explosión del plazo y textos flotantes; cuadro de diálogo con retrato.
+- Nueva portada y pantalla de preparación del expediente; botones redondeados.
+- Efectos de sonido y tema de menú sintetizados por código (sin archivos de terceros), con botón para silenciar.
+- 103 pruebas automáticas en la lógica y 9 en el servidor.
+
 ## v0.6.0 (10/11/2026)
 - Motor de partida compartido (Expedientia.Logica.Sesion): el servidor y el celular juegan con las mismas reglas y el mismo protocolo de acciones.
 - Cliente Unity 6: menú del estudio, tablero 6 × 8 vertical, dado animado con «Fundado» e «Improcedente», prueba jurídica de 20 segundos con corrección y enlace oficial, salas de trámite, audiencia, librería, cafetería y Coimero, y sentencia.

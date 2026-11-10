@@ -93,7 +93,7 @@ namespace Expedientia.Cliente
             for (var i = 0; i < bots; i++)
             {
                 var otra = (i % 2 == 0) == (esp == Especialidad.Civilista) ? Especialidad.Administrativista : Especialidad.Civilista;
-                miembros.Add(new MiembroDelEquipo(Ficha(otra, $"p{i + 2}", otra == Especialidad.Civilista ? "Bot Civilista" : "Bot Administrativista", estudio.Nivel), null));
+                miembros.Add(new MiembroDelEquipo(Ficha(otra, $"p{i + 2}", otra == Especialidad.Civilista ? "Dra. Arce" : "Dr. Benítez", estudio.Nivel), null));
             }
             _motor = new MotorDePartida(Guid.NewGuid(), new Expediente(CatalogoCasos.Buscar(casoId), _azar.Next(), miembros, estudio), DateTime.UtcNow);
             _guardado = false;

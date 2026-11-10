@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256"><circle cx="128" cy="128" r="118" fill="#2B2540" stroke="#C8442F" stroke-width="10"/><circle cx="128" cy="128" r="104" fill="#ffffff" opacity="0.05"/>
+<path d="M70 120 C40 96 26 104 14 92 C22 126 30 140 44 146 C36 156 40 170 56 170 C58 158 68 150 74 150 Z" fill="#4a4060" stroke="#1b1626" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M186 120 C216 96 230 104 242 92 C234 126 226 140 212 146 C220 156 216 170 200 170 C198 158 188 150 182 150 Z" fill="#4a4060" stroke="#1b1626" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="66" y="82" width="124" height="96" rx="6" fill="#efe2b8" stroke="#1b1626" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M66 88 L128 140 L190 88" fill="none" stroke="#1b1626" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="128" cy="140" r="12" fill="#C8442F" stroke="#1b1626" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="102" cy="116" r="10" fill="#fff" stroke="#1b1626" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><circle cx="154" cy="116" r="10" fill="#fff" stroke="#1b1626" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><circle cx="104" cy="118" r="4.5" fill="#1b1626"/><circle cx="152" cy="118" r="4.5" fill="#1b1626"/><path d="M90 100 L112 110 M166 100 L144 110" stroke="#1b1626" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M110 160 Q128 150 146 160" fill="none" stroke="#1b1626" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="128" y="206" font-family="DejaVu Sans" font-weight="bold" font-size="18" text-anchor="middle" fill="#EDE3CC">¿A quién?</text></svg>

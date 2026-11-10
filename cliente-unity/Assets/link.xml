@@ -1,0 +1,4 @@
+<!-- La lógica se serializa por reflexión (eventos y estado): que IL2CPP no recorte sus propiedades. -->
+<linker>
+  <assembly fullname="Expedientia.Logica" preserve="all" />
+</linker>
