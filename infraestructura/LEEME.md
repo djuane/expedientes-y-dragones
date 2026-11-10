@@ -2,7 +2,7 @@
 
 `28-vm-juego.sh` crea la VM 113 «juego-dev» (Debian 13, Docker, 4 núcleos, 6 GB, 60 GB en local-zfs, IP 192.168.1.252) en el Proxmox del estudio y despliega el servidor de partidas con `docker-compose.yml`.
 
-Sigue las reglas del servidor: respalda antes de cambiar, tiene `--revertir` y `--estado`, y no toca a los demás invitados. Se copia a `D:\aquilina\proxmox-integrum\` y se ejecuta en Git Bash.
+Sigue las reglas del servidor: respalda antes de cambiar, tiene `--revertir` y `--estado`, y no toca a los demás invitados. Se copia a `D:\aquilina\proxmox-integrum\` y se ejecuta en Git Bash; espera el repositorio en `E:\juegos\expedientes-y-dragones` (o la ruta en `REPO=`).
 
 | Modo | Qué hace |
 | --- | --- |
