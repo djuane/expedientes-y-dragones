@@ -1,0 +1,7 @@
+{
+  "name": "Expedientia.Cliente",
+  "references": ["UnityEngine.UI"],
+  "precompiledReferences": ["Expedientia.Logica.dll", "Newtonsoft.Json.dll"],
+  "overrideReferences": true,
+  "autoReferenced": true
+}

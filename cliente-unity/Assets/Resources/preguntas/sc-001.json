@@ -1,0 +1,14 @@
+{
+  "id": "sc-001",
+  "materia": "Contrataciones del Estado",
+  "calabozo": "Sala de Contrataciones",
+  "pregunta": "¿Qué organismo es el ente técnico normativo de las contrataciones públicas con la Ley 32069?",
+  "opciones": ["OSCE", "OECE", "MEF", "Contraloría"],
+  "indice_correcto": 1,
+  "explicacion": "Ejemplo del GDD en borrador. No entra al juego hasta que un abogado verifique la norma en SPIJ y El Peruano.",
+  "base_legal": "Ley 32069 y su reglamento (por verificar en SPIJ y El Peruano)",
+  "enlace_oficial": "",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

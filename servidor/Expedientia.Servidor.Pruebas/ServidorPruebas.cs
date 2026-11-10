@@ -122,8 +122,8 @@ public class ServidorPruebas : IClassFixture<Fabrica>
         Assert.True(pregunta["borrador"]!.GetValue<bool>());
         Assert.Null(pregunta["indice_correcto"]); // la respuesta no viaja al cliente
         var resp = await Accion(http, id, new { tipo = "responder", indice = 2 });
-        Assert.Equal("Acierto", resp["extra"]!["resultado"]!.GetValue<string>());
-        Assert.Equal("Norma de prueba", resp["extra"]!["base_legal"]!.GetValue<string>());
+        Assert.Equal("Acierto", resp["extra"]!["correccion"]!["resultado"]!.GetValue<string>());
+        Assert.Equal("Norma de prueba", resp["extra"]!["correccion"]!["base_legal"]!.GetValue<string>());
         Assert.Equal(2, resp["estado"]!["pruebas_juridicas_restantes"]!.GetValue<int>());
     }
 

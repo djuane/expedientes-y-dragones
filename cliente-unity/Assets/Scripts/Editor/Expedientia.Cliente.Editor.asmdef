@@ -1,0 +1,6 @@
+{
+  "name": "Expedientia.Cliente.Editor",
+  "references": [],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": false
+}

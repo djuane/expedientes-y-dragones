@@ -1,0 +1,14 @@
+{
+  "id": "mp-001",
+  "materia": "Procesal civil",
+  "calabozo": "Mesa de Partes",
+  "pregunta": "En un proceso de conocimiento, ¿cuál es el plazo para apelar la sentencia?",
+  "opciones": ["3 días", "5 días", "10 días", "15 días"],
+  "indice_correcto": 2,
+  "explicacion": "Ejemplo del GDD en borrador. No entra al juego hasta que un abogado verifique la norma en SPIJ.",
+  "base_legal": "Código Procesal Civil, art. 373 (por verificar en SPIJ)",
+  "enlace_oficial": "",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

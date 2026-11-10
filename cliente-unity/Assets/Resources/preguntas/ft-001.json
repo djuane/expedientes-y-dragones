@@ -1,0 +1,14 @@
+{
+  "id": "ft-001",
+  "materia": "Constitucional",
+  "calabozo": "Fiscalía de Turno",
+  "pregunta": "¿Qué proceso constitucional protege la libertad individual frente a una detención arbitraria?",
+  "opciones": ["Amparo", "Hábeas corpus", "Hábeas data", "Cumplimiento"],
+  "indice_correcto": 1,
+  "explicacion": "Ejemplo del GDD en borrador. No entra al juego hasta que un abogado verifique la norma en SPIJ.",
+  "base_legal": "Constitución Política, art. 200 (por verificar en SPIJ)",
+  "enlace_oficial": "",
+  "verificado_por": "",
+  "fecha_verificacion": "",
+  "estado": "borrador"
+}

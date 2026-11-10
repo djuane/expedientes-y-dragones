@@ -11,7 +11,8 @@ Autor: Leonel Díaz.
 | `logica/Expedientia.Logica` | Reglas del juego en C# (.NET Standard 2.1), sin dependencias de Unity. La usan la app y el servidor |
 | `logica/Expedientia.Logica.Pruebas` | Pruebas automáticas (xUnit) |
 | `servidor/` | Servidor de partidas ASP.NET Core + WebSocket + PostgreSQL, con panel de preguntas (ver `servidor/README.md`) |
-| `cliente-unity/` | Proyecto Unity 6 (2D) |
+| `cliente-unity/` | Proyecto Unity 6 (2D): juego sin conexión o en línea (ver `cliente-unity/LEEME.md`) |
+| `infraestructura/` | Script 28 para la VM del servidor en Proxmox |
 | `contenido/preguntas/` | Banco de preguntas jurídicas |
 
 ## Lo que ya hace la lógica

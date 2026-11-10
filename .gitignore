@@ -498,3 +498,6 @@ cliente-unity/*.sln
 # Secretos
 .env
 *.pfx
+logica/salida/
+cliente-unity/Library/
+cliente-unity/Builds/

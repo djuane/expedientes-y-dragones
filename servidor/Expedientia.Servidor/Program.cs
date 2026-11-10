@@ -2,6 +2,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
 using Expedientia.Logica.Expedientes;
+using Expedientia.Logica.Sesion;
 using Expedientia.Servidor.Datos;
 using Expedientia.Servidor.Panel;
 using Expedientia.Servidor.Partidas;
@@ -98,11 +99,11 @@ app.MapPost("/api/partidas/{id:guid}/unirse", async (HttpContext ctx, Guid id, U
     if (j == null) return Results.Unauthorized();
     var s = gestor.Buscar(id);
     if (s == null) return Results.NotFound();
-    var (ok, motivo) = await s.UnirseAsync(j.Id, p.Especialidad);
-    return ok ? Results.Ok(s.Estado()) : Results.BadRequest(new { motivo });
+    var motivo = await s.UnirseAsync(j.Id, p.Especialidad);
+    return motivo == null ? Results.Ok(s.Estado()) : Results.BadRequest(new { motivo });
 });
 
-app.MapPost("/api/partidas/{id:guid}/acciones", async (HttpContext ctx, Guid id, AccionPedido a, GestorPartidas gestor) =>
+app.MapPost("/api/partidas/{id:guid}/acciones", async (HttpContext ctx, Guid id, AccionJuego a, GestorPartidas gestor) =>
 {
     var j = await Autenticar(ctx);
     if (j == null) return Results.Unauthorized();
@@ -123,15 +124,15 @@ app.Map("/ws/partidas/{id:guid}", async (HttpContext ctx, Guid id, GestorPartida
     s.Conectar(ws);
     try
     {
-        var inicial = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new RespuestaAccion(true, null, Array.Empty<EventoDto>(), s.Estado()), Json.Opciones));
+        var inicial = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new RespuestaAccion { Valida = true, Estado = s.Estado() }, Json.Opciones));
         await ws.SendAsync(inicial, WebSocketMessageType.Text, true, ctx.RequestAborted);
         var buffer = new byte[16 * 1024];
         while (ws.State == WebSocketState.Open)
         {
             var recibido = await ws.ReceiveAsync(buffer, ctx.RequestAborted);
             if (recibido.MessageType == WebSocketMessageType.Close) break;
-            AccionPedido? accion = null;
-            try { accion = JsonSerializer.Deserialize<AccionPedido>(buffer.AsSpan(0, recibido.Count), Json.Opciones); } catch (JsonException) { }
+            AccionJuego? accion = null;
+            try { accion = JsonSerializer.Deserialize<AccionJuego>(buffer.AsSpan(0, recibido.Count), Json.Opciones); } catch (JsonException) { }
             if (accion == null) continue;
             var r = await s.EjecutarAsync(j.Id, accion);
             // La respuesta propia (con la pregunta o su corrección) solo va a quien actuó; el resto recibe la difusión.

@@ -30,7 +30,7 @@ public sealed class GestorPartidas
 
     public SesionPartida? Buscar(Guid id) => _partidas.TryGetValue(id, out var s) ? s : null;
 
-    public async Task<(SesionPartida? sesion, RespuestaAccion? inicio, string? error)> CrearAsync(Jugador jugador, CrearPartidaPedido pedido)
+    public async Task<(SesionPartida? sesion, Expedientia.Logica.Sesion.RespuestaAccion? inicio, string? error)> CrearAsync(Jugador jugador, CrearPartidaPedido pedido)
     {
         var caso = CatalogoCasos.Todos.FirstOrDefault(c => c.Id == pedido.CasoId);
         if (caso == null) return (null, null, "Caso desconocido.");

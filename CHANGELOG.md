@@ -1,5 +1,12 @@
 # Cambios
 
+## v0.6.0 (10/11/2026)
+- Motor de partida compartido (Expedientia.Logica.Sesion): el servidor y el celular juegan con las mismas reglas y el mismo protocolo de acciones.
+- Cliente Unity 6: menú del estudio, tablero 6 × 8 vertical, dado animado con «Fundado» e «Improcedente», prueba jurídica de 20 segundos con corrección y enlace oficial, salas de trámite, audiencia, librería, cafetería y Coimero, y sentencia.
+- Modo sin conexión (motor en el celular, progreso guardado) y modo en línea (servidor de partidas).
+- Script de compilación del APK de Android para Unity en modo batch.
+- 97 pruebas.
+
 ## v0.5.0 (10/11/2026)
 - Script 28-vm-juego.sh: crea la VM 113 en Proxmox con Debian 13 y Docker y despliega el servidor; modos --desplegar, --estado y --revertir, con respaldo previo.
 

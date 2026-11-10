@@ -5,7 +5,7 @@ namespace Expedientia.Servidor.Partidas;
 
 internal static class PreguntasDeJuego
 {
-    public const string MarcaBorrador = "BORRADOR SIN VERIFICAR";
+    public const string MarcaBorrador = Expedientia.Logica.Sesion.MotorDePartida.MarcaBorrador;
 
     /// <summary>
     /// Convierte la ficha guardada en pregunta de juego. Solo entran las verificadas; los borradores entran
