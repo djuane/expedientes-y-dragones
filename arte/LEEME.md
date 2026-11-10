@@ -13,3 +13,4 @@ Para cambiar un dibujo: editar `generar.py`, luego `python3 arte/generar.py && n
 - En Unity, `Assets/Scripts/Editor/ImportarArte.cs` importa esta carpeta como sprites sin mipmaps.
 - La portada evoca un volcán nevado y arcos de sillar, como pide la identidad visual del GDD, sin reproducir fotografías ni marcas.
 - Es arte de prototipo: en producción se reemplaza por el del ilustrador contratado (con cesión de derechos), sin tocar las reglas.
+- Técnicas recursivas (v0.9.0): las crestas de la cordillera y de los volcanes usan desplazamiento del punto medio (`cresta`), los muros de sillar se parten en bloques por subdivisión (`_bloques`) y el molle de la portada es un árbol fractal (`rama`). Usan semillas fijas, así que cada corrida produce el mismo dibujo.

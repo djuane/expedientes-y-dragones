@@ -87,6 +87,7 @@ namespace Expedientia.Cliente
             escala.referenceResolution = new Vector2(1080, 1920);
             escala.matchWidthOrHeight = 0.5f;
             _raiz = Ui.Panel(lienzo.transform, "Raiz", Ui.Noche).Anclar(0, 0, 1, 1);
+            Efectos.Preparar(lienzo.transform);
 
             _alias = PlayerPrefs.GetString("eyd.alias", _alias);
             _url = PlayerPrefs.GetString("eyd.url", _url);
@@ -732,6 +733,8 @@ namespace Expedientia.Cliente
 
         private IEnumerator DesvanecerRutina(FichaVisual f)
         {
+            if (f.Raiz == null) yield break;
+            Efectos.Papelitos(Efectos.Centro(f.Raiz));
             var grupo = f.Raiz.gameObject.AddComponent<CanvasGroup>();
             for (var t = 0f; t < 0.3f && f.Raiz != null; t += Time.deltaTime)
             {
@@ -752,6 +755,7 @@ namespace Expedientia.Cliente
 
         private static IEnumerator ExplotarRutina(FichaVisual f)
         {
+            if (f.Raiz != null) Efectos.Chispas(Efectos.Centro(f.Raiz), new Color(1f, 0.6f, 0.15f), 24);
             for (var t = 0f; t < 0.35f && f.Raiz != null; t += Time.deltaTime)
             {
                 f.Raiz.localScale = Vector3.one * (1 + 0.8f * t / 0.35f);
@@ -764,25 +768,8 @@ namespace Expedientia.Cliente
         private void Flotar(string id, string texto, Color color)
         {
             var f = Ficha(id);
-            if (f == null || _capaFichas == null) return;
-            var zona = Ui.Vacio(_capaFichas, "Flotante");
-            zona.anchorMin = f.Raiz.anchorMin; zona.anchorMax = f.Raiz.anchorMax;
-            zona.offsetMin = new Vector2(-60, 0); zona.offsetMax = new Vector2(60, 0);
-            var t = Ui.Texto(zona, texto, 40, color, TextAnchor.MiddleCenter, FontStyle.Bold).ConSombra(3);
-            t.horizontalOverflow = HorizontalWrapMode.Overflow;
-            StartCoroutine(FlotarRutina(zona, t));
-        }
-
-        private static IEnumerator FlotarRutina(RectTransform zona, Text t)
-        {
-            var c = t.color;
-            for (var k = 0f; k < 0.9f && zona != null; k += Time.deltaTime)
-            {
-                zona.anchoredPosition = new Vector2(0, 30 + 90 * k);
-                t.color = new Color(c.r, c.g, c.b, 1 - Mathf.Max(0, k - 0.5f) / 0.4f);
-                yield return null;
-            }
-            if (zona != null) Destroy(zona.gameObject);
+            if (f == null || f.Raiz == null) return;
+            Efectos.Texto(Efectos.Centro(f.Raiz), texto, color);
         }
 
         // ───────────────────────────── Diálogos de la trama ─────────────────────────────
@@ -861,6 +848,7 @@ namespace Expedientia.Cliente
                 }
                 zonaSello.localScale = Vector3.one;
                 Sonido.Tocar("sello");
+                if (fundado) Efectos.Confeti(70);
                 if (!fundado)
                     Ui.Texto(Ui.Vacio(fondo, "Pifia").Anclar(0.05f, 0.32f, 0.95f, 0.39f), new[] { "Se le cayó el expediente.", "Se acabó la tinta.", "Firmó en la línea equivocada." }[rnd.Next(3)], 40, Ui.Pergamino).ConSombra();
                 yield return new WaitForSeconds(0.9f);
@@ -943,6 +931,7 @@ namespace Expedientia.Cliente
             Ui.Texto(Ui.Vacio(carta, "L").Anclar(0.04f, 0.17f, 0.96f, 0.33f), "Lo que aprendiste: la ficha jurídica de este caso se publicará cuando un abogado la verifique en la fuente oficial.", 28, Ui.Tinta, TextAnchor.MiddleCenter, FontStyle.Italic);
             Ui.Boton(Ui.Vacio(carta, "V").Anclar(0.2f, 0.03f, 0.8f, 0.15f, 4), "Volver al estudio", () => MostrarMenu(), Ui.Carmesi, Ui.Pergamino, 40);
             StartCoroutine(Aparecer(zona));
+            if (s.Fundada) Efectos.Confeti(160);
         }
 
         // ───────────────────────────── En línea: cambios de los demás ─────────────────────────────

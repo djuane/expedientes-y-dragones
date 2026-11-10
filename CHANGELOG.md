@@ -1,5 +1,21 @@
 # Cambios
 
+## v0.9.0 (10/11/2026)
+Optimización del código y mejora de gráficos con técnicas recursivas.
+
+**Tablero y motor**
+- Caminos reales: un rival bloquea el paso y un aliado deja pasar (pero no se puede terminar en su casilla). Rodear un obstáculo cuesta los pasos reales. Se calcula con un relleno recursivo con poda, sobre un mapa de 48 casillas que se reutiliza.
+- El motor ya no repite búsquedas: un mapa de ocupación reemplaza las consultas sobre todos los combatientes, las fichas se ubican por id en un diccionario y el bot elige su casilla en una sola pasada.
+- Medido con 9,000 partidas simuladas: de unas 2,300 a unas 4,800 partidas por segundo (2.1 veces más rápido) y de 368 KB a 135 KB de memoria por partida (63 % menos). El balance de los tres casos no cambió.
+
+**Gráficos**
+- Portada con cordillera y volcanes de crestas fractales (desplazamiento del punto medio) y un molle dibujado como árbol fractal.
+- Muros de sillar con bloques de tamaños variados, partidos por subdivisión recursiva.
+- Efectos nuevos: confeti al sacar ¡Fundado! y al ganar el caso, papelitos cuando cae un enemigo y chispas cuando explota el Plazo que Vence. Las piezas y los textos flotantes se reciclan, sin crear ni destruir objetos en cada golpe.
+
+**Pruebas**
+- 108 de lógica (5 nuevas de caminos) y 9 del servidor.
+
 ## v0.8.0 (10/11/2026)
 Revisión general de gráficos, trama y jugabilidad.
 

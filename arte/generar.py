@@ -1,6 +1,6 @@
 # Genera el arte original de Expedientes y Dragones como SVG (caricatura plana, contorno oscuro).
 # Autor del arte: Leonel Díaz. Todo se dibuja desde cero con figuras geométricas.
-import os, math
+import os, math, random
 
 OUT = os.path.join(os.path.dirname(__file__), 'svg')
 os.makedirs(OUT, exist_ok=True)
@@ -305,13 +305,75 @@ def baldosas(c1, c2, y0=300, tam=64):
     return s
 
 
-def pared_sillar(alto=300, color='#e9e2d2', junta='#cfc5b0'):
+# ───────────── Técnicas recursivas (v0.9.0) ─────────────
+# Se dibuja con funciones que se llaman a sí mismas: cada llamada resuelve un trozo pequeño
+# y delega el resto. Con una semilla fija, el resultado es siempre el mismo dibujo.
+
+def _mezclar(c1, c2, t):
+    a = [int(c1[i:i + 2], 16) for i in (1, 3, 5)]
+    b = [int(c2[i:i + 2], 16) for i in (1, 3, 5)]
+    return '#' + ''.join(f'{round(x + (y - x) * t):02x}' for x, y in zip(a, b))
+
+
+def cresta(p0, p1, rugosidad, profundidad, azar):
+    """Desplazamiento del punto medio: parte el tramo en dos, sube o baja el centro al azar
+    y repite en cada mitad con la mitad de rugosidad. Devuelve la línea quebrada de p0 a p1 (sin p1)."""
+    if profundidad == 0:
+        return [p0]
+    mx, my = (p0[0] + p1[0]) / 2, (p0[1] + p1[1]) / 2 + azar.uniform(-rugosidad, rugosidad)
+    return cresta(p0, (mx, my), rugosidad / 2, profundidad - 1, azar) + cresta((mx, my), p1, rugosidad / 2, profundidad - 1, azar)
+
+
+def quebrada(puntos, rugosidad, profundidad, azar):
+    """Aplica la cresta fractal a cada tramo de una figura."""
+    out = []
+    for a, b in zip(puntos, puntos[1:]):
+        out += cresta(a, b, rugosidad, profundidad, azar)
+    return out + [puntos[-1]]
+
+
+def trazo(puntos, cerrar=True):
+    d = 'M' + ' L'.join(f'{x:.1f} {y:.1f}' for x, y in puntos)
+    return d + (' Z' if cerrar else '')
+
+
+def _bloques(x0, x1, y, alto, color, junta, azar, prof):
+    """Parte una hilada de sillar en bloques: si el tramo es largo, lo corta en un punto al azar
+    y resuelve cada lado por separado; a veces un bloque se divide en dos piedras más bajas."""
+    ancho = x1 - x0
+    if ancho > 170 or (ancho > 90 and azar.random() < 0.35):
+        corte = x0 + ancho * azar.uniform(0.38, 0.62)
+        return _bloques(x0, corte, y, alto, color, junta, azar, prof) + _bloques(corte, x1, y, alto, color, junta, azar, prof)
+    if prof > 0 and alto >= 40 and azar.random() < 0.18:
+        mitad = alto / 2
+        return _bloques(x0, x1, y, mitad, color, junta, azar, prof - 1) + _bloques(x0, x1, y + mitad, mitad, color, junta, azar, prof - 1)
+    tono = _mezclar(color, '#ffffff' if azar.random() < 0.5 else '#b9ab8f', azar.uniform(0, 0.22))
+    return (f'<rect x="{x0:.1f}" y="{y:.1f}" width="{ancho:.1f}" height="{alto:.1f}" fill="{tono}" stroke="{junta}" stroke-width="3"/>'
+            f'<path d="M{x0 + 4:.1f} {y + 4:.1f} h{max(0, ancho - 10):.1f}" stroke="#ffffff" stroke-opacity="0.35" stroke-width="2"/>')
+
+
+def pared_sillar(alto=300, color='#e9e2d2', junta='#cfc5b0', semilla=7):
+    azar = random.Random(semilla)
     s = f'<rect width="{W}" height="{alto}" fill="{color}"/>'
     for f in range(alto // 40 + 1):
-        off = 0 if f % 2 == 0 else 60
-        for c in range(-1, W // 120 + 2):
-            s += f'<rect x="{c*120+off}" y="{f*40}" width="120" height="40" fill="none" stroke="{junta}" stroke-width="3"/>'
+        s += _bloques(-30, W + 30, f * 40, 40, color, junta, azar, 1)
     return s
+
+
+def rama(x, y, angulo, largo, grosor, prof, azar, hojas):
+    """Árbol fractal: cada rama dibuja un tramo y llama a dos ramas más cortas; en la punta, hojas."""
+    x2 = x + math.cos(angulo) * largo
+    y2 = y - math.sin(angulo) * largo
+    s = f'<path d="M{x:.1f} {y:.1f} L{x2:.1f} {y2:.1f}" stroke="{TINTA}" stroke-width="{grosor:.1f}" stroke-linecap="round"/>'
+    if prof <= 2:  # copa: racimos de hojas en las ramas finas
+        hoja = f'<circle cx="{x2:.1f}" cy="{y2:.1f}" r="{azar.uniform(10, 17) + prof * 4:.1f}" fill="{azar.choice(hojas)}" stroke="{TINTA}" stroke-width="2"/>'
+        if prof == 0:
+            return s + hoja
+    else:
+        hoja = ''
+    for giro in (-1, 1):
+        s += rama(x2, y2, angulo + giro * azar.uniform(0.2, 0.5), largo * azar.uniform(0.68, 0.8), grosor * 0.7, prof - 1, azar, hojas)
+    return s + hoja
 
 
 def arco(x, y, w, h, relleno='#2b2540'):
@@ -420,6 +482,20 @@ for i in range(9):
     torre += f'<rect x="{x}" y="{y}" width="{w}" height="50" fill="{["#efe6d2","#e3d6ba","#f4ecdc"][i%3]}" {S}/>'
     torre += f'<path d="M{x} {y+25} h{w}" stroke="{CARMESI}" stroke-width="6"/>'
     torre += f'<path d="M{x+8} {y+10} h{w-16}" stroke="{TINTA}" stroke-width="2" opacity="0.4"/>'
+_m = random.Random(2026)
+_lejos = quebrada([(-20, 640), (180, 560), (420, 610), (650, 540), (900, 600), (1044, 570)], 50, 5, _m)
+lejanas = f'<path d="{trazo(_lejos + [(1044, 780), (-20, 780)])}" fill="#3b3354" stroke="{TINTA}" stroke-width="4" stroke-linejoin="round"/>'
+_cono = quebrada([(-40, 760), (330, 380), (392, 380), (780, 760)], 34, 5, _m)
+_nieve = quebrada([(150, 470), (250, 455), (330, 500), (400, 450), (470, 505), (560, 470)], 26, 4, _m)
+volcan = (f'<defs><clipPath id="cono"><path d="{trazo(_cono)}"/></clipPath></defs>'
+          f'<path d="{trazo(_cono)}" fill="#5d5476"/>'
+          f'<g clip-path="url(#cono)"><path d="{trazo([(100, 300)] + _nieve + [(620, 300)])}" fill="#f4f1ea" stroke="{TINTA}" stroke-width="4" stroke-linejoin="round"/>'
+          + ''.join(f'<path d="{trazo(quebrada([(x, 520), (x + d, 760)], 14, 3, _m), False)}" fill="none" stroke="#4d4566" stroke-width="5" stroke-linecap="round"/>'
+                    for x, d in ((260, -120), (330, -40), (400, 60), (470, 150)))
+          + f'</g><path d="{trazo(_cono)}" fill="none" {S}/>')
+_cono2 = quebrada([(560, 760), (760, 560), (798, 560), (1080, 760)], 22, 5, _m)
+volcan2 = f'<path d="{trazo(_cono2)}" fill="#4a4262" {S}/>'
+molle = rama(80, 780, math.pi / 2, 90, 18, 6, random.Random(11), ['#3f7a4a', '#4f9258', '#2f6340', '#6aa35c'])
 dragon = f'''
 <g transform="translate(150 230) scale(1.5)">
 <path d="M40 40 C10 10 -30 30 -40 -10 C0 0 20 -20 60 0 Z" fill="#5a2a3a" {S}/>
@@ -437,16 +513,14 @@ guardar('portada', 1024, 1024,
         '<defs><linearGradient id="cielo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E0C1A"/><stop offset="0.7" stop-color="#2b2540"/><stop offset="1" stop-color="#4a3d6a"/></linearGradient></defs>'
         + '<rect width="1024" height="1024" fill="url(#cielo)"/>' + estrellas
         + f'<circle cx="760" cy="200" r="120" fill="#f4ecd0"/><circle cx="730" cy="180" r="22" fill="#e6dcb8"/><circle cx="800" cy="240" r="14" fill="#e6dcb8"/>'
-        # volcán nevado (evoca el paisaje arequipeño, sin copiar una imagen)
-        + f'<path d="M-40 760 L330 380 C350 362 370 362 392 380 L780 760 Z" fill="#5d5476" {S}/>'
-        + f'<path d="M250 462 L330 380 C350 362 370 362 392 380 L470 462 C440 450 420 476 400 458 C380 440 360 470 340 452 C320 436 290 470 250 462 Z" fill="#f4f1ea" {S4}/>'
-        + f'<path d="M560 760 L760 560 C772 548 786 548 798 560 L1080 760 Z" fill="#4a4262" {S}/>'
+        # cordillera lejana y volcanes con crestas fractales (evocan el paisaje arequipeño, sin copiar una imagen)
+        + lejanas + volcan + volcan2
         + dragon
         # juzgado de sillar con arcos
         + f'<rect x="0" y="760" width="1024" height="264" fill="#e9e2d2" {S}/>'
         + ''.join(arco(30 + i * 170, 820, 110, 204, '#2b2540') for i in range(6))
         + '<rect x="0" y="740" width="1024" height="30" fill="#d8cfb8" stroke="#1b1626" stroke-width="6"/>'
-        + torre
+        + torre + molle
         + f'<path d="M598 910 L682 910 L682 834 A42 42 0 0 0 598 834 Z" fill="{TINTA2}" {S}/><circle cx="668" cy="876" r="6" fill="{DORADO}"/><path d="M598 860 h84 M598 885 h84" stroke="{TINTA}" stroke-width="4"/>')
 
 print('SVG generados:', len(os.listdir(OUT)))
