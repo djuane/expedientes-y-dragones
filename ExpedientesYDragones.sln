@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expedientia.Logica", "logic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expedientia.Logica.Pruebas", "logica\Expedientia.Logica.Pruebas\Expedientia.Logica.Pruebas.csproj", "{4D49D21E-422E-4442-A3CA-DF257E52ED3A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "servidor", "servidor", "{DB62A142-7BFF-4F93-9DD8-CA94B1084AA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expedientia.Servidor", "servidor\Expedientia.Servidor\Expedientia.Servidor.csproj", "{C8D2EA90-9D4C-452F-92DC-594039F4C008}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expedientia.Servidor.Pruebas", "servidor\Expedientia.Servidor.Pruebas\Expedientia.Servidor.Pruebas.csproj", "{4C484D24-4303-4DF4-B425-DCA85333F3DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +32,19 @@ Global
 		{4D49D21E-422E-4442-A3CA-DF257E52ED3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D49D21E-422E-4442-A3CA-DF257E52ED3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D49D21E-422E-4442-A3CA-DF257E52ED3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8D2EA90-9D4C-452F-92DC-594039F4C008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8D2EA90-9D4C-452F-92DC-594039F4C008}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8D2EA90-9D4C-452F-92DC-594039F4C008}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8D2EA90-9D4C-452F-92DC-594039F4C008}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C484D24-4303-4DF4-B425-DCA85333F3DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C484D24-4303-4DF4-B425-DCA85333F3DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C484D24-4303-4DF4-B425-DCA85333F3DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C484D24-4303-4DF4-B425-DCA85333F3DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{52DE95E0-8D70-4469-B7FF-E4E38112AFC7} = {514BDEAE-B2F5-4544-971F-91EA5E6A10B5}
 		{4D49D21E-422E-4442-A3CA-DF257E52ED3A} = {514BDEAE-B2F5-4544-971F-91EA5E6A10B5}
+		{C8D2EA90-9D4C-452F-92DC-594039F4C008} = {DB62A142-7BFF-4F93-9DD8-CA94B1084AA9}
+		{4C484D24-4303-4DF4-B425-DCA85333F3DA} = {DB62A142-7BFF-4F93-9DD8-CA94B1084AA9}
 	EndGlobalSection
 EndGlobal

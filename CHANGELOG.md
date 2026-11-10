@@ -1,5 +1,14 @@
 # Cambios
 
+## v0.4.0 (10/11/2026)
+- Servidor de partidas ASP.NET Core 8: API, WebSocket para jugar en equipo, turnos de 30 segundos con bot de reemplazo.
+- Prueba jurídica servida por el servidor (la respuesta correcta no viaja al celular) con base legal y enlace al responder.
+- Almacén en PostgreSQL (jugadores, estudios, resultados y preguntas) o en memoria.
+- Panel de contenido en /panel: no deja marcar como verificada una pregunta sin revisor, fecha, base legal y enlace oficial.
+- Dockerfile y docker-compose con PostgreSQL 17.
+- Las 3 preguntas de ejemplo del GDD, en borrador.
+- 93 pruebas (84 de lógica y 9 del servidor, también contra PostgreSQL).
+
 ## v0.3.0 (10/11/2026)
 - Partida completa (expediente): 8 a 12 salas con combate, trámite, audiencia, librería, cafetería, Coimero y jefe.
 - Jefe La Cola Infinita, que suma usuarios a la fila cada turno.

@@ -83,6 +83,9 @@ namespace Expedientia.Logica.Expedientes
 
         public MiembroDelEquipo Miembro(string id) => Miembros.First(m => m.Ficha.Id == id);
 
+        /// <summary>Un jugador toma el personaje de un bot (o un bot toma el de un jugador que se fue, con null).</summary>
+        public void AsignarJugador(string miembroId, string? jugadorId) => Miembro(miembroId).JugadorId = jugadorId;
+
         /// <summary>8 a 12 salas: empieza con combate, termina con el jefe, siempre hay una cafetería y una de cada 3 partidas trae al Coimero.</summary>
         private static List<TipoSala> GenerarSalas(IGeneradorAleatorio azar)
         {

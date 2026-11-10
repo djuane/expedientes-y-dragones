@@ -1,0 +1,32 @@
+# Entorno de desarrollo y pruebas del juego (VM 113 juego-dev).
+# Las claves van en el archivo .env junto a este archivo (lo genera el script 28; no se sube a GitHub).
+services:
+  base:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: juego
+      POSTGRES_USER: juego
+      POSTGRES_PASSWORD: ${CLAVE_BASE:?falta CLAVE_BASE en .env}
+    volumes:
+      - datos-base:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U juego -d juego"]
+      interval: 10s
+      retries: 10
+
+  servidor:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      base:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__Juego: "Host=base;Database=juego;Username=juego;Password=${CLAVE_BASE}"
+      Juego__PermitirBorradores: "${PERMITIR_BORRADORES:-true}"
+      Juego__ClavePanel: "${CLAVE_PANEL:-}"
+    ports:
+      - "8080:8080"
+
+volumes:
+  datos-base:
