@@ -1,7 +1,7 @@
 # Cambios
 
 ## v0.10.2 (11/11/2026)
-- Nuevo personaje de la trama: **Lion**, abogado investigador del estudio (terno gris, corbata roja, lentes). Lee la letra pequeña y los anexos. Aparece en el prólogo y en cada caso, y descubre el sello del Archivo Central que une los tres casos.
+- Nuevo personaje de la trama: **Lion**, abogado investigador del estudio (terno gris, corbata roja, lentes, cabello negro). Lee la letra pequeña y los anexos. Aparece en el prólogo y en cada caso, y descubre el sello del Archivo Central que une los tres casos.
 - Retrato provisional de Lion, generado con IA.
 
 ## v0.10.1 (11/11/2026)
