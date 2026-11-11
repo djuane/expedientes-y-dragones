@@ -190,6 +190,7 @@ public class MecanicasPruebas
         Assert.False(string.IsNullOrWhiteSpace(exp.TextoSala));
         Assert.NotEmpty(Guion.Prologo);
         Assert.Contains(Guion.Prologo, l => l.Personaje == Guion.Gonzabio);
+        Assert.Contains(Guion.Prologo, l => l.Personaje == Guion.Lion);
         foreach (var g in Guion.Casos.Values) Assert.Contains(g.Llegada, l => l.Personaje == Guion.Gonzabio);
         foreach (var c in CatalogoCasos.Todos) Assert.True(Guion.Casos.ContainsKey(c.Id), $"Falta el guion de {c.Id}");
     }

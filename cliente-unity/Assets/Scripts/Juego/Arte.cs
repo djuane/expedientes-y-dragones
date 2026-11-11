@@ -45,6 +45,7 @@ namespace Expedientia.Cliente
             "Suboficial Quispe" => "quispe",
             "El Coimero" => "coimero",
             "Gonzabio" => "gonzabio",
+            "Lion" => "lion",
             _ => "narrador",
         });
 

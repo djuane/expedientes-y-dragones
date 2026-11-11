@@ -43,6 +43,8 @@ namespace Expedientia.Logica.Expedientes
         public const string Coimero = "El Coimero";
         /// <summary>Socio fundador del estudio: litigante de terno beige que defiende con el expediente bien armado.</summary>
         public const string Gonzabio = "Gonzabio";
+        /// <summary>Abogado investigador del estudio, de terno gris y corbata roja: lee lo que nadie lee y lo escribe con su pluma.</summary>
+        public const string Lion = "Lion";
 
         private static LineaDeGuion L(string p, string t) => new LineaDeGuion(p, t);
 
@@ -57,6 +59,7 @@ namespace Expedientia.Logica.Expedientes
             L(Valdivia, "Cierre casos, gane reputación y no acepte atajos. Los atajos siempre cobran después."),
             L(Gonzabio, "Socio, el cuarto será chico, pero el estudio es nuestro. Usted litiga y yo armo los expedientes."),
             L(Gonzabio, "Un expediente bien foliado aguanta cualquier golpe. Eso lo aprendí en la ventanilla, no en la facultad."),
+            L(Lion, "Y yo leo la letra pequeña. Toda. Hasta los anexos que nadie abre. Ahí se esconden los monstruos."),
             L(Eusebio, "Ahí viene su primer cliente. Trae cara de ventanilla cerrada."),
         };
 
@@ -114,6 +117,7 @@ namespace Expedientia.Logica.Expedientes
                     L(Rosita, "Al fondo de la cola está su escrito… y algo bastante más grande."),
                     L(Eusebio, "Doctores, esa cola no avanza desde 1998. Suerte."),
                     L(Gonzabio, "Ustedes ataquen; yo sostengo el expediente. Mientras no se nos caiga, no nos gana."),
+                    L(Lion, "Ojo: esa cola tiene numeración salteada. Donde falta un número, hay un escrito escondido."),
                 },
                 new[]
                 {
@@ -133,6 +137,7 @@ namespace Expedientia.Logica.Expedientes
                     L(Cliente, "Doctores, me notificaron la sentencia hace casi diez días. ¿Todavía se puede hacer algo?"),
                     L(Eusebio, "La ventanilla cierra en dos horas. El reloj ya corre y no espera a nadie."),
                     L(Gonzabio, "El recurso ya está redactado. Lo que falta es llegar vivos a la ventanilla."),
+                    L(Lion, "Ya conté los días hábiles dos veces. Llegamos, pero sin pararnos a tomar café."),
                 },
                 new[]
                 {
@@ -163,6 +168,7 @@ namespace Expedientia.Logica.Expedientes
                     L(Cliente, "Somos una empresa chica. Las bases piden diez años de experiencia en una tecnología que salió el año pasado."),
                     L(Eusebio, "En la Sala de Contrataciones los requisitos cambian más rápido que los funcionarios."),
                     L(Gonzabio, "Traje las bases impresas y subrayadas. Cada requisito absurdo tiene su observación."),
+                    L(Lion, "Leí el anexo 7. El requisito se escribió pensando en una sola empresa, y no es la nuestra."),
                 },
                 new[]
                 {
@@ -172,6 +178,7 @@ namespace Expedientia.Logica.Expedientes
                 {
                     L(Cliente, "¡Nos dejaron competir en igualdad de condiciones!"),
                     L(Valdivia, "Detrás de esas bases hay alguien que escribe requisitos a la medida. Esto recién empieza."),
+                    L(Lion, "Crucé las firmas de los tres casos. Hay un mismo sello en todos: el del Archivo Central."),
                     L(Gonzabio, "Las tres pistas apuntan al mismo sótano, socio. Prepare el maletín: bajamos al Archivo Central."),
                 },
                 new[]

@@ -1,5 +1,9 @@
 # Cambios
 
+## v0.10.2 (11/11/2026)
+- Nuevo personaje de la trama: **Lion**, abogado investigador del estudio (terno gris, corbata roja, lentes). Lee la letra pequeña y los anexos. Aparece en el prólogo y en cada caso, y descubre el sello del Archivo Central que une los tres casos.
+- Retrato provisional de Lion, generado con IA.
+
 ## v0.10.1 (11/11/2026)
 - Nuevo personaje de la trama: **Gonzabio**, socio fundador del estudio. Arma los expedientes y los defiende como un escudo. Aparece en el prólogo y en la llegada, el jefe y la victoria de los casos, y es quien sigue la pista de los escritos perdidos hasta el Archivo Central.
 - Retrato provisional de Gonzabio, generado con IA (`arte/LEEME.md`).
