@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <Version>0.4.0</Version>
+    <Version>0.9.0</Version>
     <Authors>Leonel Díaz</Authors>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
