@@ -1,5 +1,9 @@
 # Cambios
 
+## v0.10.1 (11/11/2026)
+- Nuevo personaje de la trama: **Gonzabio**, socio fundador del estudio. Arma los expedientes y los defiende como un escudo. Aparece en el prólogo y en la llegada, el jefe y la victoria de los casos, y es quien sigue la pista de los escritos perdidos hasta el Archivo Central.
+- Retrato provisional de Gonzabio, generado con IA (`arte/LEEME.md`).
+
 ## v0.10.0 (11/11/2026)
 Gráficos y tipografía con acabado de ilustración.
 

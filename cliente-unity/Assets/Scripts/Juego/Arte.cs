@@ -44,6 +44,7 @@ namespace Expedientia.Cliente
             "Especialista Mendoza" => "mendoza",
             "Suboficial Quispe" => "quispe",
             "El Coimero" => "coimero",
+            "Gonzabio" => "gonzabio",
             _ => "narrador",
         });
 
