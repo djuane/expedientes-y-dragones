@@ -12,3 +12,4 @@
 *.otf filter=lfs diff=lfs merge=lfs -text
 # Arte del prototipo: pesa ~1 MB y se regenera desde arte/ (SVG); va sin LFS para poder subirlo desde cualquier equipo.
 cliente-unity/Assets/Resources/arte/*.png -filter -diff -merge binary
+cliente-unity/Assets/Resources/fuentes/*.ttf -filter -diff -merge binary

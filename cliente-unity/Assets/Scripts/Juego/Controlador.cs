@@ -105,7 +105,10 @@ namespace Expedientia.Cliente
             Sonido.Musica(true);
             Ui.Imagen(Ui.Vacio(_raiz, "Portada").Anclar(0, 0.22f, 1, 1), "Arte", Arte.Sprite("portada"), false);
             Ui.Panel(_raiz, "Base", new Color(0.055f, 0.047f, 0.1f, 0.92f)).Anclar(0, 0, 1, 0.29f);
-            Ui.Texto(Ui.Vacio(_raiz, "Titulo").Anclar(0.04f, 0.84f, 0.96f, 0.97f), "EXPEDIENTES\nY DRAGONES", 104, Ui.Dorado, TextAnchor.MiddleCenter, FontStyle.Bold).ConSombra(5);
+            var zonaTitulo = Ui.Vacio(_raiz, "Titulo").Anclar(0.03f, 0.82f, 0.97f, 0.985f);
+            var logo = Arte.Sprite("logo");
+            if (logo != null) Ui.Imagen(zonaTitulo, "Logo", logo);
+            else Ui.Texto(zonaTitulo, "EXPEDIENTES\nY DRAGONES", 104, Ui.Dorado, TextAnchor.MiddleCenter, FontStyle.Bold).ConSombra(5);
             Ui.Texto(Ui.Vacio(_raiz, "Frase").Anclar(0.06f, 0.79f, 0.94f, 0.84f), "Litiga, investiga y vence a los monstruos de la burocracia.", 36, Ui.Pergamino, TextAnchor.MiddleCenter, FontStyle.Italic).ConSombra();
 
             var est = FuenteLocal.LeerEstudio();

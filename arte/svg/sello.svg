@@ -1,4 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256"><defs><filter id="pintura" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+<feGaussianBlur in="SourceAlpha" stdDeviation="2" result="alto"/>
+<feSpecularLighting in="alto" surfaceScale="3" specularConstant="0.5" specularExponent="30" lighting-color="#fffaf0" result="brillo">
+<feDistantLight azimuth="225" elevation="50"/></feSpecularLighting>
+<feComposite in="brillo" in2="SourceAlpha" operator="in" result="brilloDentro"/>
+<feComposite in="SourceGraphic" in2="brilloDentro" operator="arithmetic" k1="0" k2="1" k3="0.35" k4="0"/>
+</filter></defs><g filter="url(#pintura)"><defs><linearGradient id="gffffff" x1="0.1" y1="0" x2="0.9" y2="1"><stop offset="0" stop-color="#fffcf4"/><stop offset="0.14" stop-color="#fffcf4"/><stop offset="0.14" stop-color="#ffffff"/><stop offset="0.74" stop-color="#ffffff"/><stop offset="0.74" stop-color="#b3b1b8"/><stop offset="1" stop-color="#b3b1b8"/></linearGradient></defs>
 <circle cx="128" cy="128" r="116" fill="none" stroke="#ffffff" stroke-width="12"/>
 <circle cx="128" cy="128" r="96" fill="none" stroke="#ffffff" stroke-width="5" stroke-dasharray="10 8"/>
-<path d="M40 128 L60 118 L60 138 Z M216 128 L196 118 L196 138 Z" fill="#ffffff"/></svg>
+<path d="M40 128 L60 118 L60 138 Z M216 128 L196 118 L196 138 Z" fill="url(#gffffff)"/></g></svg>

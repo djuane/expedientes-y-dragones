@@ -1,5 +1,13 @@
 # Cambios
 
+## v0.10.0 (11/11/2026)
+Gráficos y tipografía con acabado de ilustración.
+
+- **Tipografía:** los textos usan Alegreya y los títulos Cinzel, ambas con licencia libre OFL (ver `Resources/fuentes/LICENCIAS.txt`). Se usan sus variantes reales de negrita y cursiva. Los títulos grandes llevan contorno.
+- **Logotipo propio:** letras doradas con relieve en Cinzel Decorative, filete y un sello de lacre con la balanza.
+- **Portada nueva** (1024 × 1420, la proporción del celular): un dragón hecho de expedientes se enrosca en la Torre de Expedientes y lanza un torbellino de papeles. El equipo lo enfrenta de espaldas, con la pluma de la Civilista encendida. Detrás se ven el volcán, la luna y los arcos de sillar.
+- **Estilo de dibujo animado clásico en todo el arte:** colores más saturados, sombras de corte nítido en tres tonos, brillo en los bordes y medallones con aro metálico y resplandor del bando. Los rótulos de las escenas usan la tipografía del juego.
+
 ## v0.9.0 (10/11/2026)
 Optimización del código y mejora de gráficos con técnicas recursivas.
 

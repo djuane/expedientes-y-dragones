@@ -17,16 +17,109 @@ S = f'stroke="{TINTA}" stroke-width="6" stroke-linejoin="round" stroke-linecap="
 S4 = f'stroke="{TINTA}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"'
 
 
-def guardar(nombre, w, h, cuerpo, fondo=None):
+# ───────────── Acabado pintado (v0.10.0) ─────────────
+# Cada figura recibe un degradado propio (luz arriba a la izquierda, sombra abajo a la derecha) y el
+# dibujo completo pasa por un filtro de pintura: trazo levemente irregular, relieve iluminado,
+# textura de lienzo y, en las escenas, viñeta y luz ambiental.
+import re, colorsys
+
+
+def _saturar(c, f=1.3, brillo=1.05):
+    r, g, b = (int(c[i:i + 2], 16) / 255 for i in (1, 3, 5))
+    h, l, sat = colorsys.rgb_to_hls(r, g, b)
+    r, g, b = colorsys.hls_to_rgb(h, min(1, l * brillo), min(1, sat * f))
+    return '#' + ''.join(f'{round(v * 255):02x}' for v in (r, g, b))
+
+_HEX = re.compile(r'fill="(#[0-9a-fA-F]{6})"')
+_FIGURA = re.compile(r'<(path|rect|circle|ellipse|polygon)\b[^>]*>')
+
+
+def _mezclar(c1, c2, t):
+    a = [int(c1[i:i + 2], 16) for i in (1, 3, 5)]
+    b = [int(c2[i:i + 2], 16) for i in (1, 3, 5)]
+    return '#' + ''.join(f'{round(x + (y - x) * t):02x}' for x, y in zip(a, b))
+
+
+def _aclarar(c, t):
+    return _mezclar(c, '#fff4dc', t)
+
+
+def _oscurecer(c, t):
+    return _mezclar(c, '#120c22', t)
+
+
+def sombrear(cuerpo):
+    """Cambia el relleno plano de cada figura por un degradado con luz y sombra del mismo color."""
+    grads = {}
+
+    def figura(m):
+        tag = m.group(0)
+        if 'url(' in tag or 'opacity="0.0' in tag or 'data-plano' in tag:
+            return tag
+
+        def relleno(mm):
+            c = mm.group(1).lower()
+            gid = 'g' + c[1:]
+            if gid not in grads:
+                # Sombreado de dibujo animado (cel): tres tonos de corte nítido, luz arriba a la izquierda.
+                base = _saturar(c)
+                luz, sombra = _aclarar(base, 0.3), _oscurecer(base, 0.32)
+                grads[gid] = (f'<linearGradient id="{gid}" x1="0.1" y1="0" x2="0.9" y2="1">'
+                              f'<stop offset="0" stop-color="{luz}"/><stop offset="0.14" stop-color="{luz}"/>'
+                              f'<stop offset="0.14" stop-color="{base}"/><stop offset="0.74" stop-color="{base}"/>'
+                              f'<stop offset="0.74" stop-color="{sombra}"/><stop offset="1" stop-color="{sombra}"/></linearGradient>')
+            return f'fill="url(#{gid})"'
+        return _HEX.sub(relleno, tag, count=1)
+
+    cuerpo = _FIGURA.sub(figura, cuerpo)
+    return '<defs>' + ''.join(grads.values()) + '</defs>' + cuerpo
+
+
+def _filtro_pintura(escena):
+    """Acabado de animación clásica: trazo limpio, un brillo especular leve en los bordes y nada de grano."""
+    return f'''<filter id="pintura" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+<feGaussianBlur in="SourceAlpha" stdDeviation="{3 if escena else 2}" result="alto"/>
+<feSpecularLighting in="alto" surfaceScale="3" specularConstant="0.5" specularExponent="30" lighting-color="#fffaf0" result="brillo">
+<feDistantLight azimuth="225" elevation="50"/></feSpecularLighting>
+<feComposite in="brillo" in2="SourceAlpha" operator="in" result="brilloDentro"/>
+<feComposite in="SourceGraphic" in2="brilloDentro" operator="arithmetic" k1="0" k2="1" k3="0.35" k4="0"/>
+</filter>'''
+
+
+def acabado(w, h, cuerpo, escena):
+    cuerpo = sombrear(cuerpo)
+    extra = ''
+    if escena:
+        extra = (f'<defs><radialGradient id="vineta" cx="0.45" cy="0.38" r="0.8"><stop offset="0.55" stop-color="#000" stop-opacity="0"/>'
+                 f'<stop offset="1" stop-color="#05030c" stop-opacity="0.62"/></radialGradient>'
+                 f'<radialGradient id="ambiente" cx="0.2" cy="0.05" r="0.9"><stop offset="0" stop-color="#ffd58a" stop-opacity="0.32"/>'
+                 f'<stop offset="0.6" stop-color="#ffd58a" stop-opacity="0"/></radialGradient></defs>'
+                 f'<rect width="{w}" height="{h}" fill="url(#ambiente)" style="mix-blend-mode:screen"/>'
+                 f'<rect width="{w}" height="{h}" fill="url(#vineta)"/>')
+    return f'<defs>{_filtro_pintura(escena)}</defs><g filter="url(#pintura)">{cuerpo}</g>{extra}'
+
+
+def guardar(nombre, w, h, cuerpo, fondo=None, pintar=True):
     bg = f'<rect width="{w}" height="{h}" fill="{fondo}"/>' if fondo else ''
+    if pintar:
+        cuerpo = acabado(w, h, bg + cuerpo, escena=w > 256)
+        bg = ''
+    if 'DejaVu Sans' in cuerpo:  # los rótulos del arte usan la tipografía del juego (Alegreya, OFL)
+        cuerpo = cuerpo.replace('DejaVu Sans', 'Alegreya')  # render.js carga las fuentes
     svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">{bg}{cuerpo}</svg>'
     with open(os.path.join(OUT, f'{nombre}.svg'), 'w', encoding='utf-8') as f:
         f.write(svg)
 
 
 def disco(anillo):
-    return (f'<circle cx="128" cy="128" r="118" fill="{TINTA2}" stroke="{anillo}" stroke-width="10"/>'
-            f'<circle cx="128" cy="128" r="104" fill="#ffffff" opacity="0.05"/>')
+    """Medallón: fondo con resplandor del color del bando, aro metálico con brillo y ribete interior."""
+    gid = 'halo' + anillo[1:]
+    return (f'<defs><radialGradient id="{gid}" cx="0.5" cy="0.42" r="0.6"><stop offset="0" stop-color="{_mezclar(anillo, TINTA2, 0.45)}"/>'
+            f'<stop offset="0.55" stop-color="{TINTA2}"/><stop offset="1" stop-color="#120e1f"/></radialGradient>'
+            f'<linearGradient id="aro{gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="{_mezclar(anillo, "#fff8e0", 0.55)}"/>'
+            f'<stop offset="0.45" stop-color="{anillo}"/><stop offset="1" stop-color="{_mezclar(anillo, "#1b1020", 0.5)}"/></linearGradient></defs>'
+            f'<circle cx="128" cy="128" r="118" fill="url(#{gid})" stroke="url(#aro{gid})" stroke-width="11"/>'
+            f'<circle cx="128" cy="128" r="110" fill="none" stroke="#000" stroke-opacity="0.35" stroke-width="3"/>')
 
 
 def recorte(cuerpo):
@@ -301,19 +394,13 @@ def baldosas(c1, c2, y0=300, tam=64):
     for f in range(filas):
         for c in range(W // tam + 1):
             col = c1 if (f + c) % 2 == 0 else c2
-            s += f'<rect x="{c*tam}" y="{y0 + f*tam}" width="{tam}" height="{tam}" fill="{col}"/>'
+            s += f'<rect data-plano="1" x="{c*tam}" y="{y0 + f*tam}" width="{tam}" height="{tam}" fill="{col}"/>'
     return s
 
 
 # ───────────── Técnicas recursivas (v0.9.0) ─────────────
 # Se dibuja con funciones que se llaman a sí mismas: cada llamada resuelve un trozo pequeño
 # y delega el resto. Con una semilla fija, el resultado es siempre el mismo dibujo.
-
-def _mezclar(c1, c2, t):
-    a = [int(c1[i:i + 2], 16) for i in (1, 3, 5)]
-    b = [int(c2[i:i + 2], 16) for i in (1, 3, 5)]
-    return '#' + ''.join(f'{round(x + (y - x) * t):02x}' for x, y in zip(a, b))
-
 
 def cresta(p0, p1, rugosidad, profundidad, azar):
     """Desplazamiento del punto medio: parte el tramo en dos, sube o baja el centro al azar
@@ -470,57 +557,6 @@ guardar('escena-pasillo', W, H, '<rect width="1024" height="846" fill="#1f1a2c"/
         + sombra_inferior())
 
 
-# ───────────────────────── Portada (1024 × 1024) ─────────────────────────
-import random
-_r = random.Random(7)
-estrellas = ''.join(f'<circle cx="{_r.randint(0,1024)}" cy="{_r.randint(0,460)}" r="{_r.choice([1,1.5,2,3])}" fill="#fff" opacity="{_r.uniform(0.3,0.9):.2f}"/>' for i in range(90))
-torre = ''
-for i in range(9):
-    w = 230 - i * 10
-    x = 640 - w / 2 + (i % 2) * 8 - 4
-    y = 860 - i * 52
-    torre += f'<rect x="{x}" y="{y}" width="{w}" height="50" fill="{["#efe6d2","#e3d6ba","#f4ecdc"][i%3]}" {S}/>'
-    torre += f'<path d="M{x} {y+25} h{w}" stroke="{CARMESI}" stroke-width="6"/>'
-    torre += f'<path d="M{x+8} {y+10} h{w-16}" stroke="{TINTA}" stroke-width="2" opacity="0.4"/>'
-_m = random.Random(2026)
-_lejos = quebrada([(-20, 640), (180, 560), (420, 610), (650, 540), (900, 600), (1044, 570)], 50, 5, _m)
-lejanas = f'<path d="{trazo(_lejos + [(1044, 780), (-20, 780)])}" fill="#3b3354" stroke="{TINTA}" stroke-width="4" stroke-linejoin="round"/>'
-_cono = quebrada([(-40, 760), (330, 380), (392, 380), (780, 760)], 34, 5, _m)
-_nieve = quebrada([(150, 470), (250, 455), (330, 500), (400, 450), (470, 505), (560, 470)], 26, 4, _m)
-volcan = (f'<defs><clipPath id="cono"><path d="{trazo(_cono)}"/></clipPath></defs>'
-          f'<path d="{trazo(_cono)}" fill="#5d5476"/>'
-          f'<g clip-path="url(#cono)"><path d="{trazo([(100, 300)] + _nieve + [(620, 300)])}" fill="#f4f1ea" stroke="{TINTA}" stroke-width="4" stroke-linejoin="round"/>'
-          + ''.join(f'<path d="{trazo(quebrada([(x, 520), (x + d, 760)], 14, 3, _m), False)}" fill="none" stroke="#4d4566" stroke-width="5" stroke-linecap="round"/>'
-                    for x, d in ((260, -120), (330, -40), (400, 60), (470, 150)))
-          + f'</g><path d="{trazo(_cono)}" fill="none" {S}/>')
-_cono2 = quebrada([(560, 760), (760, 560), (798, 560), (1080, 760)], 22, 5, _m)
-volcan2 = f'<path d="{trazo(_cono2)}" fill="#4a4262" {S}/>'
-molle = rama(80, 780, math.pi / 2, 90, 18, 6, random.Random(11), ['#3f7a4a', '#4f9258', '#2f6340', '#6aa35c'])
-dragon = f'''
-<g transform="translate(150 230) scale(1.5)">
-<path d="M40 40 C10 10 -30 30 -40 -10 C0 0 20 -20 60 0 Z" fill="#5a2a3a" {S}/>
-<path d="M120 40 C140 -40 220 -60 260 -40 C220 -20 200 10 190 40 Z" fill="#7a3248" {S}/>
-<path d="M80 60 C40 40 30 -10 70 -30 C80 0 100 10 120 20 Z" fill="#7a3248" {S}/>
-<path d="M30 80 C60 40 140 30 190 50 C220 62 230 90 210 100 C170 110 110 104 60 110 C20 112 0 100 30 80 Z" fill="#8a3a4a" {S}/>
-<path d="M200 60 C230 40 262 44 276 60 C266 74 246 80 222 80 Z" fill="#8a3a4a" {S}/>
-<circle cx="252" cy="58" r="5" fill="{DORADO}"/>
-<path d="M276 64 L296 60 L280 72" fill="#f08a2c" {S4}/>
-<path d="M30 92 C0 100 -30 130 -70 120" fill="none" stroke="#8a3a4a" stroke-width="16" stroke-linecap="round"/>
-<path d="M30 92 C0 100 -30 130 -70 120" fill="none" stroke="{TINTA}" stroke-width="4"/>
-<rect x="110" y="96" width="40" height="28" fill="#fffaf0" {S4} transform="rotate(10 130 110)"/>
-</g>'''
-guardar('portada', 1024, 1024,
-        '<defs><linearGradient id="cielo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E0C1A"/><stop offset="0.7" stop-color="#2b2540"/><stop offset="1" stop-color="#4a3d6a"/></linearGradient></defs>'
-        + '<rect width="1024" height="1024" fill="url(#cielo)"/>' + estrellas
-        + f'<circle cx="760" cy="200" r="120" fill="#f4ecd0"/><circle cx="730" cy="180" r="22" fill="#e6dcb8"/><circle cx="800" cy="240" r="14" fill="#e6dcb8"/>'
-        # cordillera lejana y volcanes con crestas fractales (evocan el paisaje arequipeño, sin copiar una imagen)
-        + lejanas + volcan + volcan2
-        + dragon
-        # juzgado de sillar con arcos
-        + f'<rect x="0" y="760" width="1024" height="264" fill="#e9e2d2" {S}/>'
-        + ''.join(arco(30 + i * 170, 820, 110, 204, '#2b2540') for i in range(6))
-        + '<rect x="0" y="740" width="1024" height="30" fill="#d8cfb8" stroke="#1b1626" stroke-width="6"/>'
-        + torre + molle
-        + f'<path d="M598 910 L682 910 L682 834 A42 42 0 0 0 598 834 Z" fill="{TINTA2}" {S}/><circle cx="668" cy="876" r="6" fill="{DORADO}"/><path d="M598 860 h84 M598 885 h84" stroke="{TINTA}" stroke-width="4"/>')
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'portada.py'), encoding='utf-8').read())
 
 print('SVG generados:', len(os.listdir(OUT)))
