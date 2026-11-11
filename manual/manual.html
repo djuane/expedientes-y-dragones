@@ -1,0 +1,739 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Expedientes y Dragones · Manual del juego</title>
+<meta name="author" content="Leonel Díaz"><style>@font-face{
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+  src: url(fuentes/WnznHAc5bAfYB2QRah7pcpNvOx-pjcB9eIupYSxP.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+  src: url(fuentes/WnznHAc5bAfYB2QRah7pcpNvOx-pjcB9eIWpYQ.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+  src: url(fuentes/8vIJ7ww63mVu7gt7-GT7LEc.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+  src: url(fuentes/8vIJ7ww63mVu7gt79mT7.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 700;
+  font-display: block;
+  src: url(fuentes/8vIJ7ww63mVu7gt7-GT7LEc.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 700;
+  font-display: block;
+  src: url(fuentes/8vIJ7ww63mVu7gt79mT7.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url(fuentes/8vIJ7ww63mVu7gt7-GT7LEc.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url(fuentes/8vIJ7ww63mVu7gt79mT7.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family: 'Cinzel Decorative';
+  font-style: normal;
+  font-weight: 700;
+  font-display: block;
+  src: url(fuentes/daaHSScvJGqLYhG8nNt8KPPswUAPniZoadlKSTG7lQ.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family: 'Cinzel Decorative';
+  font-style: normal;
+  font-weight: 700;
+  font-display: block;
+  src: url(fuentes/daaHSScvJGqLYhG8nNt8KPPswUAPniZoadlESTE.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family: 'Cinzel Decorative';
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url(fuentes/daaHSScvJGqLYhG8nNt8KPPswUAPniZQa9lKSTG7lQ.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family: 'Cinzel Decorative';
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url(fuentes/daaHSScvJGqLYhG8nNt8KPPswUAPniZQa9lESTE.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family: 'EB Garamond';
+  font-style: italic;
+  font-weight: 400;
+  font-display: block;
+  src: url(fuentes/SlGWmQSNjdsmc35JDF1K5GRweDU1ZzPJ.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family: 'EB Garamond';
+  font-style: italic;
+  font-weight: 400;
+  font-display: block;
+  src: url(fuentes/SlGWmQSNjdsmc35JDF1K5GRweDs1Zw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family: 'EB Garamond';
+  font-style: italic;
+  font-weight: 600;
+  font-display: block;
+  src: url(fuentes/SlGWmQSNjdsmc35JDF1K5GRweDU1ZzPJ.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family: 'EB Garamond';
+  font-style: italic;
+  font-weight: 600;
+  font-display: block;
+  src: url(fuentes/SlGWmQSNjdsmc35JDF1K5GRweDs1Zw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(fuentes/SlGUmQSNjdsmc35JDF1K5GR7SDktYw.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(fuentes/SlGUmQSNjdsmc35JDF1K5GR1SDk.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 600;
+  font-display: block;
+  src: url(fuentes/SlGUmQSNjdsmc35JDF1K5GR7SDktYw.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 600;
+  font-display: block;
+  src: url(fuentes/SlGUmQSNjdsmc35JDF1K5GR1SDk.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 700;
+  font-display: block;
+  src: url(fuentes/SlGUmQSNjdsmc35JDF1K5GR7SDktYw.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 700;
+  font-display: block;
+  src: url(fuentes/SlGUmQSNjdsmc35JDF1K5GR1SDk.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}@page { size: 210mm 297mm; margin: 0; }
+:root { --rojo: #7a1420; --rojo2: #a3202c; --oro: #c8963a; --oro2: #e2b04a; --tinta: #2a1a14; --perg: #f3e6c8; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #555; }
+body { font-family: 'EB Garamond', serif; color: var(--tinta); font-size: 11.6pt; line-height: 1.33; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.pag { width: 210mm; height: 297mm; position: relative; overflow: hidden; page-break-after: always; break-after: page;
+  background: url(img/marco.png) center/100% 100% no-repeat, url(img/pergamino.jpg) center/100% 100% no-repeat; }
+.contenido { position: absolute; top: 19mm; left: 17.5mm; right: 17.5mm; bottom: 19mm; display: flex; flex-direction: column; }
+.contenido > * { flex: none; }
+.cinta { position: absolute; top: 3.2mm; right: 30mm; height: 7mm; padding: 0 9mm; line-height: 7mm; font-family: 'Cinzel', serif; font-weight: 700;
+  font-size: 8.5pt; letter-spacing: .12em; text-transform: uppercase; color: #ffe7a8; background: linear-gradient(#a3202c, #5e0f18);
+  border: .5mm solid var(--oro2); border-radius: 1mm; box-shadow: 0 .6mm 1.4mm rgba(0,0,0,.5); z-index: 3; }
+.cinta:empty { display: none; }
+.num { position: absolute; bottom: 4.1mm; left: 0; right: 0; text-align: center; font-family: 'Cinzel', serif; font-weight: 900; font-size: 11pt; color: #ffe7a8; z-index: 3; }
+.pag:nth-child(even) .cinta { right: auto; left: 30mm; }
+
+h1 { font-family: 'Cinzel Decorative', serif; font-weight: 900; color: var(--rojo); font-size: 23pt; margin: 0 0 3mm; line-height: 1.05;
+  text-shadow: .3mm .3mm 0 #e8c070, .6mm .6mm 1mm rgba(80,20,10,.35); column-span: all; }
+h2 { font-family: 'Cinzel', serif; font-weight: 900; color: var(--rojo); font-size: 13.5pt; margin: 2.2mm 0 1.2mm; letter-spacing: .02em;
+  border-bottom: .5mm solid var(--oro); padding-bottom: .6mm; break-after: avoid; }
+h3 { font-family: 'Cinzel', serif; font-weight: 700; color: #5e0f18; font-size: 10.5pt; margin: 2mm 0 .8mm; break-after: avoid; }
+p { margin: 0 0 1.6mm; text-align: justify; hyphens: auto; }
+ul, ol { margin: 0 0 1.6mm; padding-left: 5mm; }
+li { margin-bottom: .8mm; text-align: justify; }
+.contenido > .dos { column-count: 2; column-gap: 7mm; column-fill: auto; flex: 1 1 0; min-height: 0; }
+.capital::first-letter { font-family: 'Cinzel Decorative', serif; font-weight: 900; float: left; font-size: 30pt; line-height: .9; color: var(--rojo);
+  padding: 1mm 1.4mm 0 0; text-shadow: .3mm .3mm 0 #e8c070; }
+.intro, .intro2 { font-style: italic; font-size: 11pt; color: #4a2a1a; }
+.intro2 { font-size: 10pt; margin-top: 1.5mm; }
+.chico { font-size: 8.8pt; line-height: 1.25; }
+.atrib { font-size: 7.8pt; font-style: italic; line-height: 1.2; text-align: left; color: #5a3a2a; }
+.salto { break-after: column; height: 0; }
+mark { background: #fff200; color: inherit; padding: 0 .4mm; }
+.lema { font-style: italic; color: #6a2a1a; font-size: 11pt; margin-bottom: 1mm; }
+.cita { font-style: italic; border-left: 1mm solid var(--oro); padding-left: 3mm; color: #4a2a1a; }
+.formula { text-align: center; font-family: 'Cinzel', serif; font-weight: 700; font-size: 11pt; color: #fff3d0; background: linear-gradient(#8e1d26, #5e0f18);
+  border: .5mm solid var(--oro2); border-radius: 1.5mm; padding: 2mm; margin: 1mm 0 2mm; }
+
+/* índice */
+.ind { display: flex; align-items: baseline; font-size: 10pt; margin-bottom: .6mm; }
+.ind i { flex: 1; border-bottom: .3mm dotted #7a5a3a; margin: 0 1.2mm; }
+.ind b { font-family: 'Cinzel', serif; color: var(--rojo); }
+
+/* cajas */
+.caja { break-inside: avoid; background: rgba(255, 248, 228, .72); border: .5mm solid var(--oro); border-radius: 1.5mm; padding: 2mm 2.6mm 1mm;
+  margin: 2mm 0; box-shadow: inset 0 0 3mm rgba(160,110,40,.25); }
+.caja-t { font-family: 'Cinzel', serif; font-weight: 900; color: #fff3d0; background: var(--rojo); margin: -2mm -2.6mm 1.4mm; padding: .9mm 2.6mm;
+  font-size: 9pt; letter-spacing: .06em; border-radius: 1mm 1mm 0 0; }
+.caja p { font-size: 10.6pt; }
+.caja.aviso { background: rgba(240, 222, 200, .8); border-color: #8a3a2a; }
+.caja.aviso .caja-t { background: #3a2a2a; }
+.caja.ejemplo .caja-t { background: #24365e; }
+.caja.real .caja-t { background: #2a5a4a; }
+
+/* tablas */
+table { width: 100%; border-collapse: collapse; margin: 1.5mm 0 2.5mm; font-size: 10pt; break-inside: avoid; }
+th { font-family: 'Cinzel', serif; font-weight: 700; background: var(--rojo); color: #fff3d0; padding: 1mm 1.4mm; text-align: left; font-size: 8.4pt; }
+td { padding: .8mm 1.4mm; border-bottom: .25mm solid rgba(122, 20, 32, .25); vertical-align: top; text-align: left; }
+tbody tr:nth-child(odd) td { background: rgba(200, 150, 58, .14); }
+td:first-child { font-weight: 600; white-space: nowrap; }
+table.mini td, table.mini th { text-align: center; padding: .6mm .4mm; font-size: 8pt; }
+table.aleat td { font-size: 9.8pt; padding: .55mm 1.2mm; }
+table.aleat td:first-child { font-family: 'Cinzel', serif; color: var(--rojo); width: 12mm; }
+table.hab td { font-size: 10pt; padding: .7mm 1.4mm; }
+table.hab td:nth-child(2) { white-space: nowrap; font-style: italic; }
+table.niv td { padding: .45mm 1.4mm; font-size: 9.6pt; }
+table.poderes { font-size: 10.4pt; } table.poderes td { padding: 1.2mm 1.6mm; }
+table.poderes td:nth-child(3) { white-space: nowrap; font-style: italic; }
+
+/* imágenes */
+img.ancho { width: 100%; height: 86mm; object-fit: cover; border: .6mm solid var(--tinta); border-radius: 1.2mm; box-shadow: 0 1mm 2.6mm rgba(0,0,0,.45); display: block; }
+img.ancho.alto { height: 110mm; }
+.pie-img { font-style: italic; font-size: 8.6pt; text-align: center; color: #5a3a2a; margin: 1.2mm 0 2.4mm; }
+.tablero { width: 100%; margin: 1mm 0 0; border-radius: 1.5mm; box-shadow: 0 .8mm 2mm rgba(0,0,0,.4); }
+
+/* especialidades */
+.esp-pag .contenido { display: flex; flex-direction: column; gap: 3.5mm; }
+.esp { display: flex; gap: 5mm; flex: 1; min-height: 0; }
+.esp-img { width: 72mm; height: 100%; object-fit: cover; object-position: 50% 20%; border: .6mm solid var(--tinta); border-radius: 1.2mm; box-shadow: 0 1mm 2.6mm rgba(0,0,0,.45); }
+.esp-txt { flex: 1; }
+.esp-txt h2 { margin-top: 0; font-size: 17pt; }
+.esp-txt p { font-size: 10.6pt; margin-bottom: 1.2mm; }
+.esp-pag .esp:nth-child(even) { flex-direction: row-reverse; }
+.con-intro .esp:nth-child(odd) { flex-direction: row-reverse; }
+.con-intro .esp:nth-child(even) { flex-direction: row; }
+.con-intro h1 { margin-bottom: 0; }
+.con-intro .intro { margin: 0; font-size: 10pt; }
+.etiqueta { display: inline-block; font-family: 'Cinzel', serif; font-size: 7.5pt; font-weight: 700; color: #fff; background: #24365e; padding: .4mm 2mm; border-radius: 1mm; margin-bottom: 1mm; }
+.dato { font-size: 10.2pt !important; text-align: left !important; }
+
+/* bloques de criatura */
+.bl-atr { display: grid; grid-template-columns: repeat(6, 1fr); gap: .8mm; margin: 1.2mm 0; }
+.bl-atr div { background: var(--rojo); color: #fff3d0; text-align: center; border-radius: 1mm; padding: .5mm 0; border: .3mm solid var(--oro2); }
+.bl-atr b { display: block; font-family: 'Cinzel', serif; font-size: 7.4pt; color: #ffd98a; }
+.bl-atr span { font-size: 8.4pt; }
+.bestias { display: flex; flex-direction: column; gap: 3mm; }
+.bloque { break-inside: avoid; background: rgba(255, 248, 228, .78); border-top: 1.2mm solid var(--rojo); border-bottom: 1.2mm solid var(--rojo);
+  padding: 2mm 3mm; box-shadow: 0 .6mm 2mm rgba(0,0,0,.25); overflow: hidden; }
+.bl-img { float: left; width: 54mm; height: 54mm; object-fit: cover; margin: 0 4mm 1mm 0; border: .6mm solid var(--tinta); border-radius: 50%; box-shadow: 0 1mm 2mm rgba(0,0,0,.45); }
+.bestias .bloque:nth-child(even) .bl-img { float: right; margin: 0 0 1mm 4mm; }
+.bestias:not(.tres) .bl-img { width: 66mm; height: 66mm; }
+.bl-nom { font-family: 'Cinzel', serif; font-weight: 900; font-size: 15pt; color: var(--rojo); line-height: 1.1; }
+.bl-tipo { font-style: italic; color: #5a3a2a; font-size: 9.6pt; margin-bottom: .8mm; }
+.bl-lin { font-size: 10.4pt; margin-bottom: .8mm; }
+.bl-lin b { color: #5e0f18; }
+.dos .bloque { margin-top: 2mm; }
+.sin-margen { margin-top: 3mm; }
+
+/* personajes no jugadores */
+.pnjs { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm 6mm; margin-bottom: 2mm; }
+.pnj { display: flex; gap: 3mm; align-items: flex-start; }
+.pnj-img { width: 34mm; height: 34mm; border-radius: 50%; border: .8mm solid var(--oro); box-shadow: 0 0 0 .5mm var(--tinta), 0 1mm 2mm rgba(0,0,0,.4); flex: none; }
+.pnj h3 { margin: 0; font-size: 11.5pt; }
+.pnj p { font-size: 10.4pt; }
+
+/* plantillas */
+.plantilla { }
+.hoja-t { text-align: center; }
+.hoja label { display: block; font-family: 'Cinzel', serif; font-weight: 700; font-size: 8pt; color: var(--rojo); margin-top: 2mm; }
+.linea { border-bottom: .3mm solid #7a5a3a; height: 6.2mm; }
+.hoja-cab { display: grid; grid-template-columns: 2fr 1.4fr 1fr 1.4fr; gap: 4mm; margin-bottom: 3mm; }
+.hoja-cuerpo { display: grid; grid-template-columns: 34mm 1fr 62mm; gap: 5mm; }
+.hoja-cuerpo.dos-z { grid-template-columns: 1fr 1fr; }
+.atrib { border: .6mm solid var(--rojo); border-radius: 2mm; margin-bottom: 3.2mm; text-align: center; background: rgba(255,248,228,.7); padding-bottom: 1mm; }
+.atrib-n { background: var(--rojo); color: #fff3d0; font-family: 'Cinzel', serif; font-weight: 700; font-size: 7.6pt; padding: .7mm 0; }
+.atrib-v { height: 17mm; }
+.atrib-m { width: 14mm; height: 7mm; margin: 0 auto; border: .4mm solid var(--rojo); border-radius: 3.5mm; font-size: 6.5pt; line-height: 7mm; color: #8a6a5a; }
+.contadores { display: grid; grid-template-columns: repeat(auto-fit, minmax(20mm, 1fr)); gap: 3mm; }
+.grande { height: 15mm; border: .6mm solid var(--rojo); border-radius: 2mm; background: rgba(255,248,228,.7); }
+.contadores small { font-size: 7pt; color: #7a5a3a; }
+.hh { display: flex; align-items: flex-end; font-size: 8.4pt; height: 5.6mm; }
+.hh i { color: #8a6a5a; margin-left: 1mm; }
+.hh b { width: 11mm; font-family: 'Cinzel', serif; color: var(--rojo); }
+.cuad { width: 3mm; height: 3mm; border: .3mm solid var(--rojo); margin-right: 1.5mm; flex: none; margin-bottom: .6mm; }
+.lin { flex: 1; border-bottom: .3mm solid #7a5a3a; margin-left: 1.5mm; }
+.recuadro { height: 60mm; border: .5mm solid #7a5a3a; border-radius: 1mm; background-image: radial-gradient(#9a7a5a 0.3mm, transparent 0.35mm); background-size: 5mm 5mm; }
+.pie-final { position: absolute; bottom: 0; left: 0; right: 0; text-align: center; font-size: 8pt; font-style: italic; }
+
+/* portada */
+.portada, .contraportada { background: #0e0812; }
+.portada .contenido, .contraportada .contenido { inset: 0; }
+.portada-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.portada-tit { position: absolute; top: 14mm; left: 0; right: 0; text-align: center; }
+.sobre { font-family: 'Cinzel', serif; font-weight: 700; letter-spacing: .5em; color: #ffd98a; font-size: 11pt; text-transform: uppercase; }
+.titulo-portada { font-size: 52pt; line-height: .95; margin: 3mm 0 2mm; color: #f2c25a;
+  background: linear-gradient(#fff2c0, #e8b04a 55%, #a86a1a); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  text-shadow: none; filter: drop-shadow(0 .8mm 0 #5e0f18) drop-shadow(0 1.6mm 2.4mm rgba(0,0,0,.85)); }
+.titulo-portada span { font-size: 26pt; }
+.lema { }
+.portada-tit .lema { font-family: 'EB Garamond', serif; font-style: italic; color: #fff3d0; font-size: 15pt; text-shadow: 0 .4mm 1.5mm #000; }
+.portada-pie { position: absolute; bottom: 9mm; left: 0; right: 0; text-align: center; color: #ffe7a8; font-family: 'Cinzel', serif; font-size: 10pt; letter-spacing: .08em; text-shadow: 0 .4mm 1.5mm #000; }
+.portada-pie b { font-size: 13pt; letter-spacing: .2em; }
+.contraportada { background: radial-gradient(circle at 50% 35%, #5e1a2a, #14060c 75%); }
+.contra { position: absolute; inset: 30mm 28mm; text-align: center; color: #f6e6c0; border: .6mm solid var(--oro2); border-radius: 3mm; padding: 14mm 14mm; }
+.contra h2 { color: #f2c25a; border: none; font-size: 20pt; }
+.contra p { text-align: center; font-size: 12pt; line-height: 1.5; }
+.contra-d20 { width: 40mm; margin-bottom: 6mm; filter: drop-shadow(0 0 6mm rgba(255,120,60,.6)); }
+.contra-lema { font-family: 'Cinzel Decorative', serif; color: #f2c25a; font-size: 14pt !important; margin-top: 10mm; }
+.contra-autor { font-family: 'Cinzel', serif; letter-spacing: .2em; margin-top: 10mm; }
+
+img.mapa { width: 100%; height: auto; border: .6mm solid var(--tinta); border-radius: 1.2mm; box-shadow: 0 1mm 2.6mm rgba(0,0,0,.45); display: block; margin-top: 2mm; }
+.contenido > .pie-img:last-child { margin-bottom: 0; }
+
+.roles { display: grid; grid-template-columns: repeat(6, 1fr); gap: 3mm; margin: 2mm 0 3mm; text-align: center; }
+.rol b { display: block; font-family: 'Cinzel', serif; font-size: 8.4pt; color: var(--rojo); margin-top: 1mm; }
+.rol span { font-style: italic; font-size: 9pt; }
+.rol-img { width: 24mm; height: 24mm; margin: 0 auto; border-radius: 50%; overflow: hidden; border: .7mm solid var(--oro); box-shadow: 0 0 0 .4mm var(--tinta), 0 1mm 2mm rgba(0,0,0,.4); position: relative; }
+.rol-img img { position: absolute; width: 260%; left: -80%; top: -22%; }
+.dos-fijo { display: grid; grid-template-columns: 1fr 1fr; gap: 7mm; align-items: start; }
+.dos-fijo .caja { margin-top: 1.5mm; }
+.vineta-c { text-align: center; break-inside: avoid; margin-top: 2mm; }
+.vineta-c img { width: 52mm; height: 52mm; border-radius: 50%; border: .8mm solid var(--oro); box-shadow: 0 0 0 .5mm var(--tinta), 0 1mm 2.5mm rgba(0,0,0,.45); }
+.contenido > .bestias { flex: 1 1 0; min-height: 0; }
+.bestias .bloque { flex: 1 1 0; }
+.bestias.tres .bl-img { width: 60mm; height: 60mm; }
+</style></head><body><section class="pag portada" data-n="1"><div class="contenido">
+<img class="portada-img" src="img/portada.jpg" alt="">
+<div class="portada-tit">
+  <div class="sobre">Un juego de rol jurídico</div>
+  <h1 class="titulo-portada">Expedientes<br><span>y</span><br>Dragones</h1>
+  <div class="lema">Litiga, investiga y vence al dragón de la burocracia</div>
+</div>
+<div class="portada-pie">Manual del juego · Reglas, especialidades, bestiario y aventura<br><b>Leonel Díaz</b></div>
+</div></section>
+<section class="pag " data-n="2"><div class="cinta">Expedientes y Dragones</div><div class="num">2</div><div class="contenido">
+<div class="dos">
+<h1>Expedientes y Dragones</h1>
+<h3>Índice</h3>
+<div class="indice"><div class="ind"><span>Expedientes y Dragones</span><i></i><b>2</b></div><div class="ind"><span>Qué es esto</span><i></i><b>2</b></div><div class="ind"><span>Licencia</span><i></i><b>2</b></div><div class="ind"><span>Bienvenidos a Expedientia</span><i></i><b>3</b></div><div class="ind"><span>Crear un abogado</span><i></i><b>5</b></div><div class="ind"><span>Características</span><i></i><b>5</b></div><div class="ind"><span>Habilidades de oficio</span><i></i><b>6</b></div><div class="ind"><span>Especialidades</span><i></i><b>7</b></div><div class="ind"><span>Sistema de juego</span><i></i><b>10</b></div><div class="ind"><span>La tirada</span><i></i><b>10</b></div><div class="ind"><span>La prueba jurídica</span><i></i><b>11</b></div><div class="ind"><span>La acción</span><i></i><b>12</b></div><div class="ind"><span>Poderes de las especialidades</span><i></i><b>13</b></div><div class="ind"><span>Progresión</span><i></i><b>14</b></div><div class="ind"><span>Recompensas</span><i></i><b>15</b></div><div class="ind"><span>Montando la partida</span><i></i><b>16</b></div><div class="ind"><span>Tablas aleatorias</span><i></i><b>18</b></div><div class="ind"><span>Personajes no jugadores</span><i></i><b>20</b></div><div class="ind"><span>Bestiario</span><i></i><b>21</b></div><div class="ind"><span>Las zonas de Expedientia</span><i></i><b>26</b></div><div class="ind"><span>Aventura: El primer caso</span><i></i><b>29</b></div><div class="ind"><span>Plantillas</span><i></i><b>31</b></div></div>
+<h3>Licencia</h3>
+<p class="chico">Texto, reglas adaptadas e ilustraciones de este manual: © 2026 Leonel Díaz. Todos los personajes, lugares e instituciones de la República de Expedientia son ficticios; cualquier parecido con una ventanilla real es pura coincidencia y algo de experiencia.</p>
+<p class="chico">El sistema de tiradas se basa en el <i>System Reference Document 5.2</i>, publicado bajo licencia Creative Commons Atribución 4.0. Atribución exigida por la licencia:</p>
+<p class="chico atrib">This work includes material from the System Reference Document 5.2 ("SRD 5.2") by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.</p>
+<p class="chico">Este juego no usa marcas, logotipos, personajes ni ambientaciones de ningún otro juego de rol.</p>
+<div class="salto"></div>
+<h2>Qué es esto</h2>
+<p class="capital">Expedientes y Dragones es un juego de rol cooperativo en el que cada jugador interpreta a un abogado o abogada recién salido de la facultad que abre su estudio frente a la Corte, en un país inventado con instituciones sospechosamente familiares: la República de Expedientia.</p>
+<p>Ahí, una noche, los expedientes olvidados del Archivo Central empezaron a moverse. Los formularios desarrollaron colmillos, los plazos aprendieron a explotar y las colas se volvieron, literalmente, infinitas. Detrás de todo crece una criatura que nadie ha visto completa: <b>la Carga Procesal</b>, un dragón hecho de trámites que nadie atendió.</p>
+<p>Los jugadores no blanden espadas: presentan escritos, piden medidas cautelares, plantean nulidades y, cuando todo falla, se toman un café en la cafetería del juzgado. Ganan expedientes, reputación y honorarios, y deben decidir qué hacer cuando un señor muy amable ofrece «agilizar» el trámite.</p>
+<p>Este manual sirve para dos cosas: jugar en mesa con lápiz, papel y dados, y entender las reglas que usa la aplicación para celular del mismo nombre. Las dos versiones comparten el corazón del sistema: un dado de veinte caras, seis características y la prueba jurídica.</p>
+<div class="caja nota"><div class="caja-t">Lo que necesitas</div><p>Uno a cuatro jugadores y una persona que dirija la partida (el <b>Relator</b>). Un dado de veinte caras (d20) y, si es posible, dados de 4, 6, 8 y 100 caras. Copias de la hoja de abogado (página 31), lápices y una tarde libre de audiencias.</p></div>
+<div class="caja aviso"><div class="caja-t">Advertencia del estudio</div><p>Es un juego de humor de oficio. No es asesoría legal ni reemplaza la consulta con un abogado colegiado. Las preguntas jurídicas que aparecen en la aplicación se verifican en fuentes oficiales peruanas antes de publicarse.</p></div>
+</div></div></section>
+<section class="pag " data-n="3"><div class="cinta">Expedientes y Dragones</div><div class="num">3</div><div class="contenido">
+<h1>Bienvenidos a Expedientia</h1>
+<div class="dos">
+<p class="capital">La República de Expedientia es un país de volcanes nevados, ciudades de piedra blanca y ventanillas. Muchas ventanillas. Su capital judicial se levanta a los pies de un volcán dormido, con arcos de sillar que brillan al atardecer y un río que todos llaman el Trámite porque nunca se sabe cuándo va a llegar.</p>
+<p>En el centro de la ciudad está el <b>Palacio de Justicia</b>, de donde parten las calles hacia la Mesa de Partes, la Sala de Contrataciones y el temido Archivo Central. Alrededor crecen los negocios de siempre: la cafetería del juzgado, donde se resuelven más casos que en las salas; la librería jurídica, donde todo cuesta un poco más; y el Pasaje del Coimero, donde nada es lo que parece.</p>
+<h3>El estudio de los jugadores</h3>
+<p>Los personajes acaban de alquilar un cuarto frente a la Corte. Tiene un escritorio cojo, una impresora que funciona los martes y una placa en la puerta que dice su apellido mal escrito. Es el centro de operaciones: ahí llegan los clientes, ahí se guardan los honorarios y ahí se decide qué caso aceptar.</p>
+<h3>La Carga Procesal</h3>
+<p>Nadie sabe cuándo nació. Don Eusebio, que lleva treinta años en el juzgado, jura que la vio por primera vez «un martes». Se alimenta de cada escrito sin proveer, de cada notificación que no llegó y de cada «vuelva mañana». Cuanto más crece, más criaturas escapan del Archivo Central. Derrotarla es la meta de toda la campaña; contenerla, el trabajo de cada día.</p>
+<div class="caja nota"><div class="caja-t">Tono del juego</div><p>Expedientia se parece a la vida real del litigante, pero exagerada hasta lo fantástico. Las criaturas representan problemas del sistema, nunca a personas concretas: no hay jueces, servidores ni colegas reales retratados. El humor apunta a los trámites, no a la gente que los atiende.</p></div>
+</div>
+<img class="mapa" src="img/mapa.jpg" alt="Mapa de Expedientia">
+<p class="pie-img">Mapa de la República de Expedientia, tal como lo dibujó un practicante en la parte de atrás de una cédula de notificación.</p>
+</div></section>
+<section class="pag " data-n="4"><div class="cinta">Expedientes y Dragones</div><div class="num">4</div><div class="contenido">
+<img class="ancho" src="img/esc-dragon.jpg" alt="La Carga Procesal sobre la ciudad">
+<p class="pie-img">La Carga Procesal sobrevuela la ciudad. Sus escamas son carpetas; su aliento, sellos de «NO HA LUGAR».</p>
+<div class="dos">
+<h2>Cómo se juega</h2>
+<p class="capital">Una partida de Expedientes y Dragones es un <b>expediente</b>: un caso que llega al estudio y que el equipo debe llevar de la primera ventanilla hasta la resolución final. Cada expediente se divide en <b>salas</b>, y en cada sala sucede algo: un combate contra criaturas del sistema, un trámite que hay que superar, una audiencia con un cliente que cambia su versión, una pausa en la cafetería o una tentación.</p>
+<p>El Relator describe la sala; los jugadores dicen qué hacen sus abogados; los dados deciden si lo logran. Al final del expediente espera un <b>jefe</b>: una criatura mayor que custodia la resolución. Si el equipo vence, el caso se declara <b>fundado</b>; si cae, el expediente se <b>archiva</b>… y en Expedientia lo archivado también resucita.</p>
+<p>Una partida en la aplicación dura entre 15 y 20 minutos. En mesa, un expediente completo ocupa una sesión de dos o tres horas, y una campaña encadena varios expedientes hasta enfrentar a la Carga Procesal.</p>
+<h3>Los tres pilares</h3>
+<p><b>Litigar.</b> El combate táctico en una cuadrícula, con poderes inspirados en figuras procesales.</p>
+<p><b>Investigar.</b> Revisar expedientes, encontrar la fecha que salva el plazo, descubrir qué requisito pide la criatura.</p>
+<p><b>Decidir.</b> Aceptar o rechazar atajos, proteger la reputación del estudio, elegir qué casos tomar.</p>
+<div class="caja nota"><div class="caja-t">Glosario rápido</div><p><b>Relator:</b> quien dirige la partida. <b>Paciencia:</b> los puntos de vida del abogado. <b>Fundado:</b> sacar 20 natural. <b>Improcedente:</b> sacar 1 natural. <b>Sala:</b> cada escena del expediente. <b>Honorarios:</b> la moneda del juego. <b>Reputación:</b> lo que el gremio piensa del estudio, de 0 a 100.</p></div>
+</div></div></section>
+<section class="pag " data-n="5"><div class="cinta">Crear un abogado</div><div class="num">5</div><div class="contenido">
+<h1>Crear un abogado</h1>
+<div class="dos">
+<p class="capital">Cada jugador interpreta a un abogado o abogada del estudio. No hace falta saber derecho para jugar: el personaje sabe lo que el jugador no sabe, y los dados lo representan. Crear un personaje toma unos diez minutos.</p>
+<ol class="pasos">
+<li><b>Elige una especialidad.</b> Civilista, Administrativista, Penalista, Laboralista, Constitucionalista o Tributarista (páginas 7 a 9).</li>
+<li><b>Reparte las características.</b> Asigna los valores 16, 14, 13, 12, 10 y 10 a las seis características, o usa los valores sugeridos de tu especialidad.</li>
+<li><b>Anota tu Paciencia y tu Defensa.</b> Vienen indicadas en la especialidad.</li>
+<li><b>Elige cuatro habilidades de oficio</b> en las que tu abogado es competente (página 6).</li>
+<li><b>Anota tus poderes</b> de especialidad y el poder compartido Casación.</li>
+<li><b>Dale vida.</b> Nombre, universidad, por qué estudió derecho y una manía: siempre lleva copia de todo, no confía en los ascensores del Palacio, colecciona sellos de recepción…</li>
+</ol>
+<h2>Características</h2>
+<p>Seis números del 1 al 20 describen al abogado. Cada uno tiene un <b>modificador</b> que se suma a las tiradas: es el valor menos 10, dividido entre 2 y redondeado hacia abajo.</p>
+<table class="mini"><thead><tr><th>Valor</th><th>1</th><th>2–3</th><th>4–5</th><th>6–7</th><th>8–9</th><th>10–11</th><th>12–13</th><th>14–15</th><th>16–17</th><th>18–19</th><th>20</th></tr></thead><tbody><tr><td>Modificador</td><td>−5</td><td>−4</td><td>−3</td><td>−2</td><td>−1</td><td>+0</td><td>+1</td><td>+2</td><td>+3</td><td>+4</td><td>+5</td></tr></tbody></table>
+<p><b>Firmeza.</b> Fuerza física y temple: cargar expedientes de mil folios, sostener una puerta que se cierra, no retroceder ante un «Vuelva Mañana».</p>
+<p><b>Agilidad procesal.</b> Rapidez de manos y de pies: llegar antes del cierre de ventanilla, esquivar una notificación defectuosa, actuar primero.</p>
+<p><b>Aguante.</b> Resistencia: soportar la cola, la audiencia de seis horas y el tercer café. Se suma a la Paciencia en las reglas avanzadas.</p>
+<p><b>Doctrina.</b> Conocimiento jurídico y memoria: citar la norma, recordar el criterio del tribunal, revisar el expediente sin perderse.</p>
+<p><b>Criterio.</b> Intuición y buen juicio: leer al cliente, detectar el requisito correcto, darse cuenta de que el plazo vence hoy.</p>
+<p><b>Oratoria.</b> Presencia y palabra: alegar, negociar, convencer a un cliente de que diga la verdad.</p>
+<h3>Paciencia y Defensa</h3>
+<p>La <b>Paciencia</b> son los puntos de vida del abogado. Los ataques de las criaturas la reducen; cuando llega a 0, el abogado <b>cae</b>: se va a su casa a dormir y no participa en el resto del expediente. La <b>Defensa</b> es el número que una criatura debe igualar o superar con su tirada para afectarlo.</p>
+<div class="caja nota"><div class="caja-t">Consejo para el Relator</div><p>Si un jugador nuevo no sabe qué elegir, ofrécele Civilista o Administrativista: son las especialidades del prototipo de la aplicación y las más probadas.</p></div>
+</div></div></section>
+<section class="pag " data-n="6"><div class="cinta">Crear un abogado</div><div class="num">6</div><div class="contenido">
+<h1>Habilidades de oficio</h1>
+<table class="hab"><thead><tr><th>Habilidad</th><th>Característica</th><th>Para qué sirve</th></tr></thead><tbody><tr><td>Cargar expedientes</td><td>Firmeza</td><td>Mover, sostener o arrastrar algo pesado.</td></tr><tr><td>Aguantar la fila</td><td>Aguante</td><td>Resistir el cansancio, el hambre y la espera.</td></tr><tr><td>Llegar a tiempo</td><td>Agilidad procesal</td><td>Correr, esquivar y moverse entre la multitud.</td></tr><tr><td>Pasar desapercibido</td><td>Agilidad procesal</td><td>Moverse sin llamar la atención por los pasillos.</td></tr><tr><td>Presentar al vuelo</td><td>Agilidad procesal</td><td>Deslizar un escrito por la ventanilla justo antes del cierre.</td></tr><tr><td>Normativa</td><td>Doctrina</td><td>Recordar leyes, reglamentos y procedimientos.</td></tr><tr><td>Jurisprudencia</td><td>Doctrina</td><td>Recordar cómo se resolvieron casos parecidos.</td></tr><tr><td>Revisar el expediente</td><td>Doctrina</td><td>Encontrar la fecha, el folio o el error escondido.</td></tr><tr><td>Cuentas y tasas</td><td>Doctrina</td><td>Calcular plazos, montos, aranceles e intereses.</td></tr><tr><td>Leer al cliente</td><td>Criterio</td><td>Saber si alguien miente, oculta algo o tiene miedo.</td></tr><tr><td>Atención a plazos</td><td>Criterio</td><td>Notar lo que está por vencer o lo que cambió.</td></tr><tr><td>Orientarse en la burocracia</td><td>Criterio</td><td>Encontrar la oficina correcta a la primera.</td></tr><tr><td>Primeros auxilios del ánimo</td><td>Criterio</td><td>Calmar a un cliente o a un colega desbordado.</td></tr><tr><td>Trato con mascotas del cliente</td><td>Criterio</td><td>Ganarse al perro que custodia los documentos.</td></tr><tr><td>Alegar</td><td>Oratoria</td><td>Exponer con claridad y fuerza ante cualquiera.</td></tr><tr><td>Negociar</td><td>Oratoria</td><td>Llegar a un acuerdo que convenga al cliente.</td></tr><tr><td>Imponerse</td><td>Oratoria</td><td>Exigir con firmeza, sin perder las formas.</td></tr><tr><td>Farolear</td><td>Oratoria</td><td>Aparentar más de lo que se sabe. Mal visto: si sale mal, baja la reputación.</td></tr></tbody></table>
+<div class="dos">
+<p class="capital">Las habilidades representan lo que el abogado aprendió fuera del aula: en la cola, en la ventanilla y en el pasillo. Cada habilidad depende de una característica. Si tu personaje es <b>competente</b> en una habilidad, suma su <b>bonificador de competencia</b> (+2 en los primeros niveles) además del modificador de la característica.</p>
+<p>Al crear el personaje elige cuatro habilidades. Las especialidades sugieren algunas, pero ninguna está prohibida: un Tributarista que sabe alegar es perfectamente posible, aunque raro.</p>
+<h3>Pruebas sin habilidad</h3>
+<p>Cuando nadie es competente, se tira igual: d20 más el modificador de la característica. Un abogado sin experiencia también puede tener suerte en Mesa de Partes; lo raro es que la tenga dos veces seguidas.</p>
+<div class="caja ejemplo"><div class="caja-t">Ejemplo</div><p>Lucía, Civilista, quiere encontrar en un expediente de 800 folios la fecha en que se notificó la demanda. El Relator pide una prueba de <i>Revisar el expediente</i> (Doctrina) de dificultad 15. Lucía tiene Doctrina 16 (+3) y es competente (+2): tira el d20, saca 11 y suma 5. Total 16: encuentra la fecha en el folio 612, escondida entre dos copias del DNI del abuelo.</p></div>
+</div></div></section>
+<section class="pag esp-pag con-intro" data-n="7"><div class="cinta">Crear un abogado</div><div class="num">7</div><div class="contenido"><h1>Especialidades</h1><p class="intro">Cada abogado del estudio domina una rama del derecho. La especialidad fija sus características sugeridas, su forma de atacar y sus poderes. Civilista y Administrativista son las especialidades del prototipo de la aplicación; las otras cuatro son de expansión y sus números pueden ajustarse tras las pruebas de juego.</p><div class="esp"><img class="esp-img" src="img/esp-civilista.jpg" alt=""><div class="esp-txt"><h2>Civilista</h2><p class="lema">La memoria del código y la paciencia de un archivero.</p><p>Domina contratos, propiedad, familia y sucesiones. Es quien recuerda la norma exacta en el momento justo y quien sabe que una buena medida cautelar vale más que mil alegatos. En el combate prefiere controlar el campo: inmoviliza al enemigo más peligroso y anula sus jugadas.</p><div class="bl-atr"><div><b>FIR</b><span>10 (+0)</span></div><div><b>AGI</b><span>12 (+1)</span></div><div><b>AGU</b><span>14 (+2)</span></div><div><b>DOC</b><span>16 (+3)</span></div><div><b>CRI</b><span>13 (+1)</span></div><div><b>ORA</b><span>10 (+0)</span></div></div><p class="dato"><b>Paciencia</b> 12 (+6 por nivel) · <b>Defensa</b> 13 · <b>Movimiento</b> 3</p><p class="dato"><b>Ataque.</b> Doctrina, 1d8 de daño, alcance 2 casillas.</p><p class="dato"><b>Habilidades sugeridas.</b> Normativa, Revisar el expediente, Jurisprudencia, Leer al cliente.</p><p class="dato"><b>Poderes.</b> <b>Medida cautelar</b> e <b>Nulidad</b> (página 13).</p><p class="dato"><b>Personalidad.</b> Metódica, desconfía de las fotocopias y lleva siempre un código con cuarenta separadores de colores.</p></div></div><div class="esp"><img class="esp-img" src="img/esp-administrativista.jpg" alt=""><div class="esp-txt"><h2>Administrativista</h2><p class="lema">Conoce cada ventanilla y a cada sello por su nombre.</p><p>Se mueve en el laberinto de la administración pública como en su casa. Sabe qué formulario pide cada oficina y qué hacer cuando una entidad no responde. En el combate apoya al equipo: deja repetir tiradas, paraliza enemigos con una queja bien puesta y gana salas por silencio.</p><div class="bl-atr"><div><b>FIR</b><span>10 (+0)</span></div><div><b>AGI</b><span>13 (+1)</span></div><div><b>AGU</b><span>13 (+1)</span></div><div><b>DOC</b><span>12 (+1)</span></div><div><b>CRI</b><span>16 (+3)</span></div><div><b>ORA</b><span>12 (+1)</span></div></div><p class="dato"><b>Paciencia</b> 11 (+6 por nivel) · <b>Defensa</b> 12 · <b>Movimiento</b> 3</p><p class="dato"><b>Ataque.</b> Criterio, 1d6 de daño, alcance 3 casillas.</p><p class="dato"><b>Habilidades sugeridas.</b> Orientarse en la burocracia, Atención a plazos, Normativa, Negociar.</p><p class="dato"><b>Poderes.</b> <b>Recurso de apelación</b>, <b>Queja</b> y la pasiva <b>Silencio administrativo</b>.</p><p class="dato"><b>Personalidad.</b> Optimista incorregible; colecciona cargos de recepción como otros coleccionan estampillas.</p></div></div></div></section>
+<section class="pag esp-pag" data-n="8"><div class="cinta">Crear un abogado</div><div class="num">8</div><div class="contenido"><div class="esp"><img class="esp-img" src="img/esp-penalista.jpg" alt=""><div class="esp-txt"><h2>Penalista</h2><div class="etiqueta">Especialidad de expansión</div><p class="lema">Llega primero a la escena y nunca suelta la lupa.</p><p>Investigadora nata, trabaja con pruebas, testigos y tiempos cortos. Es la más rápida del estudio y la que mejor detecta lo que no encaja. En el combate golpea antes que nadie y rompe las defensas formales de las criaturas.</p><div class="bl-atr"><div><b>FIR</b><span>12 (+1)</span></div><div><b>AGI</b><span>16 (+3)</span></div><div><b>AGU</b><span>12 (+1)</span></div><div><b>DOC</b><span>12 (+1)</span></div><div><b>CRI</b><span>14 (+2)</span></div><div><b>ORA</b><span>10 (+0)</span></div></div><p class="dato"><b>Paciencia</b> 11 (+6 por nivel) · <b>Defensa</b> 13 · <b>Movimiento</b> 4</p><p class="dato"><b>Ataque.</b> Agilidad procesal, 1d8 de daño, alcance 1 casilla.</p><p class="dato"><b>Habilidades sugeridas.</b> Revisar el expediente, Leer al cliente, Llegar a tiempo, Pasar desapercibido.</p><p class="dato"><b>Poderes.</b> <b>Flagrancia</b> y <b>Allanamiento</b>.</p><p class="dato"><b>Personalidad.</b> Habla poco, anota todo y jamás se sienta de espaldas a la puerta.</p></div></div><div class="esp"><img class="esp-img" src="img/esp-laboralista.jpg" alt=""><div class="esp-txt"><h2>Laboralista</h2><div class="etiqueta">Especialidad de expansión</div><p class="lema">Donde hay un equipo cansado, él enciende el farol.</p><p>Defiende a trabajadores y empresas en conflictos de planilla, despidos y beneficios. Conoce el valor de un descanso a tiempo. En el combate sostiene al grupo: recupera la Paciencia de sus aliados y revela las debilidades de las criaturas.</p><div class="bl-atr"><div><b>FIR</b><span>13 (+1)</span></div><div><b>AGI</b><span>10 (+0)</span></div><div><b>AGU</b><span>16 (+3)</span></div><div><b>DOC</b><span>12 (+1)</span></div><div><b>CRI</b><span>13 (+1)</span></div><div><b>ORA</b><span>12 (+1)</span></div></div><p class="dato"><b>Paciencia</b> 14 (+6 por nivel) · <b>Defensa</b> 13 · <b>Movimiento</b> 3</p><p class="dato"><b>Ataque.</b> Firmeza, 1d6 de daño, alcance 1 casilla.</p><p class="dato"><b>Habilidades sugeridas.</b> Aguantar la fila, Primeros auxilios del ánimo, Negociar, Cuentas y tasas.</p><p class="dato"><b>Poderes.</b> <b>Beneficio social</b> e <b>Inspección</b>.</p><p class="dato"><b>Personalidad.</b> Saluda a todos los vigilantes por su nombre y siempre trae pan para compartir.</p></div></div></div></section>
+<section class="pag esp-pag" data-n="9"><div class="cinta">Crear un abogado</div><div class="num">9</div><div class="contenido"><div class="esp"><img class="esp-img" src="img/esp-constitucionalista.jpg" alt=""><div class="esp-txt"><h2>Constitucionalista</h2><div class="etiqueta">Especialidad de expansión</div><p class="lema">Cuando todo falla, ella invoca los derechos.</p><p>Veterana de mil procesos, conoce los derechos fundamentales y las garantías que los protegen. Su presencia tranquiliza al equipo. En el combate protege: libera a los aliados inmovilizados y desvía el daño que reciben.</p><div class="bl-atr"><div><b>FIR</b><span>8 (−1)</span></div><div><b>AGI</b><span>10 (+0)</span></div><div><b>AGU</b><span>12 (+1)</span></div><div><b>DOC</b><span>15 (+2)</span></div><div><b>CRI</b><span>14 (+2)</span></div><div><b>ORA</b><span>16 (+3)</span></div></div><p class="dato"><b>Paciencia</b> 11 (+6 por nivel) · <b>Defensa</b> 12 · <b>Movimiento</b> 3</p><p class="dato"><b>Ataque.</b> Oratoria, 1d6 de daño, alcance 3 casillas.</p><p class="dato"><b>Habilidades sugeridas.</b> Alegar, Jurisprudencia, Imponerse, Leer al cliente.</p><p class="dato"><b>Poderes.</b> <b>Amparo</b> y <b>Hábeas corpus</b>.</p><p class="dato"><b>Personalidad.</b> Cita de memoria, lleva una manta tejida por su abuela y no ha perdido la calma desde 1993.</p></div></div><div class="esp"><img class="esp-img" src="img/esp-tributarista.jpg" alt=""><div class="esp-txt"><h2>Tributarista</h2><div class="etiqueta">Especialidad de expansión</div><p class="lema">Cada sol cuenta; cada error de cálculo, también.</p><p>Experto en impuestos, aranceles y cuentas públicas. Encuentra el error en la liquidación que nadie vio. En el combate debilita: rebaja la Defensa de las criaturas y reparte el daño que recibe el equipo en cuotas.</p><div class="bl-atr"><div><b>FIR</b><span>10 (+0)</span></div><div><b>AGI</b><span>12 (+1)</span></div><div><b>AGU</b><span>13 (+1)</span></div><div><b>DOC</b><span>16 (+3)</span></div><div><b>CRI</b><span>14 (+2)</span></div><div><b>ORA</b><span>10 (+0)</span></div></div><p class="dato"><b>Paciencia</b> 12 (+6 por nivel) · <b>Defensa</b> 14 · <b>Movimiento</b> 3</p><p class="dato"><b>Ataque.</b> Doctrina, 1d6 de daño, alcance 2 casillas.</p><p class="dato"><b>Habilidades sugeridas.</b> Cuentas y tasas, Normativa, Atención a plazos, Revisar el expediente.</p><p class="dato"><b>Poderes.</b> <b>Fiscalización</b> y <b>Fraccionamiento</b>.</p><p class="dato"><b>Personalidad.</b> Calcula la propina al céntimo y tiene una calculadora para cada día de la semana.</p></div></div></div></section>
+<section class="pag " data-n="10"><div class="cinta">Sistema de juego</div><div class="num">10</div><div class="contenido">
+<h1>Sistema de juego</h1>
+<div class="dos">
+<h2>La tirada</h2>
+<p class="capital">Cuando un abogado intenta algo cuyo resultado es incierto, el Relator pide una tirada. Se lanza un dado de veinte caras y se suma el modificador de la característica que corresponda y, si el personaje es competente, su bonificador de competencia. Si el total iguala o supera la <b>dificultad</b>, lo logra.</p>
+<div class="formula">d20 + modificador + competencia ≥ dificultad</div>
+<p>Contra una criatura, la dificultad es su <b>Defensa</b>. Contra el entorno, el Relator la fija con esta tabla:</p>
+<table class=""><thead><tr><th>Dificultad</th><th>Ejemplo en Expedientia</th></tr></thead><tbody><tr><td>5 · Muy fácil</td><td>Encontrar la Mesa de Partes en el primer piso.</td></tr><tr><td>10 · Fácil</td><td>Llenar un formulario sin tacharlo.</td></tr><tr><td>12 · Normal</td><td>Presentar el requisito correcto en un trámite.</td></tr><tr><td>15 · Media</td><td>Encontrar un folio perdido en un expediente grueso.</td></tr><tr><td>20 · Difícil</td><td>Conseguir una cita para hoy.</td></tr><tr><td>25 · Muy difícil</td><td>Que la impresora del estudio funcione un viernes.</td></tr><tr><td>30 · Casi imposible</td><td>Que la cola avance por sí sola.</td></tr></tbody></table>
+<h3>Fundado e Improcedente</h3>
+<p>Si el dado muestra un <b>20 natural</b>, la tirada es <b>Fundada</b>: en un ataque acierta siempre y se tiran el doble de dados de daño (el modificador no se duplica). Si muestra un <b>1 natural</b>, es <b>Improcedente</b>: el ataque falla siempre, sin importar los modificadores. En las pruebas de características solo cuenta el total, pero el Relator puede narrar un 20 o un 1 con especial gracia.</p>
+<h3>Ventaja y desventaja</h3>
+<p>Algunas situaciones dan <b>ventaja</b>: se tiran dos d20 y se usa el mayor. Otras imponen <b>desventaja</b>: se tiran dos y se usa el menor. Si una tirada tiene ventaja y desventaja a la vez, se anulan y se tira un solo dado. Nunca se acumulan dos ventajas.</p>
+<p>Dan ventaja, por ejemplo: acertar una prueba jurídica, usar un Escrito pre-firmado o un Código anotado, o que un aliado distraiga a la criatura. Dan desventaja: actuar con el plazo vencido, atacar a una criatura que no se ve o trabajar sin dormir.</p>
+<div class="caja nota"><div class="caja-t">Pruebas enfrentadas</div><p>Cuando dos personajes compiten (un abogado intenta pasar desapercibido y un Tramitador lo vigila), ambos tiran y gana el total más alto. En caso de empate, se mantiene la situación como estaba.</p></div>
+</div></div></section>
+<section class="pag " data-n="11"><div class="cinta">Sistema de juego</div><div class="num">11</div><div class="contenido">
+<div class="dos">
+<h2>La prueba jurídica</h2>
+<p class="capital">La prueba jurídica es el sello del juego: una pregunta real de derecho peruano con cuatro opciones que el <i>jugador</i>, no el personaje, debe responder. Se usa antes de una tirada importante.</p>
+<ul>
+<li>Se pueden usar como máximo <b>tres pruebas jurídicas por expediente</b>, entre todo el equipo.</li>
+<li>El jugador tiene <b>20 segundos</b> para responder.</li>
+<li>Si acierta, su siguiente tirada tiene <b>ventaja</b>.</li>
+<li>Si falla o se le acaba el tiempo, tira de forma normal. La prueba nunca castiga a quien no sabe.</li>
+</ul>
+<p>En la aplicación las preguntas salen de un banco revisado por un abogado. Cada pregunta indica la norma o resolución en la que se basa, con fecha y enlace a la fuente oficial, y solo entra al juego cuando está verificada. En mesa, el Relator puede preparar sus propias preguntas siguiendo la misma regla: <b>si no se pudo verificar en la fuente oficial, no se usa.</b></p>
+<div class="caja real"><div class="caja-t">Del expediente a la realidad</div><p>En el Perú, el procedimiento ante las entidades públicas se rige por la Ley 27444, Ley del Procedimiento Administrativo General, cuyo Texto Único Ordenado vigente fue aprobado por el Decreto Supremo 006-2026-JUS (publicado en El Peruano el 30 de abril de 2026). Edición oficial del Ministerio de Justicia en gob.pe: <mark>https://www.gob.pe/institucion/minjus/informes-publicaciones/8441836</mark>.</p></div>
+<h2>Narración</h2>
+<p>Las tiradas no reemplazan a la historia: la cuentan. El Relator describe qué sucede con cada resultado, y conviene que un fallo también haga avanzar la partida. En Expedientia, fallar un trámite casi nunca detiene el caso: lo encarece. Se subsana a la segunda, se pierde tiempo, el cliente se impacienta.</p>
+<table class=""><thead><tr><th>d20</th><th>Resultado narrativo de un trámite</th></tr></thead><tbody><tr><td>1</td><td>Improcedente. El escrito vuelve con tres observaciones nuevas y un sello que nadie había visto.</td></tr><tr><td>2–6</td><td>Observado. Hay que subsanar: se pierden 20 minutos y 2 de Paciencia.</td></tr><tr><td>7–11</td><td>Recibido «a condición». Pasa, pero el Relator guarda una complicación para después.</td></tr><tr><td>12–19</td><td>Recibido. El sello cae con un sonido que alegra el alma.</td></tr><tr><td>20</td><td>Fundado. Recibido, proveído y con una copia de cortesía para el cliente.</td></tr></tbody></table>
+<h3>Simplificar</h3>
+<p>No hace falta tirar por todo. Si el abogado tiene tiempo y no hay presión, lo logra. Las tiradas se reservan para cuando fallar es interesante.</p>
+<h3>El reloj del caso</h3>
+<p>Algunos expedientes tienen <b>plazo</b>: un número de minutos de juego antes de que el caso se declare «improcedente por extemporáneo». Cada sala consume minutos (un combate, 4 más 2 por ronda; un trámite, 10 si sale bien y 20 si sale mal; la cafetería, 15). El Relator lleva la cuenta a la vista de todos.</p>
+</div></div></section>
+<section class="pag " data-n="12"><div class="cinta">Sistema de juego</div><div class="num">12</div><div class="contenido">
+<h1>La acción</h1>
+<div class="dos">
+<p class="capital">Cuando las criaturas del sistema bloquean el paso, empieza el combate. Se juega por <b>rondas</b>, y en cada ronda todos actúan una vez, en orden de <b>iniciativa</b>.</p>
+<h3>Iniciativa</h3>
+<p>Al comenzar, cada participante tira d20 + su modificador de Agilidad procesal. Se actúa de mayor a menor. Si hay empate, actúa primero quien tenga mayor Agilidad procesal y, si persiste, los abogados antes que las criaturas.</p>
+<h3>El turno</h3>
+<p>En su turno, cada personaje puede hacer, en el orden que quiera:</p>
+<ul>
+<li><b>Moverse</b> tantas casillas como su Movimiento. Las criaturas rivales bloquean el paso; los aliados dejan pasar.</li>
+<li><b>Una acción</b>: atacar, usar un poder, usar un objeto o ayudar a un aliado (que tendrá ventaja en su próxima tirada).</li>
+<li><b>Una reacción</b> por ronda, incluso fuera de su turno, solo si un poder lo permite (como la Nulidad o el Recurso de apelación).</li>
+</ul>
+<h3>Atacar</h3>
+<p>Para atacar, el objetivo debe estar dentro del <b>alcance</b>, contado en casillas. Se tira d20 + modificador de la característica de ataque + competencia, contra la Defensa del objetivo. Si acierta, se tira el dado de daño de la especialidad más el mismo modificador y se resta de la Paciencia del objetivo.</p>
+<h3>Caer</h3>
+<p>Un abogado con Paciencia 0 <b>cae</b> y deja el expediente. Una criatura con Paciencia 0 queda <b>desestimada</b> y se retira del tablero. Si todo el equipo cae, el expediente se archiva.</p>
+<h3>Estados</h3>
+<p><b>Inmovilizado:</b> no puede moverse ni actuar durante 2 turnos. <b>Observado:</b> el golpe no cumple el requisito de la criatura y no hace daño. <b>En silencio:</b> la criatura no actuó en su turno; si una criatura queda 2 turnos en silencio y hay un Administrativista en la sala, el equipo gana la sala.</p>
+<svg viewBox="0 0 380 300" class="tablero" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="380" height="300" rx="8" fill="#3a2a2e"/><rect x="10" y="10" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="55" y="10" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="100" y="10" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="145" y="10" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="190" y="10" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="235" y="10" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="280" y="10" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="325" y="10" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="10" y="56" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="55" y="56" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="100" y="56" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="145" y="56" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="190" y="56" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="235" y="56" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="280" y="56" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="325" y="56" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="10" y="102" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="55" y="102" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="100" y="102" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="145" y="102" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="190" y="102" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="235" y="102" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="280" y="102" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="325" y="102" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="10" y="148" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="55" y="148" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="100" y="148" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="145" y="148" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="190" y="148" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="235" y="148" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="280" y="148" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="325" y="148" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="10" y="194" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="55" y="194" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="100" y="194" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="145" y="194" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="190" y="194" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="235" y="194" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="280" y="194" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="325" y="194" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="10" y="240" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="55" y="240" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="100" y="240" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="145" y="240" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="190" y="240" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="235" y="240" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="280" y="240" width="45" height="46" fill="#dccba4" stroke="#8a6a4a" stroke-width="1"/><rect x="325" y="240" width="45" height="46" fill="#e9dcbc" stroke="#8a6a4a" stroke-width="1"/><rect x="55" y="148" width="45" height="46" fill="#7fc8ff" opacity=".45"/><rect x="100" y="148" width="45" height="46" fill="#7fc8ff" opacity=".45"/><rect x="145" y="148" width="45" height="46" fill="#7fc8ff" opacity=".45"/><rect x="100" y="102" width="45" height="46" fill="#7fc8ff" opacity=".45"/><rect x="100" y="194" width="45" height="46" fill="#7fc8ff" opacity=".45"/><rect x="145" y="148" width="45" height="46" fill="#7fc8ff" opacity=".45"/><circle cx="32.5" cy="171" r="17" fill="#7c1f2b" stroke="#1d1320" stroke-width="3"/><text x="32.5" y="177" text-anchor="middle" font-family="Cinzel" font-weight="700" font-size="16" fill="#fff">C</text><circle cx="77.5" cy="79" r="17" fill="#24365e" stroke="#1d1320" stroke-width="3"/><text x="77.5" y="85" text-anchor="middle" font-family="Cinzel" font-weight="700" font-size="16" fill="#fff">A</text><circle cx="302.5" cy="125" r="17" fill="#c0282a" stroke="#1d1320" stroke-width="3"/><text x="302.5" y="131" text-anchor="middle" font-family="Cinzel" font-weight="700" font-size="16" fill="#fff">F</text><circle cx="257.5" cy="217" r="17" fill="#e07a1a" stroke="#1d1320" stroke-width="3"/><text x="257.5" y="223" text-anchor="middle" font-family="Cinzel" font-weight="700" font-size="16" fill="#fff">P</text><circle cx="347.5" cy="33" r="17" fill="#6a4a8a" stroke="#1d1320" stroke-width="3"/><text x="347.5" y="39" text-anchor="middle" font-family="Cinzel" font-weight="700" font-size="16" fill="#fff">N</text><path d="M47 166 Q120 120 287 120" fill="none" stroke="#b02a2a" stroke-width="3" stroke-dasharray="6 5"/><path d="M280 113 L290 120 L280 127" fill="none" stroke="#b02a2a" stroke-width="3"/></svg>
+<p class="pie-img">El tablero de 6 × 8 casillas. La Civilista (C) puede moverse por las casillas azules; el Formalismo (F) está a su alcance de ataque tras moverse. P es un Plazo que Vence y N una Notificación Defectuosa.</p>
+</div></div></section>
+<section class="pag " data-n="13"><div class="cinta">Sistema de juego</div><div class="num">13</div><div class="contenido">
+<h1>Poderes de las especialidades</h1>
+<p class="intro">Los poderes llevan el nombre de figuras procesales, pero en el juego funcionan como habilidades especiales. No describen cómo operan esas figuras en el derecho real; para eso están los libros y las fuentes oficiales.</p>
+<table class="poderes"><thead><tr><th>Poder</th><th>Especialidad</th><th>Tipo</th><th>Efecto</th></tr></thead><tbody><tr><td>Medida cautelar</td><td>Civilista</td><td>Acción</td><td>Inmoviliza a una criatura a 3 casillas o menos durante 2 turnos. Se recarga en 3 rondas.</td></tr><tr><td>Nulidad</td><td>Civilista</td><td>Reacción</td><td>Anula la última acción de una criatura y devuelve la Paciencia que quitó. Se recarga en 3 rondas.</td></tr><tr><td>Recurso de apelación</td><td>Administrativista</td><td>Reacción</td><td>Un aliado repite su última tirada de ataque fallida.</td></tr><tr><td>Queja</td><td>Administrativista</td><td>Acción</td><td>Inmoviliza a una criatura durante 2 turnos. Se recarga en 3 rondas.</td></tr><tr><td>Silencio administrativo</td><td>Administrativista</td><td>Pasiva</td><td>Si una criatura no actúa 2 turnos seguidos, el equipo gana la sala.</td></tr><tr><td>Flagrancia</td><td>Penalista</td><td>Reacción</td><td>Ataca de inmediato a una criatura que entra en su alcance.</td></tr><tr><td>Allanamiento</td><td>Penalista</td><td>Acción</td><td>Un ataque que ignora el requisito de la criatura y la mitad de su Defensa por encima de 10.</td></tr><tr><td>Beneficio social</td><td>Laboralista</td><td>Acción</td><td>Todos los aliados a 2 casillas recuperan 1d6 de Paciencia. Una vez por sala.</td></tr><tr><td>Inspección</td><td>Laboralista</td><td>Acción</td><td>Revela el rasgo y el requisito vigente de una criatura; el equipo tiene ventaja contra ella esta ronda.</td></tr><tr><td>Amparo</td><td>Constitucionalista</td><td>Reacción</td><td>Cuando un aliado recibe daño, lo reduce a la mitad.</td></tr><tr><td>Hábeas corpus</td><td>Constitucionalista</td><td>Acción</td><td>Libera a un aliado inmovilizado o empujado y le permite moverse de inmediato.</td></tr><tr><td>Fiscalización</td><td>Tributarista</td><td>Acción</td><td>La Defensa de una criatura baja 2 puntos hasta el final de la sala.</td></tr><tr><td>Fraccionamiento</td><td>Tributarista</td><td>Reacción</td><td>Reparte el daño que recibe un aliado entre él y el Tributarista.</td></tr><tr><td>Casación</td><td>Todo el equipo</td><td>Especial</td><td>Una vez por expediente, el equipo repite cualquier tirada, pero con dificultad 18.</td></tr></tbody></table>
+<div class="roles"><div class="rol"><div class="rol-img"><img src="img/esp-civilista.jpg"></div><b>Civilista</b><span>Control</span></div><div class="rol"><div class="rol-img"><img src="img/esp-administrativista.jpg"></div><b>Administrativista</b><span>Apoyo</span></div><div class="rol"><div class="rol-img"><img src="img/esp-penalista.jpg"></div><b>Penalista</b><span>Golpe rápido</span></div><div class="rol"><div class="rol-img"><img src="img/esp-laboralista.jpg"></div><b>Laboralista</b><span>Sostén</span></div><div class="rol"><div class="rol-img"><img src="img/esp-constitucionalista.jpg"></div><b>Constitucionalista</b><span>Protección</span></div><div class="rol"><div class="rol-img"><img src="img/esp-tributarista.jpg"></div><b>Tributarista</b><span>Debilitar</span></div></div>
+<div class="dos">
+<div class="caja nota"><div class="caja-t">Recargas</div><p>Un poder que «se recarga en 3 rondas» no puede volver a usarse hasta que pasen tres rondas completas. Así la Medida cautelar y la Queja no se encadenan sin fin, y las criaturas siempre tienen una oportunidad de actuar.</p></div>
+<div class="caja ejemplo"><div class="caja-t">Combinaciones</div><p>La Civilista inmoviliza al Plazo que Vence con una Medida cautelar: mientras está inmovilizado, el plazo se suspende y no explota. Si además el Administrativista está en la sala, dos turnos de silencio ganan la sala sin un solo golpe.</p></div>
+</div>
+</div></section>
+<section class="pag " data-n="14"><div class="cinta">Sistema de juego</div><div class="num">14</div><div class="contenido">
+<h1>Progresión</h1>
+<div class="dos">
+<p class="capital">Cada expediente cerrado da <b>experiencia</b> al estudio. Al acumular suficiente, los abogados suben de nivel: ganan 6 puntos de Paciencia máxima, mejoran su competencia y avanzan en la carrera, de practicante a socio.</p>
+<table class="niv"><thead><tr><th>Nivel</th><th>Experiencia</th><th>Competencia</th><th>Título</th></tr></thead><tbody><tr><td>1</td><td>0</td><td>+2</td><td>Practicante</td></tr><tr><td>2</td><td>300</td><td>+2</td><td>Practicante</td></tr><tr><td>3</td><td>900</td><td>+2</td><td>Practicante</td></tr><tr><td>4</td><td>2 700</td><td>+2</td><td>Practicante</td></tr><tr><td>5</td><td>6 500</td><td>+3</td><td>Bachiller</td></tr><tr><td>6</td><td>14 000</td><td>+3</td><td>Bachiller</td></tr><tr><td>7</td><td>23 000</td><td>+3</td><td>Bachiller</td></tr><tr><td>8</td><td>34 000</td><td>+3</td><td>Bachiller</td></tr><tr><td>9</td><td>48 000</td><td>+4</td><td>Abogado</td></tr><tr><td>10</td><td>64 000</td><td>+4</td><td>Abogado</td></tr><tr><td>11</td><td>85 000</td><td>+4</td><td>Abogado</td></tr><tr><td>12</td><td>100 000</td><td>+4</td><td>Abogado</td></tr><tr><td>13</td><td>120 000</td><td>+5</td><td>Asociado</td></tr><tr><td>14</td><td>140 000</td><td>+5</td><td>Asociado</td></tr><tr><td>15</td><td>165 000</td><td>+5</td><td>Asociado</td></tr><tr><td>16</td><td>195 000</td><td>+5</td><td>Asociado</td></tr><tr><td>17</td><td>225 000</td><td>+6</td><td>Socio</td></tr><tr><td>18</td><td>265 000</td><td>+6</td><td>Socio</td></tr><tr><td>19</td><td>305 000</td><td>+6</td><td>Socio</td></tr><tr><td>20</td><td>355 000</td><td>+6</td><td>Socio</td></tr></tbody></table>
+<h3>Experiencia por expediente</h3>
+<p>El Relator reparte experiencia al cerrar cada expediente: 100 por cada criatura menor desestimada, 300 por un jefe, 50 por cada sala superada sin pelear y 100 extra si el caso se declara fundado. En la aplicación los números exactos dependen del caso.</p>
+<h3>Mejoras</h3>
+<p>En los niveles 4, 8, 12, 16 y 19, cada abogado suma 2 puntos a una característica o 1 punto a dos características, sin pasar de 20.</p>
+<div class="caja ejemplo"><div class="caja-t">La carrera del abogado</div><p><b>Practicante</b> (niveles 1 a 4): carga los expedientes y aprende dónde queda cada ventanilla. <b>Bachiller</b> (5 a 8): ya presenta escritos con su nombre. <b>Abogado</b> (9 a 12): litiga sin que nadie le revise los escritos. <b>Asociado</b> (13 a 16): los clientes preguntan por él. <b>Socio</b> (17 a 20): su apellido va en la placa, bien escrito.</p></div>
+<div class="caja nota"><div class="caja-t">Reputación</div><p>El estudio empieza con <b>Reputación 50</b>, en una escala de 0 a 100. Rechazar sobornos, ganar casos difíciles y denunciar a la red del Coimero la suben; los atajos la bajan. Con Reputación 70 o más aparecen los aliados honestos: el Suboficial Quispe y la Especialista Mendoza.</p></div>
+<div class="caja aviso"><div class="caja-t">El expediente disciplinario</div><p>Cada vez que el estudio acepta la oferta del Coimero, el Relator suma 10 puntos a un número secreto: el <b>expediente disciplinario</b>. Los jugadores no lo ven. Algún día, en el peor momento, ese expediente aparecerá sobre la mesa.</p></div>
+</div></div></section>
+<section class="pag " data-n="15"><div class="cinta">Sistema de juego</div><div class="num">15</div><div class="contenido">
+<h1>Recompensas</h1>
+<div class="dos">
+<p class="capital">Además de experiencia, cada expediente deja <b>honorarios</b>, la moneda del juego. Se ganan al desestimar criaturas (15 por sala de combate, 60 por el jefe, 50 por la red del Coimero) y al resolver bien las audiencias (10 o 20). Los honorarios se gastan en la librería jurídica o, para los más supersticiosos, en el puesto del Ekeko de los Honorarios, que cobra en honorarios del juego y nunca «a cuenta».</p>
+<table class=""><thead><tr><th>Objeto</th><th>Precio</th><th>Efecto</th></tr></thead><tbody><tr><td>Escrito pre-firmado</td><td>30</td><td>Se gasta para tener ventaja en una tirada cualquiera.</td></tr><tr><td>Café doble</td><td>20</td><td>Todo el equipo recupera su Paciencia máxima.</td></tr><tr><td>Código anotado</td><td>40</td><td>La próxima prueba o trámite se tira con ventaja.</td></tr><tr><td>Sello de recepción de la suerte</td><td>25</td><td>Una vez por expediente, convierte un «Observado» en «Recibido».</td></tr><tr><td>Termo de anís</td><td>15</td><td>Recupera 1d6 de Paciencia a un abogado.</td></tr><tr><td>Agenda con alarma</td><td>35</td><td>El equipo sabe siempre cuántos minutos quedan y gana 10 minutos una vez.</td></tr><tr><td>Copias certificadas</td><td>10</td><td>Ventaja contra el Formalismo durante una sala.</td></tr><tr><td>Paraguas del juzgado</td><td>20</td><td>Defensa +1 contra Notificaciones Defectuosas.</td></tr></tbody></table>
+<p class="chico">Los tres primeros objetos existen en la aplicación; los demás son para el juego en mesa.</p>
+<h3>Sobre las recompensas</h3>
+<p>Un buen Relator no regala honorarios: los pone a prueba. Ofrece una recompensa grande a cambio de un riesgo grande, o enfrenta a los jugadores con una elección: ¿gastar en el Café doble para sobrevivir al jefe, o guardar para la próxima campaña?</p>
+<h3>Recompensas que no son dinero</h3>
+<p>Un cliente agradecido que trae a su familia al estudio. Un servidor público honesto que recuerda el nombre del abogado. Una Especialista que comparte el requisito vigente. En Expedientia, la reputación abre más puertas que los honorarios.</p>
+<div class="caja nota"><div class="caja-t">Regla opcional: gastos del estudio</div><p>Entre expediente y expediente, el estudio paga 10 honorarios de alquiler y 5 de fotocopias. Si no puede pagar, empieza el siguiente caso con un abogado de menos Paciencia máxima (−2 a todos) hasta ponerse al día. Es una regla para grupos que disfrutan administrar su estudio; los demás pueden ignorarla.</p></div>
+<div class="caja aviso"><div class="caja-t">El Coimero</div><p>En algunas salas aparece un señor muy amable que ofrece «agilizar» el trámite. No ataca: tienta. El equipo puede <b>aceptar</b> (recupera toda la Paciencia, pero suma 10 al expediente disciplinario), <b>rechazar</b> (Reputación +3) o <b>denunciar</b> (Reputación +2 y se abre una sala extra, más difícil, contra la red del Coimero, con la mejor recompensa del caso).</p></div>
+</div></div></section>
+<section class="pag " data-n="16"><div class="cinta">Montando la partida</div><div class="num">16</div><div class="contenido">
+<h1>Montando la partida</h1>
+<div class="dos">
+<h2>El Relator</h2>
+<p class="capital">El Relator es quien describe el mundo, interpreta a las criaturas y a los personajes no jugadores, y aplica las reglas. No juega contra el equipo: juega para que la historia sea buena. Su trabajo es que cada expediente tenga tensión, humor y al menos una decisión difícil.</p>
+<h2>La estructura de un expediente</h2>
+<p>Cada expediente sigue la misma forma, que también usa la aplicación:</p>
+<ol class="pasos">
+<li><b>La llegada.</b> El cliente entra al estudio y cuenta su problema (siempre a su manera).</li>
+<li><b>La primera sala</b> es siempre un combate: algo bloquea la entrada.</li>
+<li><b>Las salas intermedias</b> mezclan trámites, audiencias, la cafetería, la librería y, a veces, el Coimero.</li>
+<li><b>La sala del jefe</b> cierra el caso.</li>
+<li><b>El cierre.</b> Fundado o archivado; se reparten honorarios, experiencia y reputación.</li>
+</ol>
+<table class=""><thead><tr><th>Sala</th><th>Qué pasa</th><th>Tirada típica</th></tr></thead><tbody><tr><td>Combate</td><td>Criaturas del sistema bloquean el paso.</td><td>Ataques contra Defensa</td></tr><tr><td>Trámite</td><td>Una puerta exige «el requisito correcto».</td><td>Criterio, dificultad 12</td></tr><tr><td>Audiencia</td><td>El cliente cambia su versión de los hechos.</td><td>Oratoria o Criterio, 13</td></tr><tr><td>Cafetería</td><td>Pausa: todos recuperan la mitad de su Paciencia.</td><td>Ninguna</td></tr><tr><td>Librería</td><td>Se compran objetos con honorarios.</td><td>Ninguna</td></tr><tr><td>Coimero</td><td>Una oferta tentadora.</td><td>Decisión del equipo</td></tr><tr><td>Jefe</td><td>La criatura mayor del caso.</td><td>Combate especial</td></tr></tbody></table>
+<h2>La audiencia</h2>
+<p>El Cliente cambia su versión. El equipo elige: <b>confrontarlo</b> (Oratoria, dificultad 13), y si sale bien el Cliente reconoce la versión correcta y paga 20 de honorarios extra; o <b>revisar el expediente</b> (Criterio, dificultad 13), y si sale bien se encuentra una fecha que da 20 minutos más de plazo. Si falla, la audiencia se reprograma y se pierde tiempo.</p>
+<h2>Un expediente en cinco minutos</h2>
+<p>Cuando no hay tiempo de preparar, tira en la tabla de clientes (página 19), elige la zona y tira 1d6 para la complicación:</p>
+<table class="aleat"><thead><tr><th>d6</th><th>Complicación</th></tr></thead><tbody><tr><td>1</td><td>El caso tiene plazo: 120 minutos.</td></tr><tr><td>2</td><td>El Cliente oculta un documento clave.</td></tr><tr><td>3</td><td>La contraparte también tiene abogado… y es mejor.</td></tr><tr><td>4</td><td>El Coimero aparece dos veces.</td></tr><tr><td>5</td><td>Una criatura del Archivo Central se coló en la zona.</td></tr><tr><td>6</td><td>Don Eusebio está de vacaciones.</td></tr></tbody></table>
+<div class="caja ejemplo"><div class="caja-t">Llevar la cuenta</div><p>Usa una ficha a la vista de todos con el reloj del caso, las pruebas jurídicas usadas (máximo 3), la Casación (una por expediente) y las recargas de los poderes. En la aplicación, todo esto aparece en pantalla.</p></div>
+<div class="caja nota"><div class="caja-t">Consejo</div><p>Prepara tres frases del Cliente antes de la sesión. Nada da más vida a una audiencia que un cuñado que vino de testigo y recuerda una tercera fecha.</p></div>
+</div></div></section>
+<section class="pag " data-n="17"><div class="cinta">Montando la partida</div><div class="num">17</div><div class="contenido">
+<img class="ancho" src="img/esc-mesa.jpg" alt="La Mesa de Partes">
+<p class="pie-img">La Mesa de Partes en hora punta. El letrero marca el turno 0947; la cola no ha avanzado desde la mañana.</p>
+<div class="dos">
+<h2>Exploración</h2>
+<p class="capital">Entre sala y sala, los abogados recorren Expedientia: pasillos, escaleras, oficinas sin letrero y sótanos que no figuran en los planos. El Relator describe lo que ven con dos o tres detalles concretos: el olor a papel húmedo, el vigilante que ya los conoce, el reloj de pared que adelanta diez minutos.</p>
+<p>Las tablas de las páginas siguientes ayudan a improvisar. Tira cuando el equipo entra a un lugar nuevo, cuando pierde tiempo o cuando la partida necesita un empujón.</p>
+<h3>Ritmo</h3>
+<p>Alterna salas tensas con salas tranquilas. Después de un combate difícil, una cafetería se agradece; después de dos trámites seguidos, el equipo agradecerá algo a lo que pegarle.</p>
+<h3>Cuando los jugadores se desvían</h3>
+<p>Si el equipo decide ignorar la Mesa de Partes y buscar al juez en su casa, no lo impidas: haz que el camino sea interesante. Las criaturas del sistema no viven solo en el Palacio; también hay Formalismos en las notarías y Plazos que Vencen en la puerta de cualquier oficina.</p>
+<div class="caja nota"><div class="caja-t">Seguridad en la mesa</div><p>Antes de empezar, acuerden qué temas quedan fuera del juego. Un caso de familia puede tocar fibras sensibles; el Relator cambia de tema sin pedir explicaciones si alguien lo solicita.</p></div>
+</div></div></section>
+<section class="pag " data-n="18"><div class="cinta">Montando la partida</div><div class="num">18</div><div class="contenido">
+<h1>Tablas aleatorias</h1>
+<div class="dos">
+<p class="intro2">Tira 1d100 cuando el equipo entra a un lugar del Palacio de Justicia o cuando pierde tiempo en una sala.</p>
+<table class="aleat"><thead><tr><th>d100</th><th>Sucesos en el Palacio de Justicia</th></tr></thead><tbody><tr><td>01–05</td><td>Se va la luz en todo el piso. Las ventanillas siguen atendiendo «con linterna».</td></tr><tr><td>06–10</td><td>Un Usuario en cola reconoce a un abogado: «¿Usted no es el del caso de mi tía?».</td></tr><tr><td>11–15</td><td>Cambia el sistema informático. Todos los turnos se reinician desde el 001.</td></tr><tr><td>16–20</td><td>Aparece un Formalismo exigiendo una copia que nadie conoce.</td></tr><tr><td>21–25</td><td>Don Eusebio pasa con un termo y ofrece café: +1d4 de Paciencia a todos.</td></tr><tr><td>26–30</td><td>Una Notificación Defectuosa revolotea buscando «al señor de la casa».</td></tr><tr><td>31–35</td><td>Rosita cierra la ventanilla «por cinco minutos». Se pierden 15.</td></tr><tr><td>36–40</td><td>Se cae una pila de expedientes; uno de ellos abre los ojos.</td></tr><tr><td>41–45</td><td>Un abogado de pasillo susurra que «conoce a alguien». Es el Coimero.</td></tr><tr><td>46–50</td><td>El cliente llama por teléfono para decir que encontró otro documento… de 1987.</td></tr><tr><td>51–55</td><td>Llega un Plazo que Vence con el número 3 encendido.</td></tr><tr><td>56–60</td><td>El vigilante pide que todos se pongan en fila india. La fila se convierte en una Cola.</td></tr><tr><td>61–65</td><td>Alguien gritó «¡Mesa de Partes virtual!». Nadie sabe dónde queda.</td></tr><tr><td>66–70</td><td>Se encuentra un sello perdido: ventaja en el próximo trámite.</td></tr><tr><td>71–75</td><td>La Especialista Mendoza pasa apurada y deja caer una pista sobre el requisito vigente.</td></tr><tr><td>76–80</td><td>Una impresora imprime sola la palabra «IMPROCEDENTE» cien veces.</td></tr><tr><td>81–85</td><td>El reloj de pared se detiene. El Relator decide si el plazo también.</td></tr><tr><td>86–90</td><td>Un Fraccionador se esconde entre los recibos de pago.</td></tr><tr><td>91–95</td><td>Un estudiante de derecho pide ayuda con su tarea. Ayudarle da Reputación +1.</td></tr><tr><td>96–00</td><td>Silencio absoluto. Algo grande se mueve en el sótano.</td></tr></tbody></table>
+</div></div></section>
+<section class="pag " data-n="19"><div class="cinta">Montando la partida</div><div class="num">19</div><div class="contenido">
+<div class="dos">
+<table class="aleat"><thead><tr><th>d20</th><th>Excusas de ventanilla</th></tr></thead><tbody><tr><td>1</td><td>Falta firma.</td></tr><tr><td>2</td><td>Falta la firma de la firma.</td></tr><tr><td>3</td><td>El sistema está lento.</td></tr><tr><td>4</td><td>Ese formato ya no se usa.</td></tr><tr><td>5</td><td>Ese formato todavía no se usa.</td></tr><tr><td>6</td><td>Venga con su abogado. ¿Usted es el abogado? Venga con otro.</td></tr><tr><td>7</td><td>Es en la otra ventanilla.</td></tr><tr><td>8</td><td>La otra ventanilla es esta, pero mañana.</td></tr><tr><td>9</td><td>Se pasó la hora por un minuto.</td></tr><tr><td>10</td><td>Falta copia simple del original certificado.</td></tr><tr><td>11</td><td>No hay sello.</td></tr><tr><td>12</td><td>El jefe está en reunión desde marzo.</td></tr><tr><td>13</td><td>Tiene que pagar la tasa en el banco del frente.</td></tr><tr><td>14</td><td>El banco del frente se mudó.</td></tr><tr><td>15</td><td>Su DNI está vencido. Ah, no; es el mío.</td></tr><tr><td>16</td><td>Hay que llenarlo con lapicero azul.</td></tr><tr><td>17</td><td>Tiene que traer un folder manila. No, ese no.</td></tr><tr><td>18</td><td>Saque turno.</td></tr><tr><td>19</td><td>Vuelva mañana.</td></tr><tr><td>20</td><td>Ya está. ¿Algo más?</td></tr></tbody></table>
+<p class="intro2">Tira 1d20 cuando un abogado intenta presentar algo y el Relator necesita un motivo para que no funcione.</p>
+<table class="aleat"><thead><tr><th>d20</th><th>Clientes que llegan al estudio</th></tr></thead><tbody><tr><td>1</td><td>Una señora con tres bolsas de documentos que «por si acaso» trajo todo.</td></tr><tr><td>2</td><td>Un joven emprendedor que quiere ganar una licitación con una sola fotocopia.</td></tr><tr><td>3</td><td>Un jubilado que lleva once años esperando una resolución.</td></tr><tr><td>4</td><td>Una empresa de transporte con un problema que llegó «hace poco» (en 2009).</td></tr><tr><td>5</td><td>Una pareja que no se pone de acuerdo ni en por qué vino.</td></tr><tr><td>6</td><td>Un ingeniero que trae su caso en una hoja de cálculo de 40 pestañas.</td></tr><tr><td>7</td><td>Una vecina cuya pared invadió el vecino… o al revés.</td></tr><tr><td>8</td><td>Un dirigente de mercado que quiere formalizar a 300 comerciantes.</td></tr><tr><td>9</td><td>Un estudiante cuyo título se perdió en el Archivo Central.</td></tr><tr><td>10</td><td>Una heredera que acaba de descubrir que tiene catorce primos.</td></tr><tr><td>11</td><td>Un panadero al que le llegó una multa por un horno que no tiene.</td></tr><tr><td>12</td><td>Una periodista que investiga a la red del Coimero.</td></tr><tr><td>13</td><td>Un señor que jura que presentó su escrito y tiene el cargo «en algún lado».</td></tr><tr><td>14</td><td>Una profesora a la que nunca le pagaron sus vacaciones truncas.</td></tr><tr><td>15</td><td>Un municipio pequeño que necesita contratar un puente.</td></tr><tr><td>16</td><td>Una familia que quiere inscribir la casa de la abuela.</td></tr><tr><td>17</td><td>Un músico al que le copiaron su huaino.</td></tr><tr><td>18</td><td>Una cooperativa de cafetaleros con una deuda tributaria misteriosa.</td></tr><tr><td>19</td><td>Un perro (con su dueño) involucrado en un conflicto vecinal.</td></tr><tr><td>20</td><td>Alguien que no dice su nombre y paga por adelantado. Sospechoso.</td></tr></tbody></table>
+<p class="intro2">Cada cliente es una semilla de expediente: decide qué criatura del sistema custodia su problema.</p>
+</div></div></section>
+<section class="pag " data-n="20"><div class="cinta">Montando la partida</div><div class="num">20</div><div class="contenido">
+<h1>Personajes no jugadores</h1>
+<p class="intro">Los personajes no jugadores dan voz a Expedientia. Todos son ficticios: humor de oficio, sin retratar a personas reales.</p>
+<div class="pnjs"><div class="pnj"><img class="pnj-img" src="img/pnj-eusebio.jpg" alt=""><div><h3>Don Eusebio</h3><div class="bl-tipo">Auxiliar con treinta años en el juzgado</div><p>Conoce cada pasillo y cada atajo honesto. Siempre tiene un termo de café y un comentario: «En Mesa de Partes los escritos no se pierden, doctor. Se independizan.» Es el guía del equipo y nunca acepta coimas.</p></div></div><div class="pnj"><img class="pnj-img" src="img/pnj-rosita.jpg" alt=""><div><h3>Rosita</h3><div class="bl-tipo">Encargada de la ventanilla 3</div><p>Sabe dónde está cada escrito, aunque no siempre quiere decirlo. Amable con quien es amable. «Si lo presentó, está en la cola. Todo termina en la cola.»</p></div></div><div class="pnj"><img class="pnj-img" src="img/pnj-valdivia.jpg" alt=""><div><h3>Doctora Valdivia</h3><div class="bl-tipo">Mentora del estudio</div><p>Abogada veterana, socia retirada de un gran estudio. Da consejos secos y certeros: «Los atajos siempre cobran después.» Sospecha que algo en el Archivo Central se está comiendo los expedientes.</p></div></div><div class="pnj"><img class="pnj-img" src="img/pnj-mendoza.jpg" alt=""><div><h3>Especialista Mendoza</h3><div class="bl-tipo">Servidor de la Sala de Contrataciones</div><p>Honesto y abrumado. Si la Reputación del estudio es 70 o más, revela el requisito vigente del jefe de la Sala de Contrataciones.</p></div></div><div class="pnj"><img class="pnj-img" src="img/pnj-quispe.jpg" alt=""><div><h3>Suboficial Quispe</h3><div class="bl-tipo">Aliado honesto</div><p>Policía de pocas palabras que se suma al equipo contra la red del Coimero si la Reputación es alta. Firmeza 14, Paciencia 16, Defensa 14, ataque 1d8.</p></div></div><div class="pnj"><img class="pnj-img" src="img/pnj-cliente.jpg" alt=""><div><h3>El Cliente</h3><div class="bl-tipo">El motivo de todo</div><p>Cambia de cara en cada caso, pero siempre es el mismo: preocupado, impaciente y con una versión de los hechos que muta en cada audiencia.</p></div></div></div>
+<div class="dos-fijo"><div><table class="aleat"><thead><tr><th>d6</th><th>Lo que dice Don Eusebio</th></tr></thead><tbody><tr><td>1</td><td>«En Mesa de Partes los escritos no se pierden, doctor. Se independizan.»</td></tr><tr><td>2</td><td>«Esa cola no avanza desde 1998. Suerte.»</td></tr><tr><td>3</td><td>«Aquí se resuelven más casos en la cafetería que en las salas.»</td></tr><tr><td>4</td><td>«Lo archivado también resucita.»</td></tr><tr><td>5</td><td>«El sello bueno lo tiene Rosita; el malo, todos los demás.»</td></tr><tr><td>6</td><td>«Treinta años en este juzgado y todavía me sorprendo, doctor.»</td></tr></tbody></table></div>
+<div><div class="caja nota"><div class="caja-t">Crear adversarios</div><p>Toda criatura del sistema nace de un problema concreto: un requisito absurdo, un plazo injusto, una notificación que no llega. Para crear una nueva, elige el problema, dale un <b>rasgo</b> que lo represente en el tablero y fija sus números comparándola con las del bestiario: una criatura menor tiene entre 3 y 9 de Paciencia y Defensa de 9 a 12; un jefe, 30 o más de Paciencia y una mecánica que obligue al equipo a pensar.</p></div></div></div>
+</div></section>
+<section class="pag " data-n="21"><div class="cinta">Bestiario</div><div class="num">21</div><div class="contenido">
+<h1>Bestiario</h1>
+<p class="intro">Las criaturas del sistema nacieron de los trámites que nadie atendió. Cada ficha indica sus seis características, su Paciencia, su Defensa, su Movimiento y el rasgo que la hace única. Los números son los del prototipo y pueden ajustarse.</p>
+<div class="bestias tres"><div class="bloque"><img class="bl-img" src="img/cr-formalismo.jpg" alt=""><div class="bl-nom">Formalismo</div><div class="bl-tipo">Criatura menor de Mesa de Partes</div><div class="bl-lin"><b>Paciencia</b> 8 · <b>Defensa</b> 11 · <b>Movimiento</b> 2 casillas · <b>Nivel</b> 1</div><div class="bl-atr"><div><b>FIR</b><span>10 (+0)</span></div><div><b>AGI</b><span>10 (+0)</span></div><div><b>AGU</b><span>10 (+0)</span></div><div><b>DOC</b><span>8 (−1)</span></div><div><b>CRI</b><span>8 (−1)</span></div><div><b>ORA</b><span>6 (−2)</span></div></div><div class="bl-lin"><b>Ataque.</b> Firmeza, 1d4 de daño, alcance 1.</div><div class="bl-lin"><b>Rasgo.</b> <b>Exige requisito.</b> Sin el «requisito correcto» (tirar con ventaja o sacar Fundado) solo recibe la mitad del daño.</div><div class="bl-lin"><b>Táctica.</b> Avanza lento y se planta frente a la puerta. Nunca huye: prefiere quedar observado.</div></div><div class="bloque"><img class="bl-img" src="img/cr-plazo.jpg" alt=""><div class="bl-nom">Plazo que Vence</div><div class="bl-tipo">Criatura menor de Mesa de Partes</div><div class="bl-lin"><b>Paciencia</b> 5 · <b>Defensa</b> 12 · <b>Movimiento</b> 3 casillas · <b>Nivel</b> 1</div><div class="bl-atr"><div><b>FIR</b><span>8 (−1)</span></div><div><b>AGI</b><span>12 (+1)</span></div><div><b>AGU</b><span>8 (−1)</span></div><div><b>DOC</b><span>8 (−1)</span></div><div><b>CRI</b><span>10 (+0)</span></div><div><b>ORA</b><span>6 (−2)</span></div></div><div class="bl-lin"><b>Ataque.</b> Agilidad procesal, 1d4 de daño, alcance 1.</div><div class="bl-lin"><b>Rasgo.</b> <b>Vence.</b> Si sigue en pie al comenzar su tercer turno, explota y daña a todos los que estén cerca. Inmovilizado, el plazo se suspende.</div><div class="bl-lin"><b>Táctica.</b> Corre hacia el grupo más numeroso. Es lo primero que hay que atender.</div></div><div class="bloque"><img class="bl-img" src="img/cr-notificacion.jpg" alt=""><div class="bl-nom">Notificación Defectuosa</div><div class="bl-tipo">Criatura menor voladora</div><div class="bl-lin"><b>Paciencia</b> 6 · <b>Defensa</b> 11 · <b>Movimiento</b> 3 casillas · <b>Nivel</b> 1</div><div class="bl-atr"><div><b>FIR</b><span>8 (−1)</span></div><div><b>AGI</b><span>10 (+0)</span></div><div><b>AGU</b><span>10 (+0)</span></div><div><b>DOC</b><span>8 (−1)</span></div><div><b>CRI</b><span>10 (+0)</span></div><div><b>ORA</b><span>8 (−1)</span></div></div><div class="bl-lin"><b>Ataque.</b> Agilidad procesal, 1d4 de daño, alcance 2.</div><div class="bl-lin"><b>Rasgo.</b> <b>Notifica al azar.</b> Ataca a quien no corresponde: el objetivo se elige al azar entre todos los que estén a su alcance.</div><div class="bl-lin"><b>Táctica.</b> Revolotea sin orden. Puede herir a otras criaturas si el Relator así lo decide.</div></div></div></div></section>
+<section class="pag " data-n="22"><div class="cinta">Bestiario</div><div class="num">22</div><div class="contenido"><div class="bestias tres"><div class="bloque"><img class="bl-img" src="img/cr-usuario.jpg" alt=""><div class="bl-nom">Usuario en cola</div><div class="bl-tipo">Esbirro de La Cola Infinita</div><div class="bl-lin"><b>Paciencia</b> 4 · <b>Defensa</b> 9 · <b>Movimiento</b> 2 casillas · <b>Nivel</b> 1</div><div class="bl-atr"><div><b>FIR</b><span>10 (+0)</span></div><div><b>AGI</b><span>8 (−1)</span></div><div><b>AGU</b><span>8 (−1)</span></div><div><b>DOC</b><span>6 (−2)</span></div><div><b>CRI</b><span>6 (−2)</span></div><div><b>ORA</b><span>6 (−2)</span></div></div><div class="bl-lin"><b>Ataque.</b> Firmeza, 1d3 de daño, alcance 1.</div><div class="bl-lin"><b>Rasgo.</b> <b>Paciencia infinita.</b> No es malo: solo lleva demasiado tiempo esperando. Desestimarlo lo devuelve a casa.</div><div class="bl-lin"><b>Táctica.</b> Ocupa casillas y estorba el paso. Se suma uno nuevo cada turno mientras La Cola siga en pie.</div></div><div class="bloque"><img class="bl-img" src="img/cr-cola.jpg" alt=""><div class="bl-nom">La Cola Infinita</div><div class="bl-tipo">Jefe de Mesa de Partes</div><div class="bl-lin"><b>Paciencia</b> 30 · <b>Defensa</b> 12 · <b>Movimiento</b> 1 casillas · <b>Nivel</b> 2</div><div class="bl-atr"><div><b>FIR</b><span>14 (+2)</span></div><div><b>AGI</b><span>8 (−1)</span></div><div><b>AGU</b><span>16 (+3)</span></div><div><b>DOC</b><span>8 (−1)</span></div><div><b>CRI</b><span>10 (+0)</span></div><div><b>ORA</b><span>6 (−2)</span></div></div><div class="bl-lin"><b>Ataque.</b> Firmeza, 1d8 de daño, alcance 1.</div><div class="bl-lin"><b>Rasgo.</b> <b>Siempre crece.</b> Cada turno suma un Usuario en cola a la sala, hasta un tope, para que la sala siempre pueda ganarse.</div><div class="bl-lin"><b>Táctica.</b> Se queda quieta y deja que la fila haga el trabajo. Al fondo guarda el escrito del cliente… desde 1998.</div></div><div class="bloque"><img class="bl-img" src="img/cr-vuelva.jpg" alt=""><div class="bl-nom">Vuelva Mañana</div><div class="bl-tipo">Criatura menor de la Sala de Contrataciones</div><div class="bl-lin"><b>Paciencia</b> 7 · <b>Defensa</b> 11 · <b>Movimiento</b> 2 casillas · <b>Nivel</b> 1</div><div class="bl-atr"><div><b>FIR</b><span>10 (+0)</span></div><div><b>AGI</b><span>10 (+0)</span></div><div><b>AGU</b><span>12 (+1)</span></div><div><b>DOC</b><span>8 (−1)</span></div><div><b>CRI</b><span>10 (+0)</span></div><div><b>ORA</b><span>8 (−1)</span></div></div><div class="bl-lin"><b>Ataque.</b> Firmeza, 1d4 de daño, alcance 2.</div><div class="bl-lin"><b>Rasgo.</b> <b>Empuja.</b> Cada golpe empuja hacia atrás al rival más cercano.</div><div class="bl-lin"><b>Táctica.</b> Se coloca en los pasillos estrechos para devolver a todos a la entrada.</div></div></div></div></section>
+<section class="pag " data-n="23"><div class="cinta">Bestiario</div><div class="num">23</div><div class="contenido"><div class="bestias tres"><div class="bloque"><img class="bl-img" src="img/cr-fraccionador.jpg" alt=""><div class="bl-nom">Fraccionador</div><div class="bl-tipo">Criatura menor de la Sala de Contrataciones</div><div class="bl-lin"><b>Paciencia</b> 9 · <b>Defensa</b> 10 · <b>Movimiento</b> 3 casillas · <b>Nivel</b> 1</div><div class="bl-atr"><div><b>FIR</b><span>10 (+0)</span></div><div><b>AGI</b><span>12 (+1)</span></div><div><b>AGU</b><span>10 (+0)</span></div><div><b>DOC</b><span>8 (−1)</span></div><div><b>CRI</b><span>8 (−1)</span></div><div><b>ORA</b><span>6 (−2)</span></div></div><div class="bl-lin"><b>Ataque.</b> Agilidad procesal, 1d4 de daño, alcance 1.</div><div class="bl-lin"><b>Rasgo.</b> <b>Se fracciona.</b> Cada vez que recibe daño y sigue en pie, se parte en una Fracción (Paciencia 3, Defensa 9, 1d3). Como máximo, dos copias.</div><div class="bl-lin"><b>Táctica.</b> Busca que lo golpeen poco y muchas veces. Conviene derribarlo de un solo golpe fuerte.</div></div><div class="bloque"><img class="bl-img" src="img/cr-requisito.jpg" alt=""><div class="bl-nom">El Requisito Imposible</div><div class="bl-tipo">Jefe de la Sala de Contrataciones</div><div class="bl-lin"><b>Paciencia</b> 32 · <b>Defensa</b> 12 · <b>Movimiento</b> 2 casillas · <b>Nivel</b> 2</div><div class="bl-atr"><div><b>FIR</b><span>14 (+2)</span></div><div><b>AGI</b><span>10 (+0)</span></div><div><b>AGU</b><span>16 (+3)</span></div><div><b>DOC</b><span>12 (+1)</span></div><div><b>CRI</b><span>12 (+1)</span></div><div><b>ORA</b><span>8 (−1)</span></div></div><div class="bl-lin"><b>Ataque.</b> Firmeza, 1d6 de daño, alcance 2.</div><div class="bl-lin"><b>Rasgo.</b> <b>Cambia el requisito.</b> Cada 2 rondas cambia la condición para recibir daño y suma un Formalismo a la sala. Los golpes que no cumplen quedan observados.</div><div class="bl-lin"><b>Táctica.</b> Se rodea de Formalismos. La Especialista Mendoza o un golpe observado revelan el requisito vigente.</div></div><div class="bloque"><img class="bl-img" src="img/cr-tramitador.jpg" alt=""><div class="bl-nom">Tramitador</div><div class="bl-tipo">Criatura menor de la red del Coimero</div><div class="bl-lin"><b>Paciencia</b> 9 · <b>Defensa</b> 12 · <b>Movimiento</b> 3 casillas · <b>Nivel</b> 1</div><div class="bl-atr"><div><b>FIR</b><span>12 (+1)</span></div><div><b>AGI</b><span>12 (+1)</span></div><div><b>AGU</b><span>12 (+1)</span></div><div><b>DOC</b><span>8 (−1)</span></div><div><b>CRI</b><span>10 (+0)</span></div><div><b>ORA</b><span>12 (+1)</span></div></div><div class="bl-lin"><b>Ataque.</b> Agilidad procesal, 1d6 de daño, alcance 1.</div><div class="bl-lin"><b>Rasgo.</b> <b>Conoce a alguien.</b> Una vez por sala puede llamar a un Expediente olvidado para que lo ayude.</div><div class="bl-lin"><b>Táctica.</b> Ataca al abogado más débil y huye cuando le queda poca Paciencia.</div></div></div></div></section>
+<section class="pag " data-n="24"><div class="cinta">Bestiario</div><div class="num">24</div><div class="contenido"><div class="bestias tres"><div class="bloque"><img class="bl-img" src="img/cr-coimero.jpg" alt=""><div class="bl-nom">El Coimero</div><div class="bl-tipo">Tentación (no combate)</div><div class="bl-lin"><b>Paciencia</b> — · <b>Defensa</b> — · <b>Movimiento</b> — casillas · <b>Nivel</b> 1</div><div class="bl-atr"><div><b>FIR</b><span>10 (+0)</span></div><div><b>AGI</b><span>12 (+1)</span></div><div><b>AGU</b><span>10 (+0)</span></div><div><b>DOC</b><span>12 (+1)</span></div><div><b>CRI</b><span>14 (+2)</span></div><div><b>ORA</b><span>18 (+4)</span></div></div><div class="bl-lin"><b>Ataque.</b> No ataca.</div><div class="bl-lin"><b>Rasgo.</b> <b>Ofrece agilizar.</b> Su oferta recupera toda la Paciencia del equipo a cambio de 10 puntos en el expediente disciplinario.</div><div class="bl-lin"><b>Táctica.</b> Sonríe, insiste y desaparece. Si lo denuncian, su red espera en la trastienda.</div></div><div class="bloque"><img class="bl-img" src="img/cr-expediente.jpg" alt=""><div class="bl-nom">Expediente olvidado</div><div class="bl-tipo">Criatura menor del Archivo Central</div><div class="bl-lin"><b>Paciencia</b> 10 · <b>Defensa</b> 11 · <b>Movimiento</b> 2 casillas · <b>Nivel</b> 1</div><div class="bl-atr"><div><b>FIR</b><span>12 (+1)</span></div><div><b>AGI</b><span>8 (−1)</span></div><div><b>AGU</b><span>14 (+2)</span></div><div><b>DOC</b><span>6 (−2)</span></div><div><b>CRI</b><span>8 (−1)</span></div><div><b>ORA</b><span>6 (−2)</span></div></div><div class="bl-lin"><b>Ataque.</b> Firmeza, 1d6 de daño, alcance 1.</div><div class="bl-lin"><b>Rasgo.</b> <b>Folios sueltos.</b> Al caer, deja 1d4 hojas que pueden contener una pista sobre el caso (prueba de Revisar el expediente, dificultad 12).</div><div class="bl-lin"><b>Táctica.</b> Ataca en grupos de tres en los pasillos estrechos del Archivo.</div></div></div><table class=""><thead><tr><th>Nivel del equipo</th><th>Sala de combate sugerida</th><th>Jefe sugerido</th></tr></thead><tbody><tr><td>1</td><td>3 criaturas menores (Paciencia total 15 a 25)</td><td>Paciencia 30, Defensa 12</td></tr><tr><td>2–4</td><td>3 a 4 criaturas menores, una con rasgo peligroso</td><td>Paciencia 40 a 55, Defensa 13</td></tr><tr><td>5–8</td><td>4 criaturas menores o 2 con Paciencia 15</td><td>Paciencia 60 a 80, Defensa 14</td></tr><tr><td>9 o más</td><td>Grupos mixtos con Tramitadores y Expedientes olvidados</td><td>La Carga Procesal (Paciencia 120)</td></tr></tbody></table><div class="caja nota"><div class="caja-t">Escalar a las criaturas</div><p>Para un equipo de más nivel, suma 4 de Paciencia y 1 de Defensa a cada criatura menor por cada 2 niveles por encima del primero, y aumenta un paso su dado de daño (1d4 pasa a 1d6). A los jefes, súmales 10 de Paciencia por nivel del equipo.</p></div></div></section>
+<section class="pag " data-n="25"><div class="cinta">Bestiario</div><div class="num">25</div><div class="contenido">
+<img class="ancho alto" src="img/esc-dragon.jpg" alt="La Carga Procesal">
+<div class="dos">
+<h1 class="sin-margen">La Carga Procesal</h1>
+<p class="bl-tipo">Gran dragón, jefe final de la campaña</p>
+<p class="capital">Nadie la ha visto completa. Sus escamas son carpetas de colores; sus alas, actas sin firmar; su aliento, una lluvia de sellos de «NO HA LUGAR». Duerme enroscada alrededor de la torre de expedientes del Archivo Central y crece con cada escrito que no se provee.</p>
+<p>La Carga Procesal no aparece en la aplicación del prototipo: es la meta de la campaña completa. Estos números son una propuesta para el juego en mesa.</p>
+<h3>Fases del combate final</h3>
+<p><b>1. El despertar.</b> La Carga Procesal sigue enroscada en la torre; solo ataca con la cola y lanza Expedientes olvidados.</p>
+<p><b>2. El vuelo.</b> Al perder un tercio de su Paciencia, despliega las alas y usa el Aliento de sellos.</p>
+<p><b>3. La resolución.</b> Con menos de la mitad, la torre empieza a caer. Cada ronda, un abogado puede intentar uno de los tres trámites finales.</p>
+<p class="cita">«Ese escrito no se perdió solo, doctores. Algo se lo comió.» Doctora Valdivia</p>
+<div class="bloque"><div class="bl-nom">La Carga Procesal</div><div class="bl-tipo">Jefe final</div><div class="bl-lin"><b>Paciencia</b> 120 · <b>Defensa</b> 16 · <b>Movimiento</b> 2 casillas · <b>Nivel</b> 10</div><div class="bl-atr"><div><b>FIR</b><span>20 (+5)</span></div><div><b>AGI</b><span>10 (+0)</span></div><div><b>AGU</b><span>22 (+6)</span></div><div><b>DOC</b><span>16 (+3)</span></div><div><b>CRI</b><span>14 (+2)</span></div><div><b>ORA</b><span>12 (+1)</span></div></div><div class="bl-lin"><b>Ataque.</b> Firmeza, 2d8 de daño, alcance 2. <i>Aliento de sellos</i> (cada 3 rondas): todos los abogados en una línea de 4 casillas pierden 2d6 de Paciencia; prueba de Agilidad procesal 15 para recibir la mitad.</div><div class="bl-lin"><b>Rasgo.</b> <b>Se alimenta de lo pendiente.</b> Recupera 5 de Paciencia por cada criatura menor que siga en pie al final de la ronda. <b>Escamas de expediente:</b> la primera vez que baja de la mitad de Paciencia, suelta tres Expedientes olvidados.</div><div class="bl-lin"><b>Táctica.</b> Primero derriba al Administrativista (teme al silencio). El equipo gana si la desestima o si resuelve tres trámites de dificultad 18 en la sala, uno por ronda, mientras los demás la contienen.</div></div>
+</div></div></section>
+<section class="pag " data-n="26"><div class="cinta">Las zonas</div><div class="num">26</div><div class="contenido">
+<h1>Las zonas de Expedientia</h1>
+<div class="dos">
+<h2>Zona 1: Mesa de Partes</h2><p class="capital">El primer piso del Palacio de Justicia: un pasillo infinito de ventanillas numeradas, un letrero de turnos que avanza cuando quiere y una cola que serpentea hasta perderse en la penumbra. Aquí empieza casi todo caso, y aquí terminan muchos.</p><table class="aleat"><thead><tr><th>d20</th><th>Encuentro</th></tr></thead><tbody><tr><td>1–4</td><td>Tres Formalismos bloquean el pasillo.</td></tr><tr><td>5–7</td><td>Dos Plazos que Vencen y una Notificación Defectuosa.</td></tr><tr><td>8–10</td><td>Un trámite: «falta copia legalizada del original de la copia».</td></tr><tr><td>11–13</td><td>Rosita cierra la ventanilla 3. Audiencia improvisada con el Cliente.</td></tr><tr><td>14–16</td><td>La cafetería del juzgado, abierta de milagro.</td></tr><tr><td>17–18</td><td>Un abogado de pasillo: el Coimero.</td></tr><tr><td>19–20</td><td>La cola se agita. La Cola Infinita despierta.</td></tr></tbody></table><h3>Semillas de aventura</h3><ol class="pasos"><li>El escrito fantasma: el cliente jura que presentó su escrito, pero no aparece.</li><li>Plazo en llamas: quedan dos horas para apelar y la ventanilla está por cerrar.</li><li>El turno 0947 lleva tres días en pantalla. Alguien lo está reteniendo.</li></ol><p class="dato"><b>Criaturas:</b> Formalismo, Plazo que Vence, Notificación Defectuosa, Usuario en cola. Jefe: La Cola Infinita.</p>
+<div class="salto"></div>
+<h2>Zona 2: Sala de Contrataciones</h2><p class="capital">Una sala amplia con mesas largas, sobres cerrados y un reloj que marca la hora del cierre de propuestas. Aquí las empresas pequeñas intentan competir con requisitos hechos a la medida de nadie.</p><table class="aleat"><thead><tr><th>d20</th><th>Encuentro</th></tr></thead><tbody><tr><td>1–4</td><td>Dos Vuelva Mañana custodian la mesa de recepción.</td></tr><tr><td>5–8</td><td>Un Fraccionador escondido entre los recibos.</td></tr><tr><td>9–11</td><td>Un trámite: las bases piden experiencia de 40 años a una empresa de 3.</td></tr><tr><td>12–14</td><td>La Especialista Mendoza, abrumada, pide ayuda para ordenar folios.</td></tr><tr><td>15–17</td><td>La librería jurídica en el pasillo.</td></tr><tr><td>18–19</td><td>Un Tramitador ofrece «la buena pro asegurada».</td></tr><tr><td>20</td><td>El Requisito Imposible se pone la corona.</td></tr></tbody></table><h3>Semillas de aventura</h3><ol class="pasos"><li>La buena pro imposible: una empresa pequeña quiere ganar con requisitos que nadie cumple.</li><li>Alguien partió una compra grande en cien compras pequeñas.</li><li>Las bases cambiaron anoche y nadie avisó.</li></ol><p class="dato"><b>Criaturas:</b> Vuelva Mañana, Fraccionador, Fracción, Formalismo. Jefe: El Requisito Imposible.</p>
+</div></div></section>
+<section class="pag " data-n="27"><div class="cinta">Las zonas</div><div class="num">27</div><div class="contenido">
+<img class="ancho" src="img/esc-archivo.jpg" alt="El Archivo Central">
+<p class="pie-img">El sótano del Archivo Central, donde los expedientes olvidados abrieron los ojos por primera vez.</p>
+<div class="dos">
+<h2>Zona 3: El Archivo Central</h2><p class="capital">Kilómetros de estantes bajo el Palacio. La luz no llega más allá del tercer pasillo y el polvo tiene su propio clima. Aquí duerme la Carga Procesal, y desde aquí escapan sus criaturas.</p><table class="aleat"><thead><tr><th>d20</th><th>Encuentro</th></tr></thead><tbody><tr><td>1–5</td><td>Tres Expedientes olvidados en un pasillo estrecho.</td></tr><tr><td>6–8</td><td>Un derrumbe de cajas: prueba de Agilidad procesal 13 o 1d6 de daño.</td></tr><tr><td>9–11</td><td>Un índice escrito a mano que solo entiende Don Eusebio.</td></tr><tr><td>12–14</td><td>Ojos rojos en la oscuridad: un Plazo que Vence de 1998.</td></tr><tr><td>15–17</td><td>Un rincón seco con un termo olvidado: descanso.</td></tr><tr><td>18–19</td><td>La red del Coimero vende expedientes «recuperados».</td></tr><tr><td>20</td><td>Un temblor. La Carga Procesal se da vuelta en su sueño.</td></tr></tbody></table><h3>Semillas de aventura</h3><ol class="pasos"><li>Un título universitario perdido hace veinte años.</li><li>Un expediente que se escapa cada vez que alguien lo encuentra.</li><li>La primera pista de dónde nació la Carga Procesal.</li></ol><p class="dato"><b>Criaturas:</b> Expediente olvidado, Plazo que Vence, Tramitador. Jefe final: La Carga Procesal.</p>
+</div></div></section>
+<section class="pag " data-n="28"><div class="cinta">Las zonas</div><div class="num">28</div><div class="contenido">
+<div class="dos">
+<h2>Zona 4: El Pasaje del Coimero</h2><p class="capital">Una galería angosta detrás del Palacio, llena de puestos de fotocopias, sellos y «asesorías». Todo se ofrece rápido y barato. Nada es lo que parece. Solo se entra a pelear si el equipo denunció al Coimero.</p><table class="aleat"><thead><tr><th>d20</th><th>Encuentro</th></tr></thead><tbody><tr><td>1–5</td><td>Dos Tramitadores y un Expediente olvidado.</td></tr><tr><td>6–9</td><td>Un puesto vende «sellos originales». Prueba de Criterio 14 para notar que son falsos.</td></tr><tr><td>10–12</td><td>Una periodista pide protección: sabe quién está detrás.</td></tr><tr><td>13–15</td><td>El Suboficial Quispe llega si la Reputación es 70 o más.</td></tr><tr><td>16–18</td><td>Una trampa: el pasaje se cierra; prueba de Firmeza 15.</td></tr><tr><td>19–20</td><td>El Coimero en persona ofrece una última tentación, el doble de grande.</td></tr></tbody></table><h3>Semillas de aventura</h3><ol class="pasos"><li>Una red de tramitadores vende turnos de Mesa de Partes.</li><li>El cliente del caso aceptó una coima a espaldas del estudio.</li><li>Un expediente disciplinario aparece en la mesa del estudio.</li></ol><p class="dato"><b>Criaturas:</b> Tramitador, Expediente olvidado. Aliado posible: Suboficial Quispe.</p>
+<div class="salto"></div>
+<h2>La cafetería del juzgado</h2>
+<p class="capital">Un mostrador, seis bancos y el mejor pan con chicharrón de la ciudad. Es zona neutral: ninguna criatura entra. Descansar aquí devuelve a todos la mitad de su Paciencia máxima y consume 15 minutos del reloj. Don Eusebio suele estar en el último banco y siempre tiene un dato.</p>
+<h2>La librería jurídica</h2>
+<p>Estantes hasta el techo, códigos de todos los años y una vendedora que sabe exactamente qué libro necesitas antes de que lo pidas. En la esquina, el puesto del Ekeko de los Honorarios, cargado de miniaturas de todo lo que un abogado desea: un código, un sello, una toga, una laptop que no se cuelga.</p>
+<table class="aleat"><thead><tr><th>d6</th><th>Rumores de la cafetería</th></tr></thead><tbody><tr><td>1</td><td>Dicen que en el sótano hay un expediente de 1950 que todavía espera respuesta.</td></tr><tr><td>2</td><td>La ventanilla 7 atiende rápido los jueves, pero nadie sabe por qué.</td></tr><tr><td>3</td><td>Alguien vio al Coimero almorzando con un Tramitador.</td></tr><tr><td>4</td><td>El Requisito Imposible le teme a la Especialista Mendoza.</td></tr><tr><td>5</td><td>La Carga Procesal ronca: por eso tiemblan los estantes.</td></tr><tr><td>6</td><td>Hay una Mesa de Partes virtual. Nadie la ha encontrado todavía.</td></tr></tbody></table>
+<div class="caja nota"><div class="caja-t">Crear tus propias zonas</div><p>Usa la plantilla de zona de la página 32. Una buena zona tiene una imagen fuerte (una sala, un olor, un sonido), entre tres y cinco criaturas propias, un jefe con una mecánica que obligue a pensar y al menos un personaje no jugador honesto que ayude al equipo.</p></div>
+</div></div></section>
+<section class="pag " data-n="29"><div class="cinta">Aventura</div><div class="num">29</div><div class="contenido">
+<h1>Aventura: El primer caso</h1>
+<div class="dos">
+<p class="capital">Esta aventura introduce a los jugadores en Expedientia. Está pensada para personajes de nivel 1 y ocupa tres sesiones, una por expediente. Es el mismo Acto 1 que cuenta la aplicación.</p>
+<h2>Prólogo</h2>
+<p class="cita">«República de Expedientia. Un país inventado, con instituciones sospechosamente familiares. Una noche, en el sótano del Archivo Central, los expedientes olvidados empezaron a moverse.»</p>
+<p>Lee el prólogo en voz alta. Luego presenta a Don Eusebio, que pasa por el estudio con su termo: «Treinta años en este juzgado, doctor, y nunca había visto caminar a un expediente. Hasta el martes». La Doctora Valdivia deja una advertencia: «Cierre casos, gane reputación y no acepte atajos».</p>
+<h2>Caso 1: El escrito fantasma</h2>
+<p><b>Planteamiento.</b> El Cliente jura que presentó su escrito, pero no aparece en el sistema. «Tenía el cargo… bueno, tenía el cargo hasta el lunes.»</p>
+<div class="caja real"><div class="caja-t">Para leer en voz alta</div><p class="cita">El Cliente entra sin tocar. Trae una bolsa de plástico con papeles, un paraguas que no necesita y la cara de alguien que acaba de ver cerrarse una ventanilla. «Doctor, yo presenté el escrito. Lo juro por mi madre. Tenía el cargo… bueno, tenía el cargo hasta el lunes.»</p></div>
+<p><b>Desarrollo.</b> Cuatro o cinco salas en la Mesa de Partes: un combate de entrada contra tres Formalismos, un trámite, una audiencia en la que el Cliente cambia la fecha de presentación, la cafetería y, con suerte, el Coimero.</p>
+<p><b>Jefe.</b> Rosita señala el fondo de la cola: «Al fondo está su escrito… y algo bastante más grande». La Cola Infinita, con 30 de Paciencia, suma un Usuario en cola por turno.</p>
+<p><b>Cierre.</b> Si ganan, el escrito aparece «con sello y todo». La Doctora Valdivia deja la pista: ese escrito no se perdió solo.</p>
+<h2>Caso 2: Plazo en llamas</h2>
+<p><b>Planteamiento.</b> Quedan dos horas para presentar una apelación y la ventanilla está por cerrar. El expediente tiene <b>reloj</b>: 120 minutos.</p>
+<p><b>Desarrollo.</b> Las salas consumen tiempo; los Plazos que Vencen abundan. La audiencia es clave: revisar el expediente puede encontrar una fecha que dé 20 minutos más.</p>
+<p><b>Jefe.</b> La Cola Infinita de nuevo, ahora con el reloj en contra. Si se acaba el tiempo, el caso es «improcedente por extemporáneo».</p>
+<div class="caja real"><div class="caja-t">Para leer en voz alta</div><p class="cita">El reloj de pared marca las tres. La ventanilla cierra a las cinco. Entre ustedes y la ventanilla hay un pasillo, dos Plazos que Vencen con los números encendidos y una cola que empieza a moverse como si respirara.</p></div>
+<h3>Salas sugeridas del caso 2</h3>
+<table class="aleat"><thead><tr><th>Sala</th><th>Contenido</th></tr></thead><tbody><tr><td>1</td><td>Combate: dos Plazos que Vencen y un Formalismo.</td></tr><tr><td>2</td><td>Trámite: «el formato de apelación cambió ayer».</td></tr><tr><td>3</td><td>Audiencia: el Cliente no recuerda cuándo lo notificaron.</td></tr><tr><td>4</td><td>Cafetería o Coimero, a elección del Relator.</td></tr><tr><td>5</td><td>Jefe: La Cola Infinita, con el reloj en contra.</td></tr></tbody></table>
+<div class="vineta-c"><img src="img/cr-cola.jpg"><p class="pie-img">La Cola Infinita custodia el escrito del cliente desde 1998.</p></div>
+</div></div></section>
+<section class="pag " data-n="30"><div class="cinta">Aventura</div><div class="num">30</div><div class="contenido">
+<div class="dos">
+<h2>Caso 3: La buena pro imposible</h2>
+<p class="capital"><b>Planteamiento.</b> Una empresa pequeña quiere ganar un proceso de selección, pero las bases piden requisitos que nadie cumple. La acción se traslada a la Sala de Contrataciones.</p>
+<p><b>Desarrollo.</b> Vuelva Mañana y Fraccionadores. La Especialista Mendoza aparece si la Reputación es 70 o más y revela el requisito vigente del jefe.</p>
+<div class="caja real"><div class="caja-t">Para leer en voz alta</div><p class="cita">La Sala de Contrataciones huele a sobres cerrados y café frío. Sobre la mesa principal, un pergamino con corona los mira por encima de una lista de requisitos que crece mientras la leen. «Experiencia mínima: cuarenta años. Su empresa tiene tres. Observado.»</p></div>
+<p><b>Jefe.</b> El Requisito Imposible, con 32 de Paciencia, cambia la condición para recibir daño cada dos rondas y llama Formalismos. El equipo debe observar qué golpes funcionan y adaptarse.</p>
+<p><b>Cierre.</b> Si ganan, la empresa compite en igualdad de condiciones. Mendoza encuentra entre las bases un sello antiguo del Archivo Central: alguien está alimentando a la Carga Procesal desde adentro.</p>
+<h2>Si aparece el Coimero</h2>
+<p>En cualquiera de los tres casos puede aparecer el Coimero. Si el equipo lo denuncia, añade una sala extra: la red del Coimero en la trastienda, con dos Tramitadores y, si la Reputación es alta, el Suboficial Quispe como aliado. Es la sala más difícil del caso y la que mejor paga: 50 de honorarios y Reputación +10.</p>
+<h2>Después del primer caso</h2>
+<p>El Acto 1 termina con una certeza: la Carga Procesal existe y está despertando. Los siguientes actos llevan al equipo al Archivo Central, al Pasaje del Coimero y, finalmente, a la torre de expedientes donde duerme el dragón.</p>
+<div class="caja nota"><div class="caja-t">Lo que dicen al perder</div><p>Si el equipo cae, no hay drama: Don Eusebio se encoge de hombros. «Archivado, doctor. No se preocupe: aquí lo archivado también resucita.» El caso puede reabrirse en la siguiente sesión, con las criaturas un poco más fuertes.</p></div>
+<div class="caja ejemplo"><div class="caja-t">Recompensas del Acto 1</div><p>Por cada caso fundado: 60 de honorarios por el jefe, 15 por cada sala de combate y la experiencia correspondiente. Al cerrar los tres casos, los abogados deberían estar cerca del nivel 2 y el estudio, con una Reputación entre 55 y 70 si no aceptó atajos.</p></div>
+</div></div></section>
+<section class="pag plantilla" data-n="31"><div class="cinta">Plantillas</div><div class="num">31</div><div class="contenido">
+<h1 class="hoja-t">Hoja de abogado</h1>
+<div class="hoja">
+  <div class="hoja-cab">
+    <div><label>Nombre</label><div class="linea"></div></div>
+    <div><label>Especialidad</label><div class="linea"></div></div>
+    <div><label>Nivel y título</label><div class="linea"></div></div>
+    <div><label>Universidad</label><div class="linea"></div></div>
+  </div>
+  <div class="hoja-cuerpo">
+    <div class="hoja-col">
+      <div class="atrib"><div class="atrib-n">Firmeza</div><div class="atrib-v"></div><div class="atrib-m">mod.</div></div><div class="atrib"><div class="atrib-n">Agilidad procesal</div><div class="atrib-v"></div><div class="atrib-m">mod.</div></div><div class="atrib"><div class="atrib-n">Aguante</div><div class="atrib-v"></div><div class="atrib-m">mod.</div></div><div class="atrib"><div class="atrib-n">Doctrina</div><div class="atrib-v"></div><div class="atrib-m">mod.</div></div><div class="atrib"><div class="atrib-n">Criterio</div><div class="atrib-v"></div><div class="atrib-m">mod.</div></div><div class="atrib"><div class="atrib-n">Oratoria</div><div class="atrib-v"></div><div class="atrib-m">mod.</div></div>
+    </div>
+    <div class="hoja-col2">
+      <div class="contadores">
+        <div><label>Paciencia</label><div class="grande"></div><small>actual / máxima</small></div>
+        <div><label>Defensa</label><div class="grande"></div></div>
+        <div><label>Movimiento</label><div class="grande"></div></div>
+        <div><label>Competencia</label><div class="grande"></div></div>
+      </div>
+      <label>Ataque (característica, daño, alcance)</label><div class="linea"></div><div class="linea"></div>
+      <label>Poderes y recargas</label><div class="linea"></div><div class="linea"></div><div class="linea"></div><div class="linea"></div>
+      <label>Objetos</label><div class="linea"></div><div class="linea"></div><div class="linea"></div>
+      <div class="contadores"><div><label>Honorarios</label><div class="grande"></div></div><div><label>Experiencia</label><div class="grande"></div></div><div><label>Reputación del estudio</label><div class="grande"></div></div></div>
+    </div>
+    <div class="hoja-col3">
+      <label>Habilidades de oficio</label>
+      <div class="hh"><span class="cuad"></span>Cargar expedientes <i>(Fir)</i><span class="lin"></span></div><div class="hh"><span class="cuad"></span>Aguantar la fila <i>(Agu)</i><span class="lin"></span></div><div class="hh"><span class="cuad"></span>Llegar a tiempo <i>(Agi)</i><span class="lin"></span></div><div class="hh"><span class="cuad"></span>Pasar desapercibido <i>(Agi)</i><span class="lin"></span></div><div class="hh"><span class="cuad"></span>Presentar al vuelo <i>(Agi)</i><span class="lin"></span></div><div class="hh"><span class="cuad"></span>Normativa <i>(Doc)</i><span class="lin"></span></div><div class="hh"><span class="cuad"></span>Jurisprudencia <i>(Doc)</i><span class="lin"></span></div><div class="hh"><span class="cuad"></span>Revisar el expediente <i>(Doc)</i><span class="lin"></span></div><div class="hh"><span class="cuad"></span>Cuentas y tasas <i>(Doc)</i><span class="lin"></span></div><div class="hh"><span class="cuad"></span>Leer al cliente <i>(Cri)</i><span class="lin"></span></div><div class="hh"><span class="cuad"></span>Atención a plazos <i>(Cri)</i><span class="lin"></span></div><div class="hh"><span class="cuad"></span>Orientarse en la burocracia <i>(Cri)</i><span class="lin"></span></div><div class="hh"><span class="cuad"></span>Primeros auxilios del ánimo <i>(Cri)</i><span class="lin"></span></div><div class="hh"><span class="cuad"></span>Trato con mascotas del cliente <i>(Cri)</i><span class="lin"></span></div><div class="hh"><span class="cuad"></span>Alegar <i>(Ora)</i><span class="lin"></span></div><div class="hh"><span class="cuad"></span>Negociar <i>(Ora)</i><span class="lin"></span></div><div class="hh"><span class="cuad"></span>Imponerse <i>(Ora)</i><span class="lin"></span></div><div class="hh"><span class="cuad"></span>Farolear <i>(Ora)</i><span class="lin"></span></div>
+      <label>Personalidad y manías</label><div class="linea"></div><div class="linea"></div><div class="linea"></div><div class="linea"></div>
+    </div>
+  </div>
+</div></div></section>
+<section class="pag plantilla" data-n="32"><div class="cinta">Plantillas</div><div class="num">32</div><div class="contenido">
+<h1 class="hoja-t">Plantilla de zona</h1>
+<div class="hoja">
+  <div class="hoja-cab"><div><label>Nombre de la zona</label><div class="linea"></div></div><div><label>Nivel sugerido</label><div class="linea"></div></div></div>
+  <div class="hoja-cuerpo dos-z">
+    <div>
+      <label>Descripción (lo que se ve, se oye y se huele)</label><div class="linea"></div><div class="linea"></div><div class="linea"></div><div class="linea"></div><div class="linea"></div><div class="linea"></div>
+      <label>Mapa o esquema</label><div class="recuadro"></div>
+      <label>Personajes no jugadores</label><div class="linea"></div><div class="linea"></div><div class="linea"></div><div class="linea"></div>
+    </div>
+    <div>
+      <label>Tabla de encuentros (d20)</label>
+      <div class="hh"><b>1–4</b><span class="lin"></span></div><div class="hh"><b>5–7</b><span class="lin"></span></div><div class="hh"><b>8–10</b><span class="lin"></span></div><div class="hh"><b>11–13</b><span class="lin"></span></div><div class="hh"><b>14–16</b><span class="lin"></span></div><div class="hh"><b>17–18</b><span class="lin"></span></div><div class="hh"><b>19–20</b><span class="lin"></span></div>
+      <label>Criaturas (Paciencia · Defensa · Ataque · Rasgo)</label><div class="linea"></div><div class="linea"></div><div class="linea"></div><div class="linea"></div><div class="linea"></div><div class="linea"></div><div class="linea"></div>
+      <label>Jefe y su mecánica</label><div class="linea"></div><div class="linea"></div><div class="linea"></div><div class="linea"></div>
+      <label>Semillas de aventura</label><div class="linea"></div><div class="linea"></div><div class="linea"></div><div class="linea"></div>
+    </div>
+  </div>
+</div>
+<p class="pie-final">Expedientes y Dragones · Manual del juego · © 2026 Leonel Díaz · Se permite fotocopiar las plantillas para uso personal.</p>
+</div></section>
+<section class="pag contraportada" data-n="33"><div class="contenido">
+<div class="contra">
+  <img class="contra-d20" src="img/d20.png" alt="">
+  <h2>Los expedientes olvidados se están moviendo.</h2>
+  <p>En la República de Expedientia, los formularios tienen colmillos, los plazos explotan y las colas no terminan nunca. Tu estudio acaba de abrir frente a la Corte y el primer cliente ya está en la puerta.</p>
+  <p>Este manual contiene todo lo necesario para jugar: creación de abogados con seis especialidades, el sistema del d20 con la prueba jurídica, combate táctico, un bestiario de criaturas del sistema, cuatro zonas, tablas para improvisar y la aventura completa <i>El primer caso</i>.</p>
+  <p class="contra-lema">Litiga, investiga y vence al dragón de la burocracia.</p>
+  <p class="contra-autor">Leonel Díaz · Arequipa, 2026</p>
+</div></div></section>
+</body></html>
