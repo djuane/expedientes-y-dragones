@@ -173,3 +173,11 @@ img.mapa { width: 100%; height: auto; border: .6mm solid var(--tinta); border-ra
 .contenido > .bestias { flex: 1 1 0; min-height: 0; }
 .bestias .bloque { flex: 1 1 0; }
 .bestias.tres .bl-img { width: 60mm; height: 60mm; }
+
+.socios .contenido { gap: 2mm; }
+.socio { display: flex; gap: 6mm; flex: 1; min-height: 0; align-items: flex-start; }
+.socio:nth-of-type(even) { flex-direction: row-reverse; }
+.socio-img { width: 66mm; height: 66mm; object-fit: cover; border-radius: 2mm; border: .8mm solid var(--oro); box-shadow: 0 0 0 .5mm var(--tinta), 0 1.2mm 3mm rgba(0,0,0,.45); flex: none; }
+.socio-txt { flex: 1; }
+.socio-txt h2 { margin-top: 0; font-size: 18pt; }
+.logo-portada { width: 150mm; margin: 2mm auto 0; display: block; filter: drop-shadow(0 1.5mm 3mm rgba(0,0,0,.8)); }

@@ -14,7 +14,7 @@ def pagina(seccion, html, clase=''):
 
 
 def img(nombre, clase='', alt=''):
-    ext = 'png' if nombre in ('marco', 'd20') else 'jpg'
+    ext = 'png' if nombre in ('marco', 'd20') or nombre.startswith('ia-') else 'jpg'
     return f'<img class="{clase}" src="img/{nombre}.{ext}" alt="{alt}">'
 
 
@@ -57,7 +57,7 @@ pagina('', f'''
 {img('portada', 'portada-img')}
 <div class="portada-tit">
   <div class="sobre">Un juego de rol jurídico</div>
-  <h1 class="titulo-portada">Expedientes<br><span>y</span><br>Dragones</h1>
+  {img('ia-logo', 'logo-portada', 'Expedientes y Dragones')}
   <div class="lema">Litiga, investiga y vence al dragón de la burocracia</div>
 </div>
 <div class="portada-pie">Manual del juego · Reglas, especialidades, bestiario y aventura<br><b>Leonel Díaz</b></div>
@@ -69,8 +69,8 @@ indice = [
     ('Bienvenidos a Expedientia', 3), ('Crear un abogado', 5), ('Características', 5), ('Habilidades de oficio', 6),
     ('Especialidades', 7), ('Sistema de juego', 10), ('La tirada', 10), ('La prueba jurídica', 11), ('La acción', 12),
     ('Poderes de las especialidades', 13), ('Progresión', 14), ('Recompensas', 15),
-    ('Montando la partida', 16), ('Tablas aleatorias', 18), ('Personajes no jugadores', 20), ('Bestiario', 21),
-    ('Las zonas de Expedientia', 26), ('Aventura: El primer caso', 29), ('Plantillas', 31),
+    ('Montando la partida', 16), ('Tablas aleatorias', 18), ('Personajes no jugadores', 20), ('Los socios del estudio', 21), ('Bestiario', 22),
+    ('Las zonas de Expedientia', 27), ('Aventura: El primer caso', 30), ('Plantillas', 32),
 ]
 filas_ind = ''.join(f'<div class="ind"><span>{t}</span><i></i><b>{p}</b></div>' for t, p in indice)
 pagina('Expedientes y Dragones', f'''
@@ -89,7 +89,7 @@ pagina('Expedientes y Dragones', f'''
 <p>Ahí, una noche, los expedientes olvidados del Archivo Central empezaron a moverse. Los formularios desarrollaron colmillos, los plazos aprendieron a explotar y las colas se volvieron, literalmente, infinitas. Detrás de todo crece una criatura que nadie ha visto completa: <b>la Carga Procesal</b>, un dragón hecho de trámites que nadie atendió.</p>
 <p>Los jugadores no blanden espadas: presentan escritos, piden medidas cautelares, plantean nulidades y, cuando todo falla, se toman un café en la cafetería del juzgado. Ganan expedientes, reputación y honorarios, y deben decidir qué hacer cuando un señor muy amable ofrece «agilizar» el trámite.</p>
 <p>Este manual sirve para dos cosas: jugar en mesa con lápiz, papel y dados, y entender las reglas que usa la aplicación para celular del mismo nombre. Las dos versiones comparten el corazón del sistema: un dado de veinte caras, seis características y la prueba jurídica.</p>
-{caja('Lo que necesitas', '<p>Uno a cuatro jugadores y una persona que dirija la partida (el <b>Relator</b>). Un dado de veinte caras (d20) y, si es posible, dados de 4, 6, 8 y 100 caras. Copias de la hoja de abogado (página 31), lápices y una tarde libre de audiencias.</p>')}
+{caja('Lo que necesitas', '<p>Uno a cuatro jugadores y una persona que dirija la partida (el <b>Relator</b>). Un dado de veinte caras (d20) y, si es posible, dados de 4, 6, 8 y 100 caras. Copias de la hoja de abogado (página 32), lápices y una tarde libre de audiencias.</p>')}
 {caja('Advertencia del estudio', '<p>Es un juego de humor de oficio. No es asesoría legal ni reemplaza la consulta con un abogado colegiado. Las preguntas jurídicas que aparecen en la aplicación se verifican en fuentes oficiales peruanas antes de publicarse.</p>', 'aviso')}
 </div>''')
 
@@ -100,7 +100,7 @@ pagina('Expedientes y Dragones', f'''
 <p class="capital">La República de Expedientia es un país de volcanes nevados, ciudades de piedra blanca y ventanillas. Muchas ventanillas. Su capital judicial se levanta a los pies de un volcán dormido, con arcos de sillar que brillan al atardecer y un río que todos llaman el Trámite porque nunca se sabe cuándo va a llegar.</p>
 <p>En el centro de la ciudad está el <b>Palacio de Justicia</b>, de donde parten las calles hacia la Mesa de Partes, la Sala de Contrataciones y el temido Archivo Central. Alrededor crecen los negocios de siempre: la cafetería del juzgado, donde se resuelven más casos que en las salas; la librería jurídica, donde todo cuesta un poco más; y el Pasaje del Coimero, donde nada es lo que parece.</p>
 <h3>El estudio de los jugadores</h3>
-<p>Los personajes acaban de alquilar un cuarto frente a la Corte. Tiene un escritorio cojo, una impresora que funciona los martes y una placa en la puerta que dice su apellido mal escrito. Es el centro de operaciones: ahí llegan los clientes, ahí se guardan los honorarios y ahí se decide qué caso aceptar.</p>
+<p>Los personajes acaban de alquilar un cuarto frente a la Corte con <b>Gonzabio</b>, el socio fundador, que arma los expedientes y los defiende como un escudo, y con <b>Lion</b>, el investigador que lee hasta los anexos que nadie abre. Tiene un escritorio cojo, una impresora que funciona los martes y una placa en la puerta con el apellido mal escrito. Ahí llegan los clientes, ahí se guardan los honorarios y ahí se decide qué caso aceptar.</p>
 <h3>La Carga Procesal</h3>
 <p>Nadie sabe cuándo nació. Don Eusebio, que lleva treinta años en el juzgado, jura que la vio por primera vez «un martes». Se alimenta de cada escrito sin proveer, de cada notificación que no llegó y de cada «vuelva mañana». Cuanto más crece, más criaturas escapan del Archivo Central. Derrotarla es la meta de toda la campaña; contenerla, el trabajo de cada día.</p>
 {caja('Tono del juego', '<p>Expedientia se parece a la vida real del litigante, pero exagerada hasta lo fantástico. Las criaturas representan problemas del sistema, nunca a personas concretas: no hay jueces, servidores ni colegas reales retratados. El humor apunta a los trámites, no a la gente que los atiende.</p>')}
@@ -517,6 +517,21 @@ pagina('Montando la partida', f'''
 <div>{caja('Crear adversarios', '<p>Toda criatura del sistema nace de un problema concreto: un requisito absurdo, un plazo injusto, una notificación que no llega. Para crear una nueva, elige el problema, dale un <b>rasgo</b> que lo represente en el tablero y fija sus números comparándola con las del bestiario: una criatura menor tiene entre 3 y 9 de Paciencia y Defensa de 9 a 12; un jefe, 30 o más de Paciencia y una mecánica que obligue al equipo a pensar.</p>')}</div></div>
 ''')
 
+def socio(imagen, nombre, cargo, texto, frase, poder, nombre_poder):
+    return (f'<div class="socio">{img(imagen, "socio-img")}<div class="socio-txt"><h2>{nombre}</h2><div class="bl-tipo">{cargo}</div>'
+            f'<p>{texto}</p><p class="cita">{frase}</p>{caja("Aliado: " + nombre_poder, poder, "ejemplo")}</div></div>')
+
+
+pagina('Montando la partida', '<h1>Los socios del estudio</h1><p class="intro">Dos personajes acompañan al equipo desde el primer caso. El Relator los interpreta, aunque un jugador puede llevar a uno de ellos si el grupo es pequeño. Sus poderes son propuestas para el juego en mesa.</p>' +
+       socio('ia-gonzabio', 'Gonzabio', 'Socio fundador del estudio',
+             'Puso la mitad del alquiler y toda la terquedad. Aprendió el oficio en la ventanilla, no en la facultad, y sabe que un expediente bien foliado aguanta cualquier golpe. En combate se planta delante del equipo con el maletín abierto; fuera de él, es quien sigue la pista de los escritos perdidos hasta el Archivo Central.',
+             '«Usted litiga y yo armo los expedientes. Mientras no se nos caiga el expediente, no nos gana.»',
+             '<p><b>Escudo de expedientes.</b> Una vez por sala, cuando un abogado a 2 casillas o menos recibe daño, Gonzabio lo reduce en 1d6 + 2. <b>Expediente foliado:</b> el equipo empieza cada caso con un Escrito pre-firmado gratis.</p>', 'escudo de expedientes') +
+       socio('ia-lion', 'Lion', 'Abogado investigador',
+             'Terno gris, corbata roja, lentes y una lapicera que nunca suelta. Lee la letra pequeña, cuenta los días hábiles dos veces y abre los anexos que nadie abre, porque ahí se esconden los monstruos. Fue él quien cruzó las firmas de los tres primeros casos y encontró el mismo sello: el del Archivo Central.',
+             '«Leí el anexo 7. El requisito se escribió pensando en una sola empresa, y no es la nuestra.»',
+             '<p><b>Letra pequeña.</b> Una vez por expediente, Lion revela el rasgo o el requisito vigente de una criatura, aunque la Reputación sea baja. <b>Doble conteo:</b> en un caso con reloj, el equipo gana 10 minutos la primera vez que pierde tiempo en un trámite.</p>', 'letra pequeña'), 'socios')
+
 # ═════════════════════════ 21-25. BESTIARIO ═════════════════════════
 B = [
     ('Formalismo', 'Criatura menor de Mesa de Partes', [10, 10, 10, 8, 8, 6], 8, 11, 2, 'Firmeza, 1d4 de daño, alcance 1.',
@@ -625,7 +640,7 @@ pagina('Las zonas', f'''
 <h2>La librería jurídica</h2>
 <p>Estantes hasta el techo, códigos de todos los años y una vendedora que sabe exactamente qué libro necesitas antes de que lo pidas. En la esquina, el puesto del Ekeko de los Honorarios, cargado de miniaturas de todo lo que un abogado desea: un código, un sello, una toga, una laptop que no se cuelga.</p>
 {tabla(['d6', 'Rumores de la cafetería'], [['1', 'Dicen que en el sótano hay un expediente de 1950 que todavía espera respuesta.'], ['2', 'La ventanilla 7 atiende rápido los jueves, pero nadie sabe por qué.'], ['3', 'Alguien vio al Coimero almorzando con un Tramitador.'], ['4', 'El Requisito Imposible le teme a la Especialista Mendoza.'], ['5', 'La Carga Procesal ronca: por eso tiemblan los estantes.'], ['6', 'Hay una Mesa de Partes virtual. Nadie la ha encontrado todavía.']], 'aleat')}
-{caja('Crear tus propias zonas', '<p>Usa la plantilla de zona de la página 32. Una buena zona tiene una imagen fuerte (una sala, un olor, un sonido), entre tres y cinco criaturas propias, un jefe con una mecánica que obligue a pensar y al menos un personaje no jugador honesto que ayude al equipo.</p>')}
+{caja('Crear tus propias zonas', '<p>Usa la plantilla de zona de la página 33. Una buena zona tiene una imagen fuerte (una sala, un olor, un sonido), entre tres y cinco criaturas propias, un jefe con una mecánica que obligue a pensar y al menos un personaje no jugador honesto que ayude al equipo.</p>')}
 </div>''')
 
 # ═════════════════════════ 29-30. AVENTURA ═════════════════════════
@@ -635,13 +650,13 @@ pagina('Aventura', f'''
 <p class="capital">Esta aventura introduce a los jugadores en Expedientia. Está pensada para personajes de nivel 1 y ocupa tres sesiones, una por expediente. Es el mismo Acto 1 que cuenta la aplicación.</p>
 <h2>Prólogo</h2>
 <p class="cita">«República de Expedientia. Un país inventado, con instituciones sospechosamente familiares. Una noche, en el sótano del Archivo Central, los expedientes olvidados empezaron a moverse.»</p>
-<p>Lee el prólogo en voz alta. Luego presenta a Don Eusebio, que pasa por el estudio con su termo: «Treinta años en este juzgado, doctor, y nunca había visto caminar a un expediente. Hasta el martes». La Doctora Valdivia deja una advertencia: «Cierre casos, gane reputación y no acepte atajos».</p>
+<p>Lee el prólogo en voz alta. Luego presenta a Don Eusebio, que pasa por el estudio con su termo: «Treinta años en este juzgado, doctor, y nunca había visto caminar a un expediente. Hasta el martes». La Doctora Valdivia deja una advertencia: «Cierre casos, gane reputación y no acepte atajos». Gonzabio golpea el escritorio cojo: «Socio, el cuarto será chico, pero el estudio es nuestro». Lion, sin levantar la vista de un anexo, añade: «Y yo leo la letra pequeña. Ahí se esconden los monstruos».</p>
 <h2>Caso 1: El escrito fantasma</h2>
 <p><b>Planteamiento.</b> El Cliente jura que presentó su escrito, pero no aparece en el sistema. «Tenía el cargo… bueno, tenía el cargo hasta el lunes.»</p>
 {caja('Para leer en voz alta', '<p class="cita">El Cliente entra sin tocar. Trae una bolsa de plástico con papeles, un paraguas que no necesita y la cara de alguien que acaba de ver cerrarse una ventanilla. «Doctor, yo presenté el escrito. Lo juro por mi madre. Tenía el cargo… bueno, tenía el cargo hasta el lunes.»</p>', 'real')}
 <p><b>Desarrollo.</b> Cuatro o cinco salas en la Mesa de Partes: un combate de entrada contra tres Formalismos, un trámite, una audiencia en la que el Cliente cambia la fecha de presentación, la cafetería y, con suerte, el Coimero.</p>
-<p><b>Jefe.</b> Rosita señala el fondo de la cola: «Al fondo está su escrito… y algo bastante más grande». La Cola Infinita, con 30 de Paciencia, suma un Usuario en cola por turno.</p>
-<p><b>Cierre.</b> Si ganan, el escrito aparece «con sello y todo». La Doctora Valdivia deja la pista: ese escrito no se perdió solo.</p>
+<p><b>Jefe.</b> Rosita señala el fondo de la cola: «Al fondo está su escrito… y algo bastante más grande». La Cola Infinita, con 30 de Paciencia, suma un Usuario en cola por turno. Lion nota que la numeración de la cola está salteada: donde falta un número hay un escrito escondido. Un abogado que llegue a esa casilla y supere Revisar el expediente (dificultad 13) da ventaja a todo el equipo durante una ronda.</p>
+<p><b>Cierre.</b> Si ganan, el escrito aparece «con sello y todo». Gonzabio revisa los cargos de la semana: faltan cuarenta escritos, y todos pasaron por el Archivo Central.</p>
 <h2>Caso 2: Plazo en llamas</h2>
 <p><b>Planteamiento.</b> Quedan dos horas para presentar una apelación y la ventanilla está por cerrar. El expediente tiene <b>reloj</b>: 120 minutos.</p>
 <p><b>Desarrollo.</b> Las salas consumen tiempo; los Plazos que Vencen abundan. La audiencia es clave: revisar el expediente puede encontrar una fecha que dé 20 minutos más.</p>
@@ -658,12 +673,12 @@ pagina('Aventura', f'''
 <p class="capital"><b>Planteamiento.</b> Una empresa pequeña quiere ganar un proceso de selección, pero las bases piden requisitos que nadie cumple. La acción se traslada a la Sala de Contrataciones.</p>
 <p><b>Desarrollo.</b> Vuelva Mañana y Fraccionadores. La Especialista Mendoza aparece si la Reputación es 70 o más y revela el requisito vigente del jefe.</p>
 {caja('Para leer en voz alta', '<p class="cita">La Sala de Contrataciones huele a sobres cerrados y café frío. Sobre la mesa principal, un pergamino con corona los mira por encima de una lista de requisitos que crece mientras la leen. «Experiencia mínima: cuarenta años. Su empresa tiene tres. Observado.»</p>', 'real')}
-<p><b>Jefe.</b> El Requisito Imposible, con 32 de Paciencia, cambia la condición para recibir daño cada dos rondas y llama Formalismos. El equipo debe observar qué golpes funcionan y adaptarse.</p>
+<p><b>Jefe.</b> El Requisito Imposible, con 32 de Paciencia, cambia la condición para recibir daño cada dos rondas y llama Formalismos. El equipo debe observar qué golpes funcionan y adaptarse. Si Lion está en la sala, ya leyó el anexo 7: puede revelar el primer requisito sin esperar a Mendoza.</p>
 <p><b>Cierre.</b> Si ganan, la empresa compite en igualdad de condiciones. Mendoza encuentra entre las bases un sello antiguo del Archivo Central: alguien está alimentando a la Carga Procesal desde adentro.</p>
 <h2>Si aparece el Coimero</h2>
 <p>En cualquiera de los tres casos puede aparecer el Coimero. Si el equipo lo denuncia, añade una sala extra: la red del Coimero en la trastienda, con dos Tramitadores y, si la Reputación es alta, el Suboficial Quispe como aliado. Es la sala más difícil del caso y la que mejor paga: 50 de honorarios y Reputación +10.</p>
 <h2>Después del primer caso</h2>
-<p>El Acto 1 termina con una certeza: la Carga Procesal existe y está despertando. Los siguientes actos llevan al equipo al Archivo Central, al Pasaje del Coimero y, finalmente, a la torre de expedientes donde duerme el dragón.</p>
+<p>Lion cruza las firmas de los tres casos y encuentra un mismo sello, el del Archivo Central. Gonzabio cierra el maletín: «Las tres pistas apuntan al mismo sótano, socio. Bajamos al Archivo Central». El Acto 1 termina con una certeza: la Carga Procesal existe y está despertando. Los siguientes actos llevan al equipo al Archivo Central, al Pasaje del Coimero y, finalmente, a la torre de expedientes donde duerme el dragón.</p>
 {caja('Lo que dicen al perder', '<p>Si el equipo cae, no hay drama: Don Eusebio se encoge de hombros. «Archivado, doctor. No se preocupe: aquí lo archivado también resucita.» El caso puede reabrirse en la siguiente sesión, con las criaturas un poco más fuertes.</p>')}
 {caja('Recompensas del Acto 1', '<p>Por cada caso fundado: 60 de honorarios por el jefe, 15 por cada sala de combate y la experiencia correspondiente. Al cerrar los tres casos, los abogados deberían estar cerca del nivel 2 y el estudio, con una Reputación entre 55 y 70 si no aceptó atajos.</p>', 'ejemplo')}
 </div>''')
