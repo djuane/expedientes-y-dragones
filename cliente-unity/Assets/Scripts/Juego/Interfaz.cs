@@ -117,6 +117,8 @@ namespace Expedientia.Cliente
         {
             var go = new GameObject("Boton", typeof(RectTransform), typeof(Image), typeof(Button));
             go.transform.SetParent(padre, false);
+            // Ocupa toda su zona (sin esto queda del tamaño por defecto de 100×100).
+            ((RectTransform)go.transform).Anclar(0, 0, 1, 1);
             var img = go.GetComponent<Image>();
             img.color = fondo ?? Noche;
             img.sprite = Arte.Redondeado;
