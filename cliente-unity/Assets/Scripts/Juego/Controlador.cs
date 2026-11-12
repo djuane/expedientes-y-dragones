@@ -17,7 +17,7 @@ namespace Expedientia.Cliente
     /// Arma toda la interfaz por código (vertical, para un pulgar) y conversa con la fuente de la partida.
     /// La capa visual solo interpreta eventos; las reglas están en Expedientia.Logica.
     /// </summary>
-    public sealed class Controlador : MonoBehaviour
+    public sealed partial class Controlador : MonoBehaviour
     {
         private const int Columnas = 6, Filas = 8;
         private const string ClavePrologo = "eyd.prologo-visto";
@@ -103,8 +103,11 @@ namespace Expedientia.Cliente
             else MostrarMenu();
         }
 
-        /// <summary>Partida rápida: sin conexión, con la última especialidad y el caso más difícil que ya desbloqueó el estudio.</summary>
-        private Task JugarYa()
+        /// <summary>Partida rápida: el caso de investigación, sin conexión.</summary>
+        private Task JugarYa() => EmpezarInvestigacion();
+
+        /// <summary>El modo de combate táctico anterior (v0.12), que queda como modo aparte.</summary>
+        private Task JugarCombate()
         {
             _enLinea = false;
             var cerrados = FuenteLocal.LeerEstudio().ExpedientesCerrados;
@@ -131,14 +134,11 @@ namespace Expedientia.Cliente
             var est = FuenteLocal.LeerEstudio();
             var acto = est.ExpedientesCerrados < 3 ? "Acto 1 · El primer caso" : "Acto 1 · Algo despierta en el Archivo Central";
             Ui.Texto(Ui.Vacio(_raiz, "Acto").Anclar(0.05f, 0.245f, 0.95f, 0.285f), acto, 40, Ui.Dorado, TextAnchor.MiddleCenter, FontStyle.Bold);
-            var proximo = est.Proximo;
-            var meta = proximo == null ? "Todos los desbloqueos ganados."
-                : $"Próximo desbloqueo: {proximo.Nombre} (faltan {proximo.ExpedientesNecesarios - est.ExpedientesCerrados} expedientes)";
             Ui.Texto(Ui.Vacio(_raiz, "Estudio").Anclar(0.05f, 0.205f, 0.95f, 0.245f),
-                $"Tu estudio: nivel {est.Nivel} · reputación {est.Reputacion} · S/ {est.Honorarios} · {est.ExpedientesCerrados} cerrados\n{meta}", 28, Ui.Pergamino);
+                $"Tu estudio: nivel {est.Nivel} · reputación {est.Reputacion} · S/ {est.Honorarios} · {est.ExpedientesCerrados} casos ganados\nInvestiga, junta pruebas y desmiente al testigo en la audiencia.", 28, Ui.Pergamino);
 
             Ui.Boton(Ui.Vacio(_raiz, "Jugar").Anclar(0.12f, 0.115f, 0.88f, 0.195f), "¡JUGAR YA!", () => _ = JugarYa(), Ui.Carmesi, Ui.Pergamino, 56);
-            Ui.Boton(Ui.Vacio(_raiz, "Preparar").Anclar(0.04f, 0.05f, 0.36f, 0.105f), "Elegir caso", () => MostrarPreparacion(), Ui.Tinta, Ui.Pergamino, 30);
+            Ui.Boton(Ui.Vacio(_raiz, "Preparar").Anclar(0.04f, 0.05f, 0.36f, 0.105f), "Modo combate", () => MostrarPreparacion(), Ui.Tinta, Ui.Pergamino, 30);
             Ui.Boton(Ui.Vacio(_raiz, "Prologo").Anclar(0.37f, 0.05f, 0.65f, 0.105f), "Prólogo", () => _ = VerPrologo(), Ui.Tinta, Ui.Pergamino, 30);
             Ui.Boton(Ui.Vacio(_raiz, "Sonido").Anclar(0.66f, 0.05f, 0.96f, 0.105f), Sonido.Silenciado ? "Sonido: no" : "Sonido: sí",
                 () => { Sonido.Silenciado = !Sonido.Silenciado; MostrarMenu(); }, Ui.Tinta, Ui.Pergamino, 30);
@@ -1018,7 +1018,7 @@ namespace Expedientia.Cliente
             var armado = e.MejorasTomadas.Count == 0 ? "" : "Tu armado: " + string.Join(" · ", e.MejorasTomadas.Select(t => t.Nombre)) + "\n";
             Ui.Texto(Ui.Vacio(carta, "L").Anclar(0.04f, 0.17f, 0.96f, 0.33f), armado + meta, 28, Ui.Tinta, TextAnchor.MiddleCenter, FontStyle.Italic);
             Ui.Boton(Ui.Vacio(carta, "V").Anclar(0.04f, 0.03f, 0.48f, 0.15f, 4), "Al estudio", () => MostrarMenu(), Ui.Tinta, Ui.Pergamino, 36);
-            Ui.Boton(Ui.Vacio(carta, "Otra").Anclar(0.52f, 0.03f, 0.96f, 0.15f, 4), "¡OTRA PARTIDA!", () => { MostrarMenu(); _ = JugarYa(); }, Ui.Carmesi, Ui.Pergamino, 40);
+            Ui.Boton(Ui.Vacio(carta, "Otra").Anclar(0.52f, 0.03f, 0.96f, 0.15f, 4), "¡OTRA PARTIDA!", () => { MostrarMenu(); _ = JugarCombate(); }, Ui.Carmesi, Ui.Pergamino, 40);
             StartCoroutine(Aparecer(zona));
             if (s.Fundada) Efectos.Confeti(160);
         }

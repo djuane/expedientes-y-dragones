@@ -123,11 +123,15 @@ namespace Expedientia.Cliente
             if (_motor != null && _motor.Expediente.Terminado && !_guardado)
             {
                 _guardado = true;
-                var e = _motor.Expediente.Estudio;
-                PlayerPrefs.SetString(ClaveEstudio, JsonConvert.SerializeObject(new[] { e.Honorarios, e.Experiencia, e.Reputacion, e.ExpedienteDisciplinario, e.ExpedientesCerrados }));
-                PlayerPrefs.Save();
+                GuardarEstudio(_motor.Expediente.Estudio);
             }
             return r;
+        }
+
+        public static void GuardarEstudio(EstadoEstudio e)
+        {
+            PlayerPrefs.SetString(ClaveEstudio, JsonConvert.SerializeObject(new[] { e.Honorarios, e.Experiencia, e.Reputacion, e.ExpedienteDisciplinario, e.ExpedientesCerrados }));
+            PlayerPrefs.Save();
         }
 
         public static EstadoEstudio LeerEstudio()

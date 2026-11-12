@@ -1,5 +1,18 @@
 # Cambios
 
+## v0.13.0 (12/11/2026)
+Nuevo modo principal: **investigar y litigar**. El combate por turnos queda como «Modo combate».
+
+- **Investigación con plazo:** el caso empieza a las 8 de la mañana y la audiencia es a las 5. Cada diligencia cuesta una hora. Se recorren lugares (el estudio, la casa del cliente, Mesa de Partes, el sótano de soporte técnico, el pasillo del juzgado) y se abren otros con lo que se descubre (la tintorería, la oficina del jefe). Algunos caminos no llevan a nada y solo cuestan tiempo.
+- **Pruebas y pistas:** cada hallazgo aparece como una carta que va al expediente. Las pistas abren lugares o conversaciones; las pruebas se presentan en la audiencia. Lion da hasta tres pistas por caso.
+- **El atajo del Coimero:** vende una «constancia agilizada». Presentarla en la audiencia cuesta dos puntos de credibilidad y suma al expediente disciplinario.
+- **El escrito:** antes de la audiencia se elige qué se le pide al juzgado. Pedir algo equivocado no pierde el caso, pero resta un punto de credibilidad.
+- **La audiencia:** el testigo declara frase por frase. Se puede repreguntar gratis o presentar una prueba contra una frase. La prueba justa en la frase justa rompe el testimonio («¡CONTRADICCIÓN!»); la equivocada cuesta credibilidad («¡NO HA LUGAR!»). Sin credibilidad, el caso es improcedente. Entre un testimonio y otro, la jueza puede pedir el fundamento con una prueba jurídica del banco (solo preguntas verificadas, o borradores si se activan); acertar devuelve credibilidad.
+- **Sentencia con estrellas:** de 1 a 3 según los errores, con honorarios y experiencia para el estudio.
+- **Caso 1 reescrito como misterio:** «El escrito fantasma». 7 lugares, 10 pruebas y pistas, 3 pretensiones y 5 testimonios del Lic. Bermúdez, jefe de Mesa de Partes. Gonzabio y Lion acompañan todo el caso, y el final abre la pista del Archivo Central. Los horarios y reglamentos son de ficción de la República de Expedientia.
+- El botón ¡JUGAR YA! y la primera apertura del juego llevan a este modo.
+- 11 pruebas nuevas del modo (137 en total: 128 de lógica y 9 del servidor). El caso se valida al cargarse: cada testimonio tiene una sola contradicción y las pruebas clave caben en el plazo.
+
 ## v0.12.0 (12/11/2026)
 Jugabilidad: más enganche desde el primer minuto.
 

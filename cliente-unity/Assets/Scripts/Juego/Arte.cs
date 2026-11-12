@@ -46,6 +46,9 @@ namespace Expedientia.Cliente
             "El Coimero" => "coimero",
             "Gonzabio" => "gonzabio",
             "Lion" => "lion",
+            "Lic. Bermúdez" => "tramitador",
+            "Jhony, el técnico" => "usuario",
+            "Doña Felícita" => "usuario",
             _ => "narrador",
         });
 
