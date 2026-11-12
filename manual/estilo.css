@@ -187,3 +187,7 @@ img.mapa { width: 100%; height: auto; border: .6mm solid var(--tinta); border-ra
 .rapidas .formula { font-size: 9.6pt; padding: 1.4mm; margin: .5mm 0 1.5mm; }
 .contra-roles { display: flex; justify-content: center; gap: 3mm; margin: 6mm 0 0; }
 .contra-roles .rol-img { width: 18mm; height: 18mm; margin: 0; }
+.portada .contenido::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(8,4,14,.82) 0%, rgba(8,4,14,.45) 22%, rgba(8,4,14,0) 36%, rgba(8,4,14,0) 82%, rgba(8,4,14,.85) 100%); }
+.portada-tit, .portada-pie { z-index: 2; }
+.portada-tit .lema { text-shadow: 0 0 2mm #000, 0 0 4mm #000, 0 .4mm 1mm #000; font-weight: 600; }
