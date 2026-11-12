@@ -135,7 +135,7 @@ namespace Expedientia.Cliente
             var acto = est.ExpedientesCerrados < 3 ? "Acto 1 · El primer caso" : "Acto 1 · Algo despierta en el Archivo Central";
             Ui.Texto(Ui.Vacio(_raiz, "Acto").Anclar(0.05f, 0.245f, 0.95f, 0.285f), acto, 40, Ui.Dorado, TextAnchor.MiddleCenter, FontStyle.Bold);
             Ui.Texto(Ui.Vacio(_raiz, "Estudio").Anclar(0.05f, 0.205f, 0.95f, 0.245f),
-                $"Tu estudio: nivel {est.Nivel} · reputación {est.Reputacion} · S/ {est.Honorarios} · {est.ExpedientesCerrados} casos ganados\nInvestiga, junta pruebas y desmiente al testigo en la audiencia.", 28, Ui.Pergamino);
+                $"Tu estudio: nivel {est.Nivel} · reputación {est.Reputacion} · S/ {est.Honorarios} · {est.ExpedientesCerrados} {(est.ExpedientesCerrados == 1 ? "caso ganado" : "casos ganados")}\nInvestiga, junta pruebas y desmiente al testigo en la audiencia.", 28, Ui.Pergamino);
 
             Ui.Boton(Ui.Vacio(_raiz, "Jugar").Anclar(0.12f, 0.115f, 0.88f, 0.195f), "¡JUGAR YA!", () => _ = JugarYa(), Ui.Carmesi, Ui.Pergamino, 56);
             Ui.Boton(Ui.Vacio(_raiz, "Preparar").Anclar(0.04f, 0.05f, 0.36f, 0.105f), "Modo combate", () => MostrarPreparacion(), Ui.Tinta, Ui.Pergamino, 30);
@@ -883,17 +883,18 @@ namespace Expedientia.Cliente
             var tono = personaje switch { "Don Eusebio" => 0.75f, "El Cliente" => 1.1f, "Rosita" => 1.35f, "Doctora Valdivia" => 1.2f, "El Coimero" => 0.85f, "Suboficial Quispe" => 0.9f, "Especialista Mendoza" => 1.3f, _ => 1f };
             for (var i = 1; i <= texto.Length && !tocado; i++)
             {
+                if (cuerpo == null) break; // la pantalla se limpió con el diálogo abierto
                 cuerpo.text = texto.Substring(0, i);
                 if (i % 3 == 0 && personaje != Guion.Narrador) Sonido.Tocar("blip", tono, 0.35f);
                 yield return new WaitForSeconds(0.022f);
             }
-            cuerpo.text = texto;
-            if (!_saltarDialogos)
+            if (cuerpo != null) cuerpo.text = texto;
+            if (!_saltarDialogos && fondo != null)
             {
                 tocado = false;
-                while (!tocado) yield return null;
+                while (!tocado && fondo != null) yield return null;
             }
-            Destroy(fondo.gameObject);
+            if (fondo != null) Destroy(fondo.gameObject);
             fin.TrySetResult(true);
         }
 

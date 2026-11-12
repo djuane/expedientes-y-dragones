@@ -104,7 +104,7 @@ namespace Expedientia.Cliente
                 var alcanza = h.Horas <= p.HorasRestantes;
                 var costo = h.Horas == 0 ? "gratis" : $"{h.Horas} h";
                 Ui.Boton(Ui.Vacio(zona, "A" + i).Anclar(0, 1f - (i + 1) * 0.25f, 1, 1f - i * 0.25f, 5), $"{h.Accion}  ({costo})",
-                    () => { if (alcanza) _ = Investigar(h.Id); else Anotar("No alcanza el tiempo."); }, alcanza ? Ui.Noche : Ui.Tinta, alcanza ? Ui.Pergamino : new Color(1, 1, 1, 0.4f), 32);
+                    () => { if (alcanza) _ = Investigar(h.Id); else Anotar("No alcanza el tiempo."); }, alcanza ? Ui.Aliado : Ui.Tinta, alcanza ? Ui.Pergamino : new Color(1, 1, 1, 0.4f), 32);
             }
 
             // Barra inferior.
@@ -278,7 +278,7 @@ namespace Expedientia.Cliente
 
             var nav = Ui.Vacio(_raiz, "Nav").Anclar(0.03f, 0.165f, 0.97f, 0.24f);
             Ui.Boton(Ui.Vacio(nav, "Ant").Anclar(0, 0, 0.3f, 1, 4), "◀ Anterior", () => { _linea = (_linea - 1 + t.Lineas.Count) % t.Lineas.Count; PintarAudiencia(); }, Ui.Tinta, Ui.Pergamino, 32);
-            Ui.Boton(Ui.Vacio(nav, "Rep").Anclar(0.32f, 0, 0.68f, 1, 4), "Repreguntar", () => _ = Repreguntar(), Ui.Noche, Ui.Pergamino, 32);
+            Ui.Boton(Ui.Vacio(nav, "Rep").Anclar(0.32f, 0, 0.68f, 1, 4), "Repreguntar", () => _ = Repreguntar(), Ui.Aliado, Ui.Pergamino, 32);
             Ui.Boton(Ui.Vacio(nav, "Sig").Anclar(0.7f, 0, 1, 1, 4), "Siguiente ▶", () => { _linea = (_linea + 1) % t.Lineas.Count; PintarAudiencia(); }, Ui.Tinta, Ui.Pergamino, 32);
             Ui.Boton(Ui.Vacio(_raiz, "Presentar").Anclar(0.08f, 0.03f, 0.92f, 0.15f, 4), "¡PRESENTAR PRUEBA!", () => MostrarExpediente(pr => _ = Presentar(pr)), Ui.Carmesi, Ui.Pergamino, 50);
         }
@@ -391,7 +391,7 @@ namespace Expedientia.Cliente
             Ui.Texto(Ui.Vacio(carta, "E").Anclar(0.04f, 0.47f, 0.96f, 0.58f), fundado ? new string('★', p.Estrellas) + new string('☆', 3 - p.Estrellas) : "Sin estrellas", 64, Ui.Dorado, TextAnchor.MiddleCenter, FontStyle.Bold);
             var est = p.Estudio;
             Ui.Texto(Ui.Vacio(carta, "H").Anclar(0.04f, 0.3f, 0.96f, 0.47f),
-                $"Errores: {p.Errores} · horas que sobraron: {p.HorasRestantes}\nHonorarios: S/ {p.Honorarios} · Experiencia: {p.Experiencia}\nTu estudio: nivel {est.Nivel} · {est.ExpedientesCerrados} casos ganados", 32, Ui.Noche);
+                $"Errores: {p.Errores} · horas que sobraron: {p.HorasRestantes}\nHonorarios: S/ {p.Honorarios} · Experiencia: {p.Experiencia}\nTu estudio: nivel {est.Nivel} · {est.ExpedientesCerrados} {(est.ExpedientesCerrados == 1 ? "caso ganado" : "casos ganados")}", 32, Ui.Noche);
             var consejo = fundado ? (p.Estrellas < 3 ? "Para 3 estrellas: gana sin presentar pruebas equivocadas y pidiendo lo correcto en el escrito." : "Caso perfecto. Lion ya está leyendo el siguiente expediente…")
                 : "Consejo: escucha las repreguntas y pide pistas a Lion. Cada testimonio se rompe con una prueba del expediente.";
             Ui.Texto(Ui.Vacio(carta, "L").Anclar(0.04f, 0.16f, 0.96f, 0.3f), consejo, 28, Ui.Tinta, TextAnchor.MiddleCenter, FontStyle.Italic);
