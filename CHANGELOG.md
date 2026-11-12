@@ -1,7 +1,7 @@
 # Cambios
 
 ## v0.10.3 (12/11/2026)
-- Portada ilustrada en alta resolución, con los cinco abogados del estudio frente al dragón de expedientes.
+- Portada ilustrada en alta resolución, con los cinco abogados del estudio frente al dragón de expedientes. A Gonzabio se le dibujaron los lentes, que no salieron en la imagen de Canva.
 - Retratos de Gonzabio (con lentes) y Lion en alta resolución.
 - `arte/integrar_ia.py` prepara el arte descargado de Canva.
 
