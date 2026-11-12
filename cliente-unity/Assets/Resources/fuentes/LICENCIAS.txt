@@ -1,0 +1,11 @@
+Fuentes tipográficas del juego (todas con SIL Open Font License 1.1, uso comercial permitido):
+- Cinzel y Cinzel Decorative, de Natanael Gama. Títulos y logotipo.
+- Alegreya, de Juan Pablo del Peral (Huerta Tipográfica). Textos.
+Fuente: https://github.com/google/fonts (carpetas ofl/cinzel, ofl/cinzeldecorative y ofl/alegreya).
+Cinzel-Bold, Cinzel-Black, Alegreya-Regular, Alegreya-Bold y Alegreya-Italic son instancias estáticas de las fuentes variables originales.
+El texto completo de la licencia está en OFL.txt.
+
+Avisos de copyright:
+Copyright 2020 The Cinzel Project Authors (https://github.com/NDISCOVER/Cinzel)
+Copyright (c) 2012 Natanael Gama (info@ndiscovered.com), with Reserved Font Name 'Cinzel'
+Copyright 2011 The Alegreya Project Authors (https://github.com/huertatipografica/Alegreya)

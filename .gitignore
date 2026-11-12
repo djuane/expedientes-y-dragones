@@ -501,3 +501,6 @@ cliente-unity/*.sln
 logica/salida/
 cliente-unity/Library/
 cliente-unity/Builds/
+
+# Unity: el manifiesto de paquetes sí se versiona (uGUI y Newtonsoft)
+!cliente-unity/Packages/manifest.json

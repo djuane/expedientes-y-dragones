@@ -10,4 +10,7 @@
     <NoWarn>CS1591</NoWarn>
     <Authors>Leonel Díaz</Authors>
   </PropertyGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Expedientia.Logica.Pruebas" />
+  </ItemGroup>
 </Project>

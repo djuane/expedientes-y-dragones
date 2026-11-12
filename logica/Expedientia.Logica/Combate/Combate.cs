@@ -24,10 +24,14 @@ namespace Expedientia.Logica.Combate
     {
         private readonly IGeneradorAleatorio _azar;
         private readonly List<Combatiente> _todos;
+        private readonly Dictionary<string, Combatiente> _porId;
         private List<Combatiente> _orden = new List<Combatiente>();
         private int _indice;
         private bool _actuoEsteTurno;
         private readonly Dictionary<string, (string objetivo, Modo modo)> _ultimoAtaqueFallido = new Dictionary<string, (string, Modo)>();
+        // Última acción enemiga que quitó paciencia (para la Nulidad): a quién y cuánto.
+        private readonly List<(string id, int danio)> _ultimaAccionEnemiga = new List<(string, int)>();
+        private string? _autorUltimaAccionEnemiga;
 
         public int Ronda { get; private set; }
         public bool Terminado { get; private set; }
@@ -36,6 +40,10 @@ namespace Expedientia.Logica.Combate
         public IReadOnlyList<Combatiente> Combatientes => _todos;
         public IReadOnlyList<Combatiente> Orden => _orden;
         public Combatiente Actual => _orden[_indice];
+
+        /// <summary>Hay una acción enemiga reciente que la Civilista puede anular con Nulidad.</summary>
+        public bool HayAccionEnemigaQueAnular => _ultimaAccionEnemiga.Count > 0;
+        public string? AutorUltimaAccionEnemiga => _autorUltimaAccionEnemiga;
 
         /// <summary>Mecánica especial del jefe de la sala, si la hay.</summary>
         public IMecanicaDeJefe? Mecanica { get; }
@@ -46,18 +54,19 @@ namespace Expedientia.Logica.Combate
             Mecanica = mecanica;
             _azar = azar ?? throw new ArgumentNullException(nameof(azar));
             _todos = combatientes.ToList();
+            _porId = new Dictionary<string, Combatiente>(StringComparer.Ordinal);
             if (_todos.Select(c => c.Id).Distinct().Count() != _todos.Count) throw new ArgumentException("Ids repetidos.");
             if (_todos.Any(c => !Cuadricula.Contiene(c.Posicion))) throw new ArgumentException("Hay combatientes fuera de la cuadrícula.");
             if (_todos.Select(c => c.Posicion).Distinct().Count() != _todos.Count) throw new ArgumentException("Dos combatientes en la misma casilla.");
             if (!_todos.Any(c => c.Bando == Bando.Estudio) || !_todos.Any(c => c.Bando == Bando.Sistema)) throw new ArgumentException("Faltan combatientes de un bando.");
+            foreach (var c in _todos) _porId[c.Id] = c;
         }
 
         public IReadOnlyList<EventoCombate> Iniciar()
         {
             if (Ronda != 0) throw new InvalidOperationException("El combate ya empezó.");
-            var porId = _todos.ToDictionary(c => c.Id);
             _orden = Iniciativa.Ordenar(_azar, _todos.Select(c => new Participante(c.Id, c.Ficha.Atributos.Modificador(Atributo.AgilidadProcesal))))
-                .Select(t => porId[t.Participante.Id]).ToList();
+                .Select(t => _porId[t.Participante.Id]).ToList();
             Ronda = 1;
             _indice = 0;
             var eventos = new List<EventoCombate>();
@@ -65,7 +74,32 @@ namespace Expedientia.Logica.Combate
             return eventos;
         }
 
-        public Combatiente Buscar(string id) => _todos.FirstOrDefault(c => c.Id == id) ?? throw new ArgumentException($"No existe {id}.");
+        public Combatiente Buscar(string id) => _porId.TryGetValue(id, out var c) ? c : throw new ArgumentException($"No existe {id}.");
+
+        // Mapa de ocupación y de movimiento restante, reutilizados en cada consulta (sin reservar memoria).
+        private readonly byte[] _ocupacion = new byte[Rutas.Casillas];
+        private readonly int[] _restante = new int[Rutas.Casillas];
+
+        /// <summary>Marca quién ocupa cada casilla, visto desde el bando de <paramref name="yo"/>.</summary>
+        private void MarcarOcupacion(Combatiente? yo)
+        {
+            Array.Clear(_ocupacion, 0, _ocupacion.Length);
+            foreach (var c in _todos)
+            {
+                if (c.Caido || c == yo) continue;
+                _ocupacion[Rutas.Indice(c.Posicion)] = yo == null || c.Bando != yo.Bando ? Rutas.Rival : Rutas.Aliado;
+            }
+        }
+
+        /// <summary>Calcula, para el combatiente en turno, cuánto movimiento le sobra al llegar a cada casilla.</summary>
+        private void CalcularAlcance()
+        {
+            var yo = Actual;
+            MarcarOcupacion(yo);
+            Rutas.Explorar(yo.Posicion, yo.Inmovilizado ? 0 : yo.MovimientoRestante, _ocupacion, _restante);
+        }
+
+        private bool Ocupada(Casilla c) => _ocupacion[Rutas.Indice(c)] != Rutas.Libre;
 
         public bool PuedeMoverA(Casilla destino, out string? motivo)
         {
@@ -74,20 +108,34 @@ namespace Expedientia.Logica.Combate
             if (Terminado) motivo = "El combate terminó.";
             else if (yo.Inmovilizado) motivo = "Está inmovilizado.";
             else if (!Cuadricula.Contiene(destino)) motivo = "Fuera de la cuadrícula.";
-            else if (_todos.Any(c => !c.Caido && c.Posicion == destino)) motivo = "Casilla ocupada.";
-            else if (yo.Posicion.DistanciaA(destino) > yo.MovimientoRestante) motivo = "No le alcanza el movimiento.";
+            else
+            {
+                CalcularAlcance();
+                if (destino == yo.Posicion) motivo = "Ya está ahí.";
+                else if (Ocupada(destino)) motivo = "Casilla ocupada.";
+                else if (_restante[Rutas.Indice(destino)] < 0)
+                    motivo = yo.Posicion.DistanciaA(destino) > yo.MovimientoRestante ? "No le alcanza el movimiento." : "El camino está bloqueado.";
+            }
             return motivo == null;
         }
 
-        /// <summary>Casillas a las que puede moverse ahora (para iluminarlas en la interfaz).</summary>
-        public IEnumerable<Casilla> CasillasValidas()
+        /// <summary>Casillas a las que puede moverse ahora (para iluminarlas en la interfaz). Una sola búsqueda para todo el tablero.</summary>
+        public IReadOnlyList<Casilla> CasillasValidas()
         {
-            for (var x = 0; x < Cuadricula.Columnas; x++)
-                for (var y = 0; y < Cuadricula.Filas; y++)
-                {
-                    var c = new Casilla(x, y);
-                    if (c != Actual.Posicion && PuedeMoverA(c, out _)) yield return c;
-                }
+            var yo = Actual;
+            if (Terminado || yo.Inmovilizado || yo.MovimientoRestante <= 0) return Array.Empty<Casilla>();
+            CalcularAlcance();
+            var lista = new List<Casilla>();
+            for (var i = 0; i < Rutas.Casillas; i++)
+                if (_restante[i] >= 0 && _ocupacion[i] == Rutas.Libre && i != Rutas.Indice(yo.Posicion)) lista.Add(Rutas.Casilla(i));
+            return lista;
+        }
+
+        /// <summary>Movimiento que le sobraría al combatiente en turno si fuera a <paramref name="destino"/> (-1 si no puede).</summary>
+        public int MovimientoAlLlegar(Casilla destino)
+        {
+            if (!PuedeMoverA(destino, out _)) return -1;
+            return _restante[Rutas.Indice(destino)];
         }
 
         public ResultadoAccion Mover(Casilla destino)
@@ -95,7 +143,7 @@ namespace Expedientia.Logica.Combate
             if (!PuedeMoverA(destino, out var motivo)) return ResultadoAccion.Rechazada(motivo!);
             var yo = Actual;
             var desde = yo.Posicion;
-            yo.MovimientoRestante -= desde.DistanciaA(destino);
+            yo.MovimientoRestante = _restante[Rutas.Indice(destino)];
             yo.Posicion = destino;
             _actuoEsteTurno = true;
             return ResultadoAccion.Ok(new List<EventoCombate> { new Movio(yo.Id, desde, destino) });
@@ -171,11 +219,51 @@ namespace Expedientia.Logica.Combate
             return ResultadoAccion.Ok(eventos);
         }
 
+        /// <summary>
+        /// Nulidad (reacción de la Civilista): anula la última acción de un enemigo que quitó paciencia;
+        /// los afectados la recuperan (y quien cayó por ella se levanta). Se recarga en 3 rondas.
+        /// </summary>
+        public ResultadoAccion Nulidad(string civilistaId)
+        {
+            if (Terminado) return ResultadoAccion.Rechazada("El combate terminó.");
+            var civ = Buscar(civilistaId);
+            if (civ.Ficha.Especialidad != Especialidad.Civilista) return ResultadoAccion.Rechazada("Solo la Civilista deduce nulidad.");
+            if (civ.Caido) return ResultadoAccion.Rechazada("Está caída.");
+            if (!civ.ReaccionDisponible) return ResultadoAccion.Rechazada("Ya usó su reacción.");
+            if (civ.RondaUltimaNulidad.HasValue && Ronda - civ.RondaUltimaNulidad.Value < ReglasHabilidades.EnfriamientoNulidad)
+                return ResultadoAccion.Rechazada("La Nulidad se está recargando.");
+            if (_ultimaAccionEnemiga.Count == 0) return ResultadoAccion.Rechazada("No hay una acción enemiga que anular.");
+            civ.ReaccionDisponible = false;
+            civ.RondaUltimaNulidad = Ronda;
+            var eventos = new List<EventoCombate> { new UsoHabilidad(civ.Id, Habilidad.Nulidad, _autorUltimaAccionEnemiga) };
+            foreach (var (id, danio) in _ultimaAccionEnemiga)
+            {
+                var c = Buscar(id);
+                var antes = c.Paciencia;
+                c.Paciencia = Math.Min(c.Ficha.PacienciaMaxima, c.Paciencia + danio);
+                if (c.Paciencia > antes) eventos.Add(new Recupero(c.Id, c.Paciencia - antes, c.Paciencia));
+            }
+            _ultimaAccionEnemiga.Clear();
+            _autorUltimaAccionEnemiga = null;
+            return ResultadoAccion.Ok(eventos);
+        }
+
+        /// <summary>Rondas que faltan para poder usar la habilidad con enfriamiento (0 = lista).</summary>
+        public int RecargaHabilidad(Combatiente c) =>
+            c.RondaUltimaHabilidad.HasValue ? Math.Max(0, ReglasHabilidades.EnfriamientoEnRondas - (Ronda - c.RondaUltimaHabilidad.Value)) : 0;
+
+        public int RecargaNulidad(Combatiente c) =>
+            c.RondaUltimaNulidad.HasValue ? Math.Max(0, ReglasHabilidades.EnfriamientoNulidad - (Ronda - c.RondaUltimaNulidad.Value)) : 0;
+
+        /// <summary>Requisito vigente del jefe, si lo exige (Requisito Imposible).</summary>
+        public IExigeRequisito? Requisito => Mecanica as IExigeRequisito;
+
         public IReadOnlyList<EventoCombate> TerminarTurno()
         {
             if (Terminado) throw new InvalidOperationException("El combate terminó.");
             var eventos = new List<EventoCombate>();
             var yo = Actual;
+            if (yo.Ficha.Rasgo == Rasgo.Empuja && !yo.Caido && !yo.Inmovilizado) Empujar(yo, eventos);
             // Solo cuenta el silencio voluntario: estar inmovilizado no es "no actuar".
             yo.TurnosSinActuar = _actuoEsteTurno || yo.Inmovilizado ? 0 : yo.TurnosSinActuar + 1;
             if (yo.TurnosInmovilizado > 0) yo.TurnosInmovilizado--;
@@ -203,6 +291,13 @@ namespace Expedientia.Logica.Combate
             yo.ReaccionDisponible = true;
             _actuoEsteTurno = false;
             eventos.Add(new InicioDeTurno(yo.Id, Ronda));
+            // El plazo corre en cada turno propio; inmovilizado, el plazo se suspende.
+            if (!yo.Inmovilizado) yo.TurnosJugados++;
+            if (yo.Ficha.Rasgo == Rasgo.Vence && !yo.Caido && !yo.Inmovilizado && yo.TurnosJugados >= ReglasHabilidades.TurnosDelPlazo)
+            {
+                Vencer(yo, eventos);
+                return;
+            }
             if (Mecanica != null && Mecanica.JefeId == yo.Id && !yo.Inmovilizado && !yo.Caido)
                 Mecanica.AlInicioDelTurnoDelJefe(this, eventos);
         }
@@ -210,21 +305,75 @@ namespace Expedientia.Logica.Combate
         /// <summary>Casillas libres de la cuadrícula, en orden de fila y columna.</summary>
         public IEnumerable<Casilla> CasillasLibres()
         {
-            for (var y = 0; y < Cuadricula.Filas; y++)
-                for (var x = 0; x < Cuadricula.Columnas; x++)
-                {
-                    var c = new Casilla(x, y);
-                    if (!_todos.Any(o => !o.Caido && o.Posicion == c)) yield return c;
-                }
+            MarcarOcupacion(null);
+            var libres = new List<Casilla>();
+            for (var i = 0; i < Rutas.Casillas; i++)
+                if (_ocupacion[i] == Rutas.Libre) libres.Add(Rutas.Casilla(i));
+            return libres;
         }
 
         /// <summary>Suma un combatiente a mitad del combate; actúa al final de la ronda.</summary>
         internal void AgregarRefuerzo(Combatiente nuevo, List<EventoCombate> eventos)
         {
-            if (_todos.Any(c => c.Id == nuevo.Id)) throw new ArgumentException("Id repetido.");
+            if (_porId.ContainsKey(nuevo.Id)) throw new ArgumentException("Id repetido.");
+            _porId[nuevo.Id] = nuevo;
             _todos.Add(nuevo);
             _orden.Add(nuevo);
             eventos.Add(new Aparecio(nuevo.Id, nuevo.Ficha.Nombre, nuevo.Posicion));
+        }
+
+        /// <summary>El Plazo que Vence explota: 1d4+1 de daño a cada rival a 2 casillas o menos, y desaparece.</summary>
+        private void Vencer(Combatiente plazo, List<EventoCombate> eventos)
+        {
+            eventos.Add(new Vencio(plazo.Id));
+            plazo.AccionDisponible = false;
+            plazo.MovimientoRestante = 0;
+            var golpes = new List<(string, int)>();
+            foreach (var r in _todos.Where(c => c.Bando != plazo.Bando && !c.Caido && c.Posicion.DistanciaA(plazo.Posicion) <= 2).ToList())
+            {
+                var danio = Dado.Tirar(_azar, 4) + 1;
+                var real = Math.Min(danio, r.Paciencia);
+                r.Paciencia -= real;
+                golpes.Add((r.Id, real));
+                eventos.Add(new RecibioDanio(r.Id, real, r.Paciencia));
+                if (r.Caido) eventos.Add(new Cayo(r.Id));
+            }
+            if (golpes.Count > 0) RegistrarAccionEnemiga(plazo, golpes);
+            plazo.Paciencia = 0;
+            eventos.Add(new Cayo(plazo.Id));
+            RevisarFin(eventos);
+        }
+
+        /// <summary>"Vuelva Mañana": empuja una fila hacia atrás al rival más cercano que tenga a 2 casillas o menos.</summary>
+        private void Empujar(Combatiente yo, List<EventoCombate> eventos)
+        {
+            var objetivo = _todos.Where(c => c.Bando != yo.Bando && !c.Caido && c.Posicion.DistanciaA(yo.Posicion) <= 2)
+                .OrderBy(c => c.Posicion.DistanciaA(yo.Posicion)).ThenBy(c => c.Id, StringComparer.Ordinal).FirstOrDefault();
+            if (objetivo == null) return;
+            var paso = objetivo.Posicion.Fila >= yo.Posicion.Fila ? 1 : -1;
+            var destino = new Casilla(objetivo.Posicion.Columna, objetivo.Posicion.Fila + paso);
+            if (!Cuadricula.Contiene(destino) || _todos.Any(c => !c.Caido && c.Posicion == destino)) return;
+            var desde = objetivo.Posicion;
+            objetivo.Posicion = destino;
+            eventos.Add(new Empujado(objetivo.Id, yo.Id, desde, destino));
+        }
+
+        private void RegistrarAccionEnemiga(Combatiente autor, List<(string, int)> golpes)
+        {
+            _ultimaAccionEnemiga.Clear();
+            _ultimaAccionEnemiga.AddRange(golpes);
+            _autorUltimaAccionEnemiga = autor.Id;
+        }
+
+        /// <summary>Fraccionador: si recibió daño y sigue en pie, se parte en una copia pequeña en una casilla vecina.</summary>
+        private void Fraccionar(Combatiente original, List<EventoCombate> eventos)
+        {
+            if (original.Copias >= ReglasHabilidades.MaximoDeCopias) return;
+            var libre = CasillasLibres().Where(c => c.DistanciaA(original.Posicion) == 1)
+                .OrderBy(c => c.Fila).ThenBy(c => c.Columna).Cast<Casilla?>().FirstOrDefault();
+            if (libre == null) return;
+            original.Copias++;
+            AgregarRefuerzo(new Combatiente(Catalogo.Fraccion($"{original.Id}-f{original.Copias}"), libre.Value), eventos);
         }
 
         private ResultadoAccion Inmovilizar(Combatiente yo, Especialidad requerida, Habilidad h, string objetivoId)
@@ -249,6 +398,8 @@ namespace Expedientia.Logica.Combate
         private void ResolverAtaque(Combatiente atacante, Combatiente objetivo, Modo modo, List<EventoCombate> eventos)
         {
             var f = atacante.Ficha;
+            // SRD: atacar a una criatura inmovilizada (Restrained) se hace con ventaja.
+            if (objetivo.Inmovilizado && modo != Modo.Ventaja) modo = Dado.Combinar(true, modo == Modo.Desventaja);
             var r = Personajes.Pruebas.Ataque(_azar, f.Atributos, f.AtributoDeAtaque, f.Nivel, objetivo.Ficha.Defensa, modo);
             eventos.Add(new Ataco(atacante.Id, objetivo.Id, r.Tirada.Natural, r.Total, r.Exito, r.Tirada.Momento));
             if (!r.Exito)
@@ -258,39 +409,52 @@ namespace Expedientia.Logica.Combate
             }
             _ultimoAtaqueFallido.Remove(atacante.Id);
             var danio = Personajes.Pruebas.Danio(_azar, f.DadosDeDanio, f.CarasDeDanio, f.Atributos.Modificador(f.AtributoDeAtaque), r.EsCritico);
-            objetivo.Paciencia = Math.Max(0, objetivo.Paciencia - danio);
-            eventos.Add(new RecibioDanio(objetivo.Id, danio, objetivo.Paciencia));
+            var conRequisito = modo == Modo.Ventaja || r.EsCritico;
+            if (Requisito != null && !Requisito.Admite(atacante, objetivo, conRequisito))
+            {
+                Requisito.Revelar();
+                eventos.Add(new Observado(objetivo.Id, "Observado: no cumple el requisito. " + Requisito.DescripcionActual));
+                return;
+            }
+            if (objetivo.Ficha.Rasgo == Rasgo.ExigeRequisito && !conRequisito)
+            {
+                danio = Math.Max(1, danio / 2);
+                eventos.Add(new Observado(objetivo.Id, "Falta el requisito correcto: el daño se reduce a la mitad."));
+            }
+            var real = Math.Min(danio, objetivo.Paciencia);
+            objetivo.Paciencia -= real;
+            eventos.Add(new RecibioDanio(objetivo.Id, real, objetivo.Paciencia));
+            if (atacante.Bando == Bando.Sistema && real > 0) RegistrarAccionEnemiga(atacante, new List<(string, int)> { (objetivo.Id, real) });
             if (objetivo.Caido)
             {
                 eventos.Add(new Cayo(objetivo.Id));
                 RevisarFin(eventos);
             }
+            else if (objetivo.Ficha.Rasgo == Rasgo.SeFracciona && real > 0) Fraccionar(objetivo, eventos);
         }
 
         private void RevisarFin(List<EventoCombate> eventos)
         {
-            foreach (var bando in new[] { Bando.Estudio, Bando.Sistema })
-            {
-                if (_todos.Where(c => c.Bando == bando).All(c => c.Caido))
-                {
-                    var ganador = bando == Bando.Estudio ? Bando.Sistema : Bando.Estudio;
-                    Finalizar(ganador, ganador == Bando.Estudio ? "Fundado: el equipo venció" : "El equipo cayó", eventos);
-                    return;
-                }
-            }
+            bool estudioEnPie = false, sistemaEnPie = false;
+            foreach (var c in _todos)
+                if (!c.Caido) { if (c.Bando == Bando.Estudio) estudioEnPie = true; else sistemaEnPie = true; }
+            if (!estudioEnPie) Finalizar(Bando.Sistema, "El equipo cayó", eventos);
+            else if (!sistemaEnPie) Finalizar(Bando.Estudio, "Fundado: el equipo venció", eventos);
         }
 
         /// <summary>Pasiva del Administrativista: un enemigo que no actúa 2 turnos seguidos le da la sala al equipo.</summary>
         private bool RevisarSilencioAdministrativo(List<EventoCombate> eventos)
         {
-            var hayAdministrativista = _todos.Any(c => c.Bando == Bando.Estudio && !c.Caido && c.Ficha.Especialidad == Especialidad.Administrativista);
-            if (!hayAdministrativista) return false;
-            if (_todos.Any(c => c.Bando == Bando.Sistema && !c.Caido && c.TurnosSinActuar >= ReglasHabilidades.TurnosDeSilencio))
+            bool hayAdministrativista = false, haySilencio = false;
+            foreach (var c in _todos)
             {
-                Finalizar(Bando.Estudio, "Silencio administrativo", eventos);
-                return true;
+                if (c.Caido) continue;
+                if (c.Bando == Bando.Estudio && c.Ficha.Especialidad == Especialidad.Administrativista) hayAdministrativista = true;
+                else if (c.Bando == Bando.Sistema && c.TurnosSinActuar >= ReglasHabilidades.TurnosDeSilencio) haySilencio = true;
             }
-            return false;
+            if (!hayAdministrativista || !haySilencio) return false;
+            Finalizar(Bando.Estudio, "Silencio administrativo", eventos);
+            return true;
         }
 
         private void Finalizar(Bando ganador, string motivo, List<EventoCombate> eventos)
@@ -304,6 +468,7 @@ namespace Expedientia.Logica.Combate
         private string? ValidarAccion(Combatiente yo)
         {
             if (Terminado) return "El combate terminó.";
+            if (yo.Caido) return "Está caído.";
             if (yo.Inmovilizado) return "Está inmovilizado.";
             if (!yo.AccionDisponible) return "Ya usó su acción.";
             return null;
@@ -311,8 +476,7 @@ namespace Expedientia.Logica.Combate
 
         private string? ValidarObjetivoEnemigo(Combatiente yo, string objetivoId, int alcance)
         {
-            var obj = _todos.FirstOrDefault(c => c.Id == objetivoId);
-            if (obj == null) return "Objetivo inexistente.";
+            if (objetivoId == null || !_porId.TryGetValue(objetivoId, out var obj)) return "Objetivo inexistente.";
             if (obj.Bando == yo.Bando) return "El objetivo es un aliado.";
             if (obj.Caido) return "El objetivo ya cayó.";
             if (yo.Posicion.DistanciaA(obj.Posicion) > alcance) return "Fuera de alcance.";

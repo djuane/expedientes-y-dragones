@@ -73,7 +73,7 @@ public class ServidorPruebas : IClassFixture<Fabrica>
     public async Task Lista_los_casos_del_prototipo()
     {
         var casos = await _f.CreateClient().GetFromJsonAsync<JsonArray>("/api/casos");
-        Assert.Equal(2, casos!.Count);
+        Assert.Equal(3, casos!.Count);
     }
 
     [Fact]
@@ -91,7 +91,9 @@ public class ServidorPruebas : IClassFixture<Fabrica>
         {
             var sala = estado["sala_actual"]!.GetValue<string>();
             var resuelta = estado["sala_resuelta"]!.GetValue<bool>();
-            object accion = resuelta ? new { tipo = "avanzar" } : sala switch
+            var ofertas = estado["mejoras_ofrecidas"]!.AsArray();
+            object accion = ofertas.Count > 0 ? new { tipo = "mejora", objeto = ofertas[0]!["id"]!.GetValue<string>() }
+                : resuelta ? new { tipo = "avanzar" } : sala switch
             {
                 "Combate" or "Jefe" or "RedDelCoimero" => new { tipo = "piloto" },
                 "Tramite" => new { tipo = "tramite" },

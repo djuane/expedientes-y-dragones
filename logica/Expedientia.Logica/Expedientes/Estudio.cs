@@ -1,7 +1,22 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Expedientia.Logica.Expedientes
 {
+    /// <summary>Lo que el estudio gana para siempre al ir cerrando expedientes. Es la meta entre partidas.</summary>
+    public enum Desbloqueo { MejoraDeEntrada, BibliotecaDelEstudio, SegundaOpinion, OficinaPropia }
+
+    public sealed class DatosDesbloqueo
+    {
+        public Desbloqueo Desbloqueo { get; }
+        public int ExpedientesNecesarios { get; }
+        public string Nombre { get; }
+        public string Descripcion { get; }
+        internal DatosDesbloqueo(Desbloqueo d, int n, string nombre, string descripcion)
+        { Desbloqueo = d; ExpedientesNecesarios = n; Nombre = nombre; Descripcion = descripcion; }
+    }
+
     /// <summary>Progreso que se conserva entre expedientes.</summary>
     public sealed class EstadoEstudio
     {
@@ -29,6 +44,20 @@ namespace Expedientia.Logica.Expedientes
                 return nivel;
             }
         }
+
+        /// <summary>Desbloqueos en orden; cada uno se gana al llegar a esa cantidad de expedientes cerrados (Fundado).</summary>
+        public static readonly IReadOnlyList<DatosDesbloqueo> Desbloqueos = new[]
+        {
+            new DatosDesbloqueo(Desbloqueo.MejoraDeEntrada, 1, "Maletín del estudio", "Eliges una mejora antes del primer combate."),
+            new DatosDesbloqueo(Desbloqueo.BibliotecaDelEstudio, 2, "Biblioteca del estudio", "Aparecen mejoras raras en el sorteo."),
+            new DatosDesbloqueo(Desbloqueo.SegundaOpinion, 3, "Segunda opinión", "Una vez por expediente puedes volver a sortear las mejoras."),
+            new DatosDesbloqueo(Desbloqueo.OficinaPropia, 5, "Oficina propia", "Todo el equipo empieza con +4 de paciencia máxima."),
+        };
+
+        public bool Tiene(Desbloqueo d) => ExpedientesCerrados >= Desbloqueos.First(x => x.Desbloqueo == d).ExpedientesNecesarios;
+
+        /// <summary>El próximo desbloqueo por ganar, o null si ya los tiene todos.</summary>
+        public DatosDesbloqueo? Proximo => Desbloqueos.FirstOrDefault(d => ExpedientesCerrados < d.ExpedientesNecesarios);
 
         public static int ExperienciaParaNivel(int nivel) => UmbralesDeNivel[nivel - 1];
 

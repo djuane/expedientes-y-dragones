@@ -93,7 +93,7 @@ namespace Expedientia.Cliente
             for (var i = 0; i < bots; i++)
             {
                 var otra = (i % 2 == 0) == (esp == Especialidad.Civilista) ? Especialidad.Administrativista : Especialidad.Civilista;
-                miembros.Add(new MiembroDelEquipo(Ficha(otra, $"p{i + 2}", otra == Especialidad.Civilista ? "Bot Civilista" : "Bot Administrativista", estudio.Nivel), null));
+                miembros.Add(new MiembroDelEquipo(Ficha(otra, $"p{i + 2}", otra == Especialidad.Civilista ? "Dra. Arce" : "Dr. Benítez", estudio.Nivel), null));
             }
             _motor = new MotorDePartida(Guid.NewGuid(), new Expediente(CatalogoCasos.Buscar(casoId), _azar.Next(), miembros, estudio), DateTime.UtcNow);
             _guardado = false;
@@ -123,11 +123,15 @@ namespace Expedientia.Cliente
             if (_motor != null && _motor.Expediente.Terminado && !_guardado)
             {
                 _guardado = true;
-                var e = _motor.Expediente.Estudio;
-                PlayerPrefs.SetString(ClaveEstudio, JsonConvert.SerializeObject(new[] { e.Honorarios, e.Experiencia, e.Reputacion, e.ExpedienteDisciplinario, e.ExpedientesCerrados }));
-                PlayerPrefs.Save();
+                GuardarEstudio(_motor.Expediente.Estudio);
             }
             return r;
+        }
+
+        public static void GuardarEstudio(EstadoEstudio e)
+        {
+            PlayerPrefs.SetString(ClaveEstudio, JsonConvert.SerializeObject(new[] { e.Honorarios, e.Experiencia, e.Reputacion, e.ExpedienteDisciplinario, e.ExpedientesCerrados }));
+            PlayerPrefs.Save();
         }
 
         public static EstadoEstudio LeerEstudio()

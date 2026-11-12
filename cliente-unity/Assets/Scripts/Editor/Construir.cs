@@ -69,6 +69,28 @@ namespace Expedientia.Cliente.Editor
             if (Application.isBatchMode) EditorApplication.Exit(r.summary.result == BuildResult.Succeeded ? 0 : 1);
         }
 
+        /// <summary>
+        /// Compilación de Windows con la marca CAPTURAS (no afecta al APK). Ejecutar luego:
+        ///   Builds/Capturas/ExpedientesYDragones.exe -capturas &lt;carpeta&gt;
+        /// </summary>
+        [MenuItem("Expedientes/Compilar capturas (Windows)")]
+        public static void Capturas()
+        {
+            Preparar();
+            Directory.CreateDirectory("Builds/Capturas");
+            var salida = "Builds/Capturas/ExpedientesYDragones.exe";
+            var r = BuildPipeline.BuildPlayer(new BuildPlayerOptions
+            {
+                scenes = new[] { Escena },
+                locationPathName = salida,
+                target = BuildTarget.StandaloneWindows64,
+                extraScriptingDefines = new[] { "CAPTURAS" },
+                options = BuildOptions.None,
+            });
+            Debug.Log($"Capturas: {r.summary.result}, {r.summary.totalErrors} errores → {salida}");
+            if (Application.isBatchMode) EditorApplication.Exit(r.summary.result == BuildResult.Succeeded ? 0 : 1);
+        }
+
         private static string Version()
         {
             try

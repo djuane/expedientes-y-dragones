@@ -6,7 +6,8 @@ namespace Expedientia.Logica.Sesion
     /// <summary>
     /// Acción de un jugador. La misma forma sirve para el servidor (JSON) y para el modo sin conexión del celular.
     /// Tipos: avanzar, mover, atacar, habilidad, apelar, casacion, terminarTurno, piloto, tramite, audiencia,
-    /// descansar, comprar, salirTienda, coimero, pedirPregunta, responder.
+    /// descansar, comprar, salirTienda, coimero, pedirPregunta, responder, nulidad,
+    /// mejora (Indice u Objeto con el nombre), resortear.
     /// </summary>
     public sealed class AccionJuego
     {
@@ -43,6 +44,17 @@ namespace Expedientia.Logica.Sesion
         public int TurnosInmovilizado { get; set; }
         public bool EsBot { get; set; }
         public string? JugadorId { get; set; }
+        /// <summary>Clave del dibujo (civilista, formalismo, plazo…).</summary>
+        public string Clave { get; set; } = "";
+        /// <summary>Mecánica propia (Vence, NotificaAlAzar, ExigeRequisito, Empuja, SeFracciona) o Ninguno.</summary>
+        public string Rasgo { get; set; } = "Ninguno";
+        /// <summary>Plazo que Vence: turnos propios que le quedan antes de vencer; null si no vence.</summary>
+        public int? TurnosParaVencer { get; set; }
+        public int RecargaHabilidad { get; set; }
+        public int Alcance { get; set; }
+        public int Movimiento { get; set; }
+        public int RecargaNulidad { get; set; }
+        public bool ReaccionDisponible { get; set; }
     }
 
     public sealed class CombateEstado
@@ -56,6 +68,11 @@ namespace Expedientia.Logica.Sesion
         public bool AccionDisponible { get; set; }
         public int MovimientoRestante { get; set; }
         public bool CasacionUsada { get; set; }
+        /// <summary>Hay una acción enemiga reciente que la Civilista puede anular.</summary>
+        public bool NulidadPosible { get; set; }
+        /// <summary>Requisito Imposible: lo que exige ahora (EnPersona, Virtual, ConConstancia), solo si el equipo lo conoce.</summary>
+        public string? Requisito { get; set; }
+        public string? RequisitoDescripcion { get; set; }
     }
 
     public sealed class EstudioEstado
@@ -65,6 +82,18 @@ namespace Expedientia.Logica.Sesion
         public int Nivel { get; set; }
         public int Reputacion { get; set; }
         public int ExpedientesCerrados { get; set; }
+        /// <summary>Próximo desbloqueo y cuántos expedientes faltan para ganarlo; null si ya los tiene todos.</summary>
+        public string? ProximoDesbloqueo { get; set; }
+        public string? ProximoDesbloqueoDescripcion { get; set; }
+        public int FaltanParaDesbloqueo { get; set; }
+    }
+
+    public sealed class MejoraEstado
+    {
+        public string Id { get; set; } = "";
+        public string Nombre { get; set; } = "";
+        public string Descripcion { get; set; } = "";
+        public bool Rara { get; set; }
     }
 
     public sealed class SentenciaEstado
@@ -85,11 +114,17 @@ namespace Expedientia.Logica.Sesion
         public int IndiceSala { get; set; }
         public string? SalaActual { get; set; }
         public bool SalaResuelta { get; set; }
+        /// <summary>Descripción de la sala actual (trama).</summary>
+        public string TextoSala { get; set; } = "";
         public int? MinutosRestantes { get; set; }
         public int PruebasJuridicasRestantes { get; set; }
         public bool TieneEscritoPreFirmado { get; set; }
         public bool TieneCodigoAnotado { get; set; }
         public int HonorariosDisponibles { get; set; }
+        /// <summary>Si no está vacío, el equipo debe elegir una antes de seguir.</summary>
+        public List<MejoraEstado> MejorasOfrecidas { get; set; } = new List<MejoraEstado>();
+        public List<MejoraEstado> MejorasTomadas { get; set; } = new List<MejoraEstado>();
+        public bool PuedeVolverASortear { get; set; }
         public EstudioEstado Estudio { get; set; } = new EstudioEstado();
         public List<CombatienteEstado> Equipo { get; set; } = new List<CombatienteEstado>();
         public CombateEstado? Combate { get; set; }
