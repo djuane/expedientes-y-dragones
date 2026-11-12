@@ -9,7 +9,8 @@ const fs = require('fs'), path = require('path');
   const fuentes = path.join(__dirname, '..', 'cliente-unity', 'Assets', 'Resources', 'fuentes');
   const css = [['Alegreya', 'Alegreya-Bold.ttf'], ['Alegreya Italic', 'Alegreya-Italic.ttf'], ['Cinzel Decorative', 'CinzelDecorative-Bold.ttf']]
     .map(([f, a]) => `@font-face{font-family:'${f}';src:url(data:font/ttf;base64,${fs.readFileSync(path.join(fuentes, a)).toString('base64')}) format('truetype');}`).join('');
-  for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.svg'))) {
+  // portada-vectorial es la portada anterior hecha por código: queda como fuente, no entra al juego.
+  for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.svg') && f !== 'portada-vectorial.svg')) {
     const svg = fs.readFileSync(path.join(dir, f), 'utf8');
     const w = +svg.match(/width="(\d+)"/)[1], h = +svg.match(/height="(\d+)"/)[1];
     await p.setViewportSize({ width: w, height: h });

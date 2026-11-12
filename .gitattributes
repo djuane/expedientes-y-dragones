@@ -14,3 +14,4 @@
 cliente-unity/Assets/Resources/arte/*.png -filter -diff -merge binary
 cliente-unity/Assets/Resources/fuentes/*.ttf -filter -diff -merge binary
 arte/ia/*.jpg -filter -diff -merge binary
+cliente-unity/Assets/Resources/arte/*.jpg -filter -diff -merge binary

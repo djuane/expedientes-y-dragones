@@ -250,7 +250,7 @@ def _rayos():
 
 
 
-guardar('portada', PW, PH,
+guardar('portada-vectorial', PW, PH,
         _cielo() + _nubes(520, '#4b3a6a', '#c9a0b8', 9, 'nub1') + _montanas() + _nubes(780, '#7a4a62', '#ffb88a', 7, 'nub2')
         + _ciudad() + _torre() + '<g transform="translate(0 60)">' + _dragon() + '</g>' + _torbellino() + _escalinata() + _rayos() + _equipo())
 

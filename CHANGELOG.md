@@ -1,5 +1,10 @@
 # Cambios
 
+## v0.10.3 (12/11/2026)
+- Portada ilustrada en alta resolución, con los cinco abogados del estudio frente al dragón de expedientes.
+- Retratos de Gonzabio (con lentes) y Lion en alta resolución.
+- `arte/integrar_ia.py` prepara el arte descargado de Canva.
+
 ## v0.10.2 (11/11/2026)
 - Nuevo personaje de la trama: **Lion**, abogado investigador del estudio (terno gris, corbata roja, lentes, cabello negro). Lee la letra pequeña y los anexos. Aparece en el prólogo y en cada caso, y descubre el sello del Archivo Central que une los tres casos.
 - Retrato provisional de Lion, generado con IA.
