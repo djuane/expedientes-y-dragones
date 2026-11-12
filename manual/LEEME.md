@@ -1,6 +1,6 @@
 # Manual del juego
 
-Manual de *Expedientes y Dragones* en formato de libro de rol (A4, 34 páginas): reglas, especialidades, bestiario, zonas, aventura y plantillas. Autor: Leonel Díaz.
+Manual de *Expedientes y Dragones* en formato de libro de rol (A4, 35 páginas): reglas, reglas rápidas, especialidades, bestiario, zonas, aventura y plantillas. Autor: Leonel Díaz.
 
 **PDF listo:** `salida/Expedientes-y-Dragones-Manual.pdf`
 

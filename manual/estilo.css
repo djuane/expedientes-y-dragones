@@ -181,3 +181,9 @@ img.mapa { width: 100%; height: auto; border: .6mm solid var(--tinta); border-ra
 .socio-txt { flex: 1; }
 .socio-txt h2 { margin-top: 0; font-size: 18pt; }
 .logo-portada { width: 150mm; margin: 2mm auto 0; display: block; filter: drop-shadow(0 1.5mm 3mm rgba(0,0,0,.8)); }
+
+.rapidas .caja { margin: 0 0 2.4mm; }
+.rapidas .caja p { font-size: 10.2pt; margin-bottom: 1mm; }
+.rapidas .formula { font-size: 9.6pt; padding: 1.4mm; margin: .5mm 0 1.5mm; }
+.contra-roles { display: flex; justify-content: center; gap: 3mm; margin: 6mm 0 0; }
+.contra-roles .rol-img { width: 18mm; height: 18mm; margin: 0; }

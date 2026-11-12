@@ -357,6 +357,12 @@ img.mapa { width: 100%; height: auto; border: .6mm solid var(--tinta); border-ra
 .socio-txt { flex: 1; }
 .socio-txt h2 { margin-top: 0; font-size: 18pt; }
 .logo-portada { width: 150mm; margin: 2mm auto 0; display: block; filter: drop-shadow(0 1.5mm 3mm rgba(0,0,0,.8)); }
+
+.rapidas .caja { margin: 0 0 2.4mm; }
+.rapidas .caja p { font-size: 10.2pt; margin-bottom: 1mm; }
+.rapidas .formula { font-size: 9.6pt; padding: 1.4mm; margin: .5mm 0 1.5mm; }
+.contra-roles { display: flex; justify-content: center; gap: 3mm; margin: 6mm 0 0; }
+.contra-roles .rol-img { width: 18mm; height: 18mm; margin: 0; }
 </style></head><body><section class="pag portada" data-n="1"><div class="contenido">
 <img class="portada-img" src="img/portada.jpg" alt="">
 <div class="portada-tit">
@@ -370,7 +376,7 @@ img.mapa { width: 100%; height: auto; border: .6mm solid var(--tinta); border-ra
 <div class="dos">
 <h1>Expedientes y Dragones</h1>
 <h3>Índice</h3>
-<div class="indice"><div class="ind"><span>Expedientes y Dragones</span><i></i><b>2</b></div><div class="ind"><span>Qué es esto</span><i></i><b>2</b></div><div class="ind"><span>Licencia</span><i></i><b>2</b></div><div class="ind"><span>Bienvenidos a Expedientia</span><i></i><b>3</b></div><div class="ind"><span>Crear un abogado</span><i></i><b>5</b></div><div class="ind"><span>Características</span><i></i><b>5</b></div><div class="ind"><span>Habilidades de oficio</span><i></i><b>6</b></div><div class="ind"><span>Especialidades</span><i></i><b>7</b></div><div class="ind"><span>Sistema de juego</span><i></i><b>10</b></div><div class="ind"><span>La tirada</span><i></i><b>10</b></div><div class="ind"><span>La prueba jurídica</span><i></i><b>11</b></div><div class="ind"><span>La acción</span><i></i><b>12</b></div><div class="ind"><span>Poderes de las especialidades</span><i></i><b>13</b></div><div class="ind"><span>Progresión</span><i></i><b>14</b></div><div class="ind"><span>Recompensas</span><i></i><b>15</b></div><div class="ind"><span>Montando la partida</span><i></i><b>16</b></div><div class="ind"><span>Tablas aleatorias</span><i></i><b>18</b></div><div class="ind"><span>Personajes no jugadores</span><i></i><b>20</b></div><div class="ind"><span>Los socios del estudio</span><i></i><b>21</b></div><div class="ind"><span>Bestiario</span><i></i><b>22</b></div><div class="ind"><span>Las zonas de Expedientia</span><i></i><b>27</b></div><div class="ind"><span>Aventura: El primer caso</span><i></i><b>30</b></div><div class="ind"><span>Plantillas</span><i></i><b>32</b></div></div>
+<div class="indice"><div class="ind"><span>Expedientes y Dragones</span><i></i><b>2</b></div><div class="ind"><span>Qué es esto</span><i></i><b>2</b></div><div class="ind"><span>Licencia</span><i></i><b>2</b></div><div class="ind"><span>Bienvenidos a Expedientia</span><i></i><b>3</b></div><div class="ind"><span>Crear un abogado</span><i></i><b>5</b></div><div class="ind"><span>Características</span><i></i><b>5</b></div><div class="ind"><span>Habilidades de oficio</span><i></i><b>6</b></div><div class="ind"><span>Especialidades</span><i></i><b>7</b></div><div class="ind"><span>Sistema de juego</span><i></i><b>10</b></div><div class="ind"><span>La tirada</span><i></i><b>10</b></div><div class="ind"><span>La prueba jurídica</span><i></i><b>11</b></div><div class="ind"><span>La acción</span><i></i><b>12</b></div><div class="ind"><span>Poderes de las especialidades</span><i></i><b>13</b></div><div class="ind"><span>Progresión</span><i></i><b>14</b></div><div class="ind"><span>Recompensas</span><i></i><b>15</b></div><div class="ind"><span>Montando la partida</span><i></i><b>16</b></div><div class="ind"><span>Tablas aleatorias</span><i></i><b>18</b></div><div class="ind"><span>Personajes no jugadores</span><i></i><b>20</b></div><div class="ind"><span>Los socios del estudio</span><i></i><b>21</b></div><div class="ind"><span>Bestiario</span><i></i><b>22</b></div><div class="ind"><span>Las zonas de Expedientia</span><i></i><b>27</b></div><div class="ind"><span>Aventura: El primer caso</span><i></i><b>30</b></div><div class="ind"><span>Reglas rápidas</span><i></i><b>32</b></div><div class="ind"><span>Plantillas</span><i></i><b>33</b></div></div>
 <h3>Licencia</h3>
 <p class="chico">Texto, reglas adaptadas e ilustraciones de este manual: © 2026 Leonel Díaz. Todos los personajes, lugares e instituciones de la República de Expedientia son ficticios; cualquier parecido con una ventanilla real es pura coincidencia y algo de experiencia.</p>
 <p class="chico">El sistema de tiradas se basa en el <i>System Reference Document 5.2</i>, publicado bajo licencia Creative Commons Atribución 4.0. Atribución exigida por la licencia:</p>
@@ -382,7 +388,7 @@ img.mapa { width: 100%; height: auto; border: .6mm solid var(--tinta); border-ra
 <p>Ahí, una noche, los expedientes olvidados del Archivo Central empezaron a moverse. Los formularios desarrollaron colmillos, los plazos aprendieron a explotar y las colas se volvieron, literalmente, infinitas. Detrás de todo crece una criatura que nadie ha visto completa: <b>la Carga Procesal</b>, un dragón hecho de trámites que nadie atendió.</p>
 <p>Los jugadores no blanden espadas: presentan escritos, piden medidas cautelares, plantean nulidades y, cuando todo falla, se toman un café en la cafetería del juzgado. Ganan expedientes, reputación y honorarios, y deben decidir qué hacer cuando un señor muy amable ofrece «agilizar» el trámite.</p>
 <p>Este manual sirve para dos cosas: jugar en mesa con lápiz, papel y dados, y entender las reglas que usa la aplicación para celular del mismo nombre. Las dos versiones comparten el corazón del sistema: un dado de veinte caras, seis características y la prueba jurídica.</p>
-<div class="caja nota"><div class="caja-t">Lo que necesitas</div><p>Uno a cuatro jugadores y una persona que dirija la partida (el <b>Relator</b>). Un dado de veinte caras (d20) y, si es posible, dados de 4, 6, 8 y 100 caras. Copias de la hoja de abogado (página 32), lápices y una tarde libre de audiencias.</p></div>
+<div class="caja nota"><div class="caja-t">Lo que necesitas</div><p>Uno a cuatro jugadores y una persona que dirija la partida (el <b>Relator</b>). Un dado de veinte caras (d20) y, si es posible, dados de 4, 6, 8 y 100 caras. Copias de la hoja de abogado (página 33), lápices y una tarde libre de audiencias.</p></div>
 <div class="caja aviso"><div class="caja-t">Advertencia del estudio</div><p>Es un juego de humor de oficio. No es asesoría legal ni reemplaza la consulta con un abogado colegiado. Las preguntas jurídicas que aparecen en la aplicación se verifican en fuentes oficiales peruanas antes de publicarse.</p></div>
 </div></div></section>
 <section class="pag " data-n="3"><div class="cinta">Expedientes y Dragones</div><div class="num">3</div><div class="contenido">
@@ -644,7 +650,7 @@ img.mapa { width: 100%; height: auto; border: .6mm solid var(--tinta); border-ra
 <h2>La librería jurídica</h2>
 <p>Estantes hasta el techo, códigos de todos los años y una vendedora que sabe exactamente qué libro necesitas antes de que lo pidas. En la esquina, el puesto del Ekeko de los Honorarios, cargado de miniaturas de todo lo que un abogado desea: un código, un sello, una toga, una laptop que no se cuelga.</p>
 <table class="aleat"><thead><tr><th>d6</th><th>Rumores de la cafetería</th></tr></thead><tbody><tr><td>1</td><td>Dicen que en el sótano hay un expediente de 1950 que todavía espera respuesta.</td></tr><tr><td>2</td><td>La ventanilla 7 atiende rápido los jueves, pero nadie sabe por qué.</td></tr><tr><td>3</td><td>Alguien vio al Coimero almorzando con un Tramitador.</td></tr><tr><td>4</td><td>El Requisito Imposible le teme a la Especialista Mendoza.</td></tr><tr><td>5</td><td>La Carga Procesal ronca: por eso tiemblan los estantes.</td></tr><tr><td>6</td><td>Hay una Mesa de Partes virtual. Nadie la ha encontrado todavía.</td></tr></tbody></table>
-<div class="caja nota"><div class="caja-t">Crear tus propias zonas</div><p>Usa la plantilla de zona de la página 33. Una buena zona tiene una imagen fuerte (una sala, un olor, un sonido), entre tres y cinco criaturas propias, un jefe con una mecánica que obligue a pensar y al menos un personaje no jugador honesto que ayude al equipo.</p></div>
+<div class="caja nota"><div class="caja-t">Crear tus propias zonas</div><p>Usa la plantilla de zona de la página 34. Una buena zona tiene una imagen fuerte (una sala, un olor, un sonido), entre tres y cinco criaturas propias, un jefe con una mecánica que obligue a pensar y al menos un personaje no jugador honesto que ayude al equipo.</p></div>
 </div></div></section>
 <section class="pag " data-n="30"><div class="cinta">Aventura</div><div class="num">30</div><div class="contenido">
 <h1>Aventura: El primer caso</h1>
@@ -683,7 +689,23 @@ img.mapa { width: 100%; height: auto; border: .6mm solid var(--tinta); border-ra
 <div class="caja nota"><div class="caja-t">Lo que dicen al perder</div><p>Si el equipo cae, no hay drama: Don Eusebio se encoge de hombros. «Archivado, doctor. No se preocupe: aquí lo archivado también resucita.» El caso puede reabrirse en la siguiente sesión, con las criaturas un poco más fuertes.</p></div>
 <div class="caja ejemplo"><div class="caja-t">Recompensas del Acto 1</div><p>Por cada caso fundado: 60 de honorarios por el jefe, 15 por cada sala de combate y la experiencia correspondiente. Al cerrar los tres casos, los abogados deberían estar cerca del nivel 2 y el estudio, con una Reputación entre 55 y 70 si no aceptó atajos.</p></div>
 </div></div></section>
-<section class="pag plantilla" data-n="32"><div class="cinta">Plantillas</div><div class="num">32</div><div class="contenido">
+<section class="pag " data-n="32"><div class="cinta">Reglas rápidas</div><div class="num">32</div><div class="contenido">
+<h1>Reglas rápidas</h1>
+<p class="intro">Una página para tener abierta sobre la mesa. Todo lo demás está en el manual.</p>
+<div class="dos rapidas">
+<div class="caja nota"><div class="caja-t">La tirada</div><div class="formula">d20 + modificador + competencia ≥ dificultad</div><p>Modificador = (valor − 10) ÷ 2, hacia abajo. Competencia: +2 en niveles 1 a 4, +1 cada 4 niveles.</p><p><b>Dificultades:</b> 5 muy fácil · 10 fácil · 12 normal · 15 media · 20 difícil · 25 muy difícil · 30 casi imposible.</p></div>
+<div class="caja nota"><div class="caja-t">Fundado e Improcedente</div><p><b>20 natural:</b> Fundado. En ataque acierta siempre y duplica los dados de daño. <b>1 natural:</b> Improcedente. En ataque falla siempre.</p></div>
+<div class="caja nota"><div class="caja-t">Ventaja y desventaja</div><p>Ventaja: dos d20, el mayor. Desventaja: dos d20, el menor. Si hay ambas, se anulan. No se acumulan.</p></div>
+<div class="caja real"><div class="caja-t">Prueba jurídica</div><p>Máximo 3 por expediente. 20 segundos, 4 opciones. Acierto: ventaja en la siguiente tirada. Fallo o tiempo agotado: tirada normal. Solo preguntas verificadas en fuente oficial.</p></div>
+<div class="caja nota"><div class="caja-t">El turno</div><p>Iniciativa: d20 + Agilidad procesal. Cada turno: <b>moverse</b> (Movimiento en casillas; los rivales bloquean, los aliados dejan pasar), <b>una acción</b> (atacar, poder, objeto, ayudar) y <b>una reacción</b> por ronda si un poder lo permite.</p></div>
+<div class="caja nota"><div class="caja-t">Atacar y caer</div><p>Objetivo dentro del alcance. d20 + mod. + competencia contra Defensa. Daño: dado de la especialidad + mod. Paciencia 0: el abogado cae; la criatura queda desestimada.</p></div>
+<div class="caja nota"><div class="caja-t">Estados</div><p><b>Inmovilizado:</b> 2 turnos sin moverse ni actuar. <b>Observado:</b> el golpe no hace daño. <b>Silencio:</b> 2 turnos sin actuar con un Administrativista en la sala = sala ganada.</p></div>
+<div class="caja nota"><div class="caja-t">Las salas</div><p><b>Combate</b> · <b>Trámite</b> (Criterio 12; si falla, −2 de Paciencia a todos y 20 min) · <b>Audiencia</b> (Oratoria o Criterio 13) · <b>Cafetería</b> (mitad de la Paciencia, 15 min) · <b>Librería</b> · <b>Coimero</b> (aceptar, rechazar o denunciar) · <b>Jefe</b>.</p></div>
+<div class="caja nota"><div class="caja-t">Las seis especialidades</div><table class=""><thead><tr><th>Especialidad</th><th>Pac.</th><th>Def.</th><th>Mov.</th><th>Ataque</th></tr></thead><tbody><tr><td>Civilista</td><td>12</td><td>13</td><td>3</td><td>Doctrina 1d8</td></tr><tr><td>Administrativista</td><td>11</td><td>12</td><td>3</td><td>Criterio 1d6</td></tr><tr><td>Penalista</td><td>11</td><td>13</td><td>4</td><td>Agilidad procesal 1d8</td></tr><tr><td>Laboralista</td><td>14</td><td>13</td><td>3</td><td>Firmeza 1d6</td></tr><tr><td>Constitucionalista</td><td>11</td><td>12</td><td>3</td><td>Oratoria 1d6</td></tr><tr><td>Tributarista</td><td>12</td><td>14</td><td>3</td><td>Doctrina 1d6</td></tr></tbody></table></div>
+<div class="caja nota"><div class="caja-t">Experiencia y niveles</div><p>100 por criatura menor desestimada, 300 por jefe, 50 por sala superada sin pelear y 100 extra si el caso es fundado.</p><p><b>Umbrales:</b> nivel 2 con 300 · 3 con 900 · 4 con 2700 · 5 con 6500 · 6 con 14 000. Cada nivel suma 6 de Paciencia y, cada 4, un punto de competencia.</p></div>
+<div class="caja ejemplo"><div class="caja-t">Recompensas</div><p>Honorarios: 15 por combate, 60 por jefe, 50 por la red del Coimero, 10 o 20 por audiencia. Reputación inicial 50; con 70 o más llegan los aliados honestos. Casación: una vez por expediente, repetir una tirada con dificultad 18.</p></div>
+</div></div></section>
+<section class="pag plantilla" data-n="33"><div class="cinta">Plantillas</div><div class="num">33</div><div class="contenido">
 <h1 class="hoja-t">Hoja de abogado</h1>
 <div class="hoja">
   <div class="hoja-cab">
@@ -715,7 +737,7 @@ img.mapa { width: 100%; height: auto; border: .6mm solid var(--tinta); border-ra
     </div>
   </div>
 </div></div></section>
-<section class="pag plantilla" data-n="33"><div class="cinta">Plantillas</div><div class="num">33</div><div class="contenido">
+<section class="pag plantilla" data-n="34"><div class="cinta">Plantillas</div><div class="num">34</div><div class="contenido">
 <h1 class="hoja-t">Plantilla de zona</h1>
 <div class="hoja">
   <div class="hoja-cab"><div><label>Nombre de la zona</label><div class="linea"></div></div><div><label>Nivel sugerido</label><div class="linea"></div></div></div>
@@ -736,12 +758,13 @@ img.mapa { width: 100%; height: auto; border: .6mm solid var(--tinta); border-ra
 </div>
 <p class="pie-final">Expedientes y Dragones · Manual del juego · © 2026 Leonel Díaz · Se permite fotocopiar las plantillas para uso personal.</p>
 </div></section>
-<section class="pag contraportada" data-n="34"><div class="contenido">
+<section class="pag contraportada" data-n="35"><div class="contenido">
 <div class="contra">
   <img class="contra-d20" src="img/d20.png" alt="">
   <h2>Los expedientes olvidados se están moviendo.</h2>
   <p>En la República de Expedientia, los formularios tienen colmillos, los plazos explotan y las colas no terminan nunca. Tu estudio acaba de abrir frente a la Corte y el primer cliente ya está en la puerta.</p>
   <p>Este manual contiene todo lo necesario para jugar: creación de abogados con seis especialidades, el sistema del d20 con la prueba jurídica, combate táctico, un bestiario de criaturas del sistema, cuatro zonas, tablas para improvisar y la aventura completa <i>El primer caso</i>.</p>
+  <div class="contra-roles"><div class="rol-img"><img src="img/esp-civilista.jpg"></div><div class="rol-img"><img src="img/esp-administrativista.jpg"></div><div class="rol-img"><img src="img/esp-penalista.jpg"></div><div class="rol-img"><img src="img/esp-laboralista.jpg"></div><div class="rol-img"><img src="img/esp-constitucionalista.jpg"></div><div class="rol-img"><img src="img/esp-tributarista.jpg"></div></div>
   <p class="contra-lema">Litiga, investiga y vence al dragón de la burocracia.</p>
   <p class="contra-autor">Leonel Díaz · Arequipa, 2026</p>
 </div></div></section>

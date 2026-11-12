@@ -1,7 +1,7 @@
 # Cambios
 
 ## v0.11.0 (11/11/2026)
-- Manual del juego en formato de libro de rol (A4, 34 páginas, PDF en `manual/salida/`): creación de abogados, seis especialidades, sistema del d20 con la prueba jurídica, combate en la cuadrícula, poderes, progresión, recompensas, guía del Relator, tablas aleatorias, personajes no jugadores, bestiario de 11 criaturas y la Carga Procesal, cuatro zonas, la aventura «El primer caso» y plantillas de hoja de abogado y de zona.
+- Manual del juego en formato de libro de rol (A4, 35 páginas, PDF en `manual/salida/`): creación de abogados, seis especialidades, sistema del d20 con la prueba jurídica, combate en la cuadrícula, poderes, progresión, recompensas, guía del Relator, tablas aleatorias, personajes no jugadores, bestiario de 11 criaturas y la Carga Procesal, cuatro zonas, la aventura «El primer caso», una página de reglas rápidas, contraportada con las seis especialidades y plantillas de hoja de abogado y de zona.
 - 35 ilustraciones originales generadas desde código (`manual/arte/`): portada, especialidades de cuerpo entero, criaturas, escenas, mapa de Expedientia, retratos y marco de página.
 - Los socios del estudio en el manual: Gonzabio (socio fundador) y Lion (investigador), con sus retratos, sus poderes como aliados y su papel en el prólogo y en los tres casos. La portada usa el logotipo del juego.
 

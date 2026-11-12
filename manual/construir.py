@@ -54,7 +54,7 @@ def bloque(nombre, tipo, valores, pac, defe, mov, ataque, rasgo, tactica, imagen
 
 # ═════════════════════════ 1. PORTADA ═════════════════════════
 pagina('', f'''
-{img('portada', 'portada-img')}
+{img('ia-portada', 'portada-img') if os.path.exists(os.path.join(AQUI, 'img', 'ia-portada.png')) else img('portada', 'portada-img')}
 <div class="portada-tit">
   <div class="sobre">Un juego de rol jurídico</div>
   {img('ia-logo', 'logo-portada', 'Expedientes y Dragones')}
@@ -70,7 +70,7 @@ indice = [
     ('Especialidades', 7), ('Sistema de juego', 10), ('La tirada', 10), ('La prueba jurídica', 11), ('La acción', 12),
     ('Poderes de las especialidades', 13), ('Progresión', 14), ('Recompensas', 15),
     ('Montando la partida', 16), ('Tablas aleatorias', 18), ('Personajes no jugadores', 20), ('Los socios del estudio', 21), ('Bestiario', 22),
-    ('Las zonas de Expedientia', 27), ('Aventura: El primer caso', 30), ('Plantillas', 32),
+    ('Las zonas de Expedientia', 27), ('Aventura: El primer caso', 30), ('Reglas rápidas', 32), ('Plantillas', 33),
 ]
 filas_ind = ''.join(f'<div class="ind"><span>{t}</span><i></i><b>{p}</b></div>' for t, p in indice)
 pagina('Expedientes y Dragones', f'''
@@ -89,7 +89,7 @@ pagina('Expedientes y Dragones', f'''
 <p>Ahí, una noche, los expedientes olvidados del Archivo Central empezaron a moverse. Los formularios desarrollaron colmillos, los plazos aprendieron a explotar y las colas se volvieron, literalmente, infinitas. Detrás de todo crece una criatura que nadie ha visto completa: <b>la Carga Procesal</b>, un dragón hecho de trámites que nadie atendió.</p>
 <p>Los jugadores no blanden espadas: presentan escritos, piden medidas cautelares, plantean nulidades y, cuando todo falla, se toman un café en la cafetería del juzgado. Ganan expedientes, reputación y honorarios, y deben decidir qué hacer cuando un señor muy amable ofrece «agilizar» el trámite.</p>
 <p>Este manual sirve para dos cosas: jugar en mesa con lápiz, papel y dados, y entender las reglas que usa la aplicación para celular del mismo nombre. Las dos versiones comparten el corazón del sistema: un dado de veinte caras, seis características y la prueba jurídica.</p>
-{caja('Lo que necesitas', '<p>Uno a cuatro jugadores y una persona que dirija la partida (el <b>Relator</b>). Un dado de veinte caras (d20) y, si es posible, dados de 4, 6, 8 y 100 caras. Copias de la hoja de abogado (página 32), lápices y una tarde libre de audiencias.</p>')}
+{caja('Lo que necesitas', '<p>Uno a cuatro jugadores y una persona que dirija la partida (el <b>Relator</b>). Un dado de veinte caras (d20) y, si es posible, dados de 4, 6, 8 y 100 caras. Copias de la hoja de abogado (página 33), lápices y una tarde libre de audiencias.</p>')}
 {caja('Advertencia del estudio', '<p>Es un juego de humor de oficio. No es asesoría legal ni reemplaza la consulta con un abogado colegiado. Las preguntas jurídicas que aparecen en la aplicación se verifican en fuentes oficiales peruanas antes de publicarse.</p>', 'aviso')}
 </div>''')
 
@@ -640,7 +640,7 @@ pagina('Las zonas', f'''
 <h2>La librería jurídica</h2>
 <p>Estantes hasta el techo, códigos de todos los años y una vendedora que sabe exactamente qué libro necesitas antes de que lo pidas. En la esquina, el puesto del Ekeko de los Honorarios, cargado de miniaturas de todo lo que un abogado desea: un código, un sello, una toga, una laptop que no se cuelga.</p>
 {tabla(['d6', 'Rumores de la cafetería'], [['1', 'Dicen que en el sótano hay un expediente de 1950 que todavía espera respuesta.'], ['2', 'La ventanilla 7 atiende rápido los jueves, pero nadie sabe por qué.'], ['3', 'Alguien vio al Coimero almorzando con un Tramitador.'], ['4', 'El Requisito Imposible le teme a la Especialista Mendoza.'], ['5', 'La Carga Procesal ronca: por eso tiemblan los estantes.'], ['6', 'Hay una Mesa de Partes virtual. Nadie la ha encontrado todavía.']], 'aleat')}
-{caja('Crear tus propias zonas', '<p>Usa la plantilla de zona de la página 33. Una buena zona tiene una imagen fuerte (una sala, un olor, un sonido), entre tres y cinco criaturas propias, un jefe con una mecánica que obligue a pensar y al menos un personaje no jugador honesto que ayude al equipo.</p>')}
+{caja('Crear tus propias zonas', '<p>Usa la plantilla de zona de la página 34. Una buena zona tiene una imagen fuerte (una sala, un olor, un sonido), entre tres y cinco criaturas propias, un jefe con una mecánica que obligue a pensar y al menos un personaje no jugador honesto que ayude al equipo.</p>')}
 </div>''')
 
 # ═════════════════════════ 29-30. AVENTURA ═════════════════════════
@@ -681,6 +681,24 @@ pagina('Aventura', f'''
 <p>Lion cruza las firmas de los tres casos y encuentra un mismo sello, el del Archivo Central. Gonzabio cierra el maletín: «Las tres pistas apuntan al mismo sótano, socio. Bajamos al Archivo Central». El Acto 1 termina con una certeza: la Carga Procesal existe y está despertando. Los siguientes actos llevan al equipo al Archivo Central, al Pasaje del Coimero y, finalmente, a la torre de expedientes donde duerme el dragón.</p>
 {caja('Lo que dicen al perder', '<p>Si el equipo cae, no hay drama: Don Eusebio se encoge de hombros. «Archivado, doctor. No se preocupe: aquí lo archivado también resucita.» El caso puede reabrirse en la siguiente sesión, con las criaturas un poco más fuertes.</p>')}
 {caja('Recompensas del Acto 1', '<p>Por cada caso fundado: 60 de honorarios por el jefe, 15 por cada sala de combate y la experiencia correspondiente. Al cerrar los tres casos, los abogados deberían estar cerca del nivel 2 y el estudio, con una Reputación entre 55 y 70 si no aceptó atajos.</p>', 'ejemplo')}
+</div>''')
+
+# ═════════════════════════ REGLAS RÁPIDAS ═════════════════════════
+pagina('Reglas rápidas', f'''
+<h1>Reglas rápidas</h1>
+<p class="intro">Una página para tener abierta sobre la mesa. Todo lo demás está en el manual.</p>
+<div class="dos rapidas">
+{caja('La tirada', '<div class="formula">d20 + modificador + competencia ≥ dificultad</div><p>Modificador = (valor − 10) ÷ 2, hacia abajo. Competencia: +2 en niveles 1 a 4, +1 cada 4 niveles.</p><p><b>Dificultades:</b> 5 muy fácil · 10 fácil · 12 normal · 15 media · 20 difícil · 25 muy difícil · 30 casi imposible.</p>')}
+{caja('Fundado e Improcedente', '<p><b>20 natural:</b> Fundado. En ataque acierta siempre y duplica los dados de daño. <b>1 natural:</b> Improcedente. En ataque falla siempre.</p>')}
+{caja('Ventaja y desventaja', '<p>Ventaja: dos d20, el mayor. Desventaja: dos d20, el menor. Si hay ambas, se anulan. No se acumulan.</p>')}
+{caja('Prueba jurídica', '<p>Máximo 3 por expediente. 20 segundos, 4 opciones. Acierto: ventaja en la siguiente tirada. Fallo o tiempo agotado: tirada normal. Solo preguntas verificadas en fuente oficial.</p>', 'real')}
+{caja('El turno', '<p>Iniciativa: d20 + Agilidad procesal. Cada turno: <b>moverse</b> (Movimiento en casillas; los rivales bloquean, los aliados dejan pasar), <b>una acción</b> (atacar, poder, objeto, ayudar) y <b>una reacción</b> por ronda si un poder lo permite.</p>')}
+{caja('Atacar y caer', '<p>Objetivo dentro del alcance. d20 + mod. + competencia contra Defensa. Daño: dado de la especialidad + mod. Paciencia 0: el abogado cae; la criatura queda desestimada.</p>')}
+{caja('Estados', '<p><b>Inmovilizado:</b> 2 turnos sin moverse ni actuar. <b>Observado:</b> el golpe no hace daño. <b>Silencio:</b> 2 turnos sin actuar con un Administrativista en la sala = sala ganada.</p>')}
+{caja('Las salas', '<p><b>Combate</b> · <b>Trámite</b> (Criterio 12; si falla, −2 de Paciencia a todos y 20 min) · <b>Audiencia</b> (Oratoria o Criterio 13) · <b>Cafetería</b> (mitad de la Paciencia, 15 min) · <b>Librería</b> · <b>Coimero</b> (aceptar, rechazar o denunciar) · <b>Jefe</b>.</p>')}
+{caja('Las seis especialidades', tabla(['Especialidad', 'Pac.', 'Def.', 'Mov.', 'Ataque'], [[e['n'], e['pac'].split(' ')[0], str(e['defe']), str(e['mov']), e['ataque'].split(' de daño')[0].replace(',', '')] for e in ESP]))}
+{caja('Experiencia y niveles', '<p>100 por criatura menor desestimada, 300 por jefe, 50 por sala superada sin pelear y 100 extra si el caso es fundado.</p><p><b>Umbrales:</b> nivel 2 con 300 · 3 con 900 · 4 con 2700 · 5 con 6500 · 6 con 14 000. Cada nivel suma 6 de Paciencia y, cada 4, un punto de competencia.</p>')}
+{caja('Recompensas', '<p>Honorarios: 15 por combate, 60 por jefe, 50 por la red del Coimero, 10 o 20 por audiencia. Reputación inicial 50; con 70 o más llegan los aliados honestos. Casación: una vez por expediente, repetir una tirada con dificultad 18.</p>', 'ejemplo')}
 </div>''')
 
 # ═════════════════════════ 31-32. PLANTILLAS ═════════════════════════
@@ -748,6 +766,7 @@ pagina('', f'''
   <h2>Los expedientes olvidados se están moviendo.</h2>
   <p>En la República de Expedientia, los formularios tienen colmillos, los plazos explotan y las colas no terminan nunca. Tu estudio acaba de abrir frente a la Corte y el primer cliente ya está en la puerta.</p>
   <p>Este manual contiene todo lo necesario para jugar: creación de abogados con seis especialidades, el sistema del d20 con la prueba jurídica, combate táctico, un bestiario de criaturas del sistema, cuatro zonas, tablas para improvisar y la aventura completa <i>El primer caso</i>.</p>
+  <div class="contra-roles">{''.join(f'<div class="rol-img"><img src="img/{e["img"]}.jpg"></div>' for e in ESP)}</div>
   <p class="contra-lema">Litiga, investiga y vence al dragón de la burocracia.</p>
   <p class="contra-autor">Leonel Díaz · Arequipa, 2026</p>
 </div>''', 'contraportada')
