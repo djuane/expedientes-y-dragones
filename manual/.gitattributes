@@ -1,0 +1,5 @@
+# El manual se sube sin Git LFS para poder versionarlo desde cualquier equipo.
+*.png -filter -diff -merge binary
+*.jpg -filter -diff -merge binary
+*.pdf binary
+*.woff2 binary
