@@ -30,6 +30,14 @@ namespace Expedientia.Logica.Personajes
         public int Valor(Atributo a) => _valores[(int)a];
         public int Modificador(Atributo a) => Reglas.Modificador(Valor(a));
 
+        /// <summary>Copia con un atributo subido o bajado (tope 1 a 30).</summary>
+        public Atributos Con(Atributo a, int delta)
+        {
+            var v = (int[])_valores.Clone();
+            v[(int)a] = Math.Max(1, Math.Min(30, v[(int)a] + delta));
+            return new Atributos(v[0], v[1], v[2], v[3], v[4], v[5]);
+        }
+
         private void Fijar(Atributo a, int valor)
         {
             if (valor < 1 || valor > 30) throw new ArgumentOutOfRangeException(a.ToString(), "Los atributos van de 1 a 30.");

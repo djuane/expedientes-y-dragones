@@ -57,12 +57,20 @@ namespace Expedientia.Logica.Combate
             Rasgo = rasgo;
             Clave = clave ?? (especialidad != Especialidad.Ninguna ? especialidad.ToString().ToLowerInvariant() : nombre.ToLowerInvariant());
         }
+
+        /// <summary>Copia con algunos números cambiados (lo usan las mejoras del expediente).</summary>
+        internal FichaCombatiente Con(int? paciencia = null, int? defensa = null, int? movimiento = null, int? dados = null,
+            int? caras = null, int? alcance = null, Atributos? atributos = null) =>
+            new FichaCombatiente(Id, Nombre, Bando, Especialidad, atributos ?? Atributos, Nivel, paciencia ?? PacienciaMaxima,
+                defensa ?? Defensa, movimiento ?? Movimiento, AtributoDeAtaque, dados ?? DadosDeDanio, caras ?? CarasDeDanio,
+                alcance ?? Alcance, Rasgo, Clave);
     }
 
     /// <summary>Estado de un combatiente durante la partida.</summary>
     public sealed class Combatiente
     {
-        public FichaCombatiente Ficha { get; }
+        /// <summary>Se reemplaza al ganar una mejora (la ficha es inmutable; la mejora crea otra con los números nuevos).</summary>
+        public FichaCombatiente Ficha { get; internal set; }
         public string Id => Ficha.Id;
         public Bando Bando => Ficha.Bando;
         public Casilla Posicion { get; internal set; }

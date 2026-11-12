@@ -24,6 +24,7 @@ namespace Expedientia.Logica.Sesion
                     TurnosParaVencer = c.Ficha.Rasgo == Rasgo.Vence && !c.Caido ? Math.Max(0, ReglasHabilidades.TurnosDelPlazo - c.TurnosJugados) : (int?)null,
                     RecargaHabilidad = e.CombateActual?.RecargaHabilidad(c) ?? 0,
                     RecargaNulidad = e.CombateActual?.RecargaNulidad(c) ?? 0,
+                    Alcance = c.Ficha.Alcance, Movimiento = c.Ficha.Movimiento,
                     ReaccionDisponible = c.ReaccionDisponible,
                 };
             }
@@ -42,6 +43,8 @@ namespace Expedientia.Logica.Sesion
                 };
             }
             var s = e.Sentencia;
+            var proximo = e.Estudio.Proximo;
+            MejoraEstado M(Mejora m) { var d = Mejoras.Datos(m); return new MejoraEstado { Id = m.ToString(), Nombre = d.Nombre, Descripcion = d.Descripcion, Rara = d.Rara }; }
             return new EstadoPartida
             {
                 Id = id, CasoId = e.Caso.Id, Titulo = e.Caso.Titulo, Premisa = e.Caso.Premisa,
@@ -51,10 +54,15 @@ namespace Expedientia.Logica.Sesion
                 PruebasJuridicasRestantes = ControlPruebasJuridicas.MaximoPorPartida - e.PruebasJuridicas.Usadas,
                 TieneEscritoPreFirmado = e.TieneEscritoPreFirmado, TieneCodigoAnotado = e.TieneCodigoAnotado,
                 HonorariosDisponibles = e.HonorariosDisponibles,
+                MejorasOfrecidas = e.MejorasOfrecidas.Select(M).ToList(),
+                MejorasTomadas = e.MejorasTomadas.Select(M).ToList(),
+                PuedeVolverASortear = e.PuedeVolverASortear,
                 Estudio = new EstudioEstado
                 {
                     Honorarios = e.Estudio.Honorarios, Experiencia = e.Estudio.Experiencia, Nivel = e.Estudio.Nivel,
                     Reputacion = e.Estudio.Reputacion, ExpedientesCerrados = e.Estudio.ExpedientesCerrados,
+                    ProximoDesbloqueo = proximo?.Nombre, ProximoDesbloqueoDescripcion = proximo?.Descripcion,
+                    FaltanParaDesbloqueo = proximo == null ? 0 : proximo.ExpedientesNecesarios - e.Estudio.ExpedientesCerrados,
                 },
                 Equipo = e.Equipo.Select(Dto).ToList(),
                 Combate = combate,

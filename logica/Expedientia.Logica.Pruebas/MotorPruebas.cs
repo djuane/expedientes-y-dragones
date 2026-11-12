@@ -13,7 +13,8 @@ public class MotorPruebas
         new MiembroDelEquipo(Catalogo.Administrativista("p2", "Bot"), null),
     }), DateTime.UnixEpoch);
 
-    private static AccionJuego Siguiente(EstadoPartida e) => e.SalaResuelta ? new AccionJuego { Tipo = "avanzar" } : e.SalaActual switch
+    private static AccionJuego Siguiente(EstadoPartida e) => e.MejorasOfrecidas.Count > 0 ? new AccionJuego { Tipo = "mejora", Indice = 0 }
+        : e.SalaResuelta ? new AccionJuego { Tipo = "avanzar" } : e.SalaActual switch
     {
         "Combate" or "Jefe" or "RedDelCoimero" => new AccionJuego { Tipo = "piloto" },
         "Tramite" => new AccionJuego { Tipo = "tramite" },
@@ -35,6 +36,24 @@ public class MotorPruebas
             e = r.Estado;
         }
         Assert.NotNull(e.Sentencia);
+    }
+
+    [Fact]
+    public void Al_ganar_un_combate_hay_que_elegir_mejora_antes_de_avanzar()
+    {
+        var m = Nuevo(4);
+        var e = m.Iniciar(DateTime.UnixEpoch).Estado;
+        for (var i = 0; i < 500 && e.MejorasOfrecidas.Count == 0 && e.Sentencia == null; i++)
+            e = m.Ejecutar("yo", Siguiente(e), DateTime.UnixEpoch, _ => null).Estado;
+        Assert.Equal(3, e.MejorasOfrecidas.Count);
+        Assert.False(m.Ejecutar("yo", new AccionJuego { Tipo = "avanzar" }, DateTime.UnixEpoch, _ => null).Valida);
+        Assert.False(m.Ejecutar("yo", new AccionJuego { Tipo = "resortear" }, DateTime.UnixEpoch, _ => null).Valida);
+        var elegida = e.MejorasOfrecidas[1].Id;
+        var r = m.Ejecutar("yo", new AccionJuego { Tipo = "mejora", Objeto = elegida }, DateTime.UnixEpoch, _ => null);
+        Assert.True(r.Valida, r.Motivo);
+        Assert.Empty(r.Estado.MejorasOfrecidas);
+        Assert.Contains(r.Estado.MejorasTomadas, x => x.Id == elegida);
+        Assert.Contains(r.Eventos, ev => ev.Tipo == "MejoraElegida");
     }
 
     [Fact]

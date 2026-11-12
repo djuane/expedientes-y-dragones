@@ -54,6 +54,10 @@ namespace Expedientia.Logica.Expedientes
         private bool _ventajaProximaPrueba;
         private bool _escritoPreFirmado;
         private int _honorariosGanados;
+        private readonly List<Mejora> _ofertas = new List<Mejora>();
+        private readonly List<Mejora> _tomadas = new List<Mejora>();
+        private bool _resorteoUsado;
+        private int _combatesGanados;
 
         public Caso Caso { get; }
         public EstadoEstudio Estudio { get; }
@@ -68,6 +72,11 @@ namespace Expedientia.Logica.Expedientes
         public bool Terminado => Sentencia != null;
         public ControlPruebasJuridicas PruebasJuridicas { get; } = new ControlPruebasJuridicas();
         public IReadOnlyCollection<Combatiente> Equipo => _equipo.Values;
+
+        /// <summary>Mejoras por elegir ahora (vacío si no hay elección pendiente).</summary>
+        public IReadOnlyList<Mejora> MejorasOfrecidas => _ofertas;
+        public IReadOnlyList<Mejora> MejorasTomadas => _tomadas;
+        public bool PuedeVolverASortear => _ofertas.Count > 0 && !_resorteoUsado && Estudio.Tiene(Desbloqueo.SegundaOpinion);
 
         /// <summary>Cómo se ve la sala actual (trama); la capa visual lo muestra tal cual.</summary>
         public string TextoSala { get; private set; } = "";
@@ -84,6 +93,8 @@ namespace Expedientia.Logica.Expedientes
             _equipo = Miembros.ToDictionary(m => m.Ficha.Id, m => new Combatiente(m.Ficha, new Casilla(0, 0)));
             _salas = GenerarSalas(_azar);
             MinutosRestantes = caso.MinutosDePlazo;
+            if (Estudio.Tiene(Desbloqueo.OficinaPropia))
+                foreach (var c in _equipo.Values) { c.Ficha = c.Ficha.Con(paciencia: c.Ficha.PacienciaMaxima + 4); c.Paciencia = c.Ficha.PacienciaMaxima; }
         }
 
         public MiembroDelEquipo Miembro(string id) => Miembros.First(m => m.Ficha.Id == id);
@@ -116,9 +127,12 @@ namespace Expedientia.Logica.Expedientes
             if (Terminado) throw new InvalidOperationException("El expediente está cerrado.");
             if (IndiceSala >= 0 && !SalaResuelta) throw new InvalidOperationException("La sala actual no está resuelta.");
             var eventos = new List<EventoCombate>();
+            // Si nadie eligió la mejora, el juego elige por el equipo (como un bot).
+            if (_ofertas.Count > 0) eventos.AddRange(ElegirMejora(Mejoras.ElegirComoBot(_ofertas, _equipo.Values, MinutosRestantes)));
             if (IndiceSala == _salas.Count - 1) { Cerrar(true, "Expediente cerrado: Fundado", eventos); return eventos; }
             var guion = Guion.De(Caso.Id);
-            if (IndiceSala < 0) Decir(guion.Llegada, eventos);
+            var primera = IndiceSala < 0;
+            if (primera) Decir(guion.Llegada, eventos);
             IndiceSala++;
             SalaResuelta = false;
             CombateActual = null;
@@ -149,6 +163,7 @@ namespace Expedientia.Logica.Expedientes
                     eventos.Add(new Dialogo(Guion.Coimero, "Doctor, por una propina su escrito entra primero. Nadie se entera."));
                     break;
             }
+            if (primera && Estudio.Tiene(Desbloqueo.MejoraDeEntrada)) Ofrecer(eventos);
             return eventos;
         }
 
@@ -156,7 +171,7 @@ namespace Expedientia.Logica.Expedientes
         {
             if (Caso.Jefe == CatalogoCasos.JefeRequisitoImposible)
             {
-                var jefe = Catalogo.RequisitoImposible("jefe", 16 + 6 * Miembros.Count);
+                var jefe = Catalogo.RequisitoImposible("jefe", 16 + 6 * Miembros.Count + 3 * _tomadas.Count + 3 * Fama);
                 var conMendoza = Estudio.AliadosHonestosDisponibles;
                 var inicial = new[] { RequisitoImposible.EnPersona, RequisitoImposible.Virtual }[_azar.Entre(0, 1)];
                 var mecanica = new RequisitoImposible(jefe.Id, inicial, n => Catalogo.Formalismo($"req-{n}"), conMendoza, maximoDeRefuerzos: Math.Max(1, Miembros.Count / 2));
@@ -167,7 +182,7 @@ namespace Expedientia.Logica.Expedientes
             }
             else
             {
-                var jefe = Catalogo.ColaInfinita("jefe", 18 + 6 * Miembros.Count);
+                var jefe = Catalogo.ColaInfinita("jefe", 18 + 6 * Miembros.Count + 3 * _tomadas.Count + 3 * Fama);
                 TextoSala = "Jefe: La Cola Infinita. Cada turno se suma un usuario a la fila.";
                 Decir(guion.Jefe, eventos);
                 PrepararCombate(eventos, new List<FichaCombatiente> { jefe },
@@ -181,7 +196,17 @@ namespace Expedientia.Logica.Expedientes
         }
 
         /// <summary>Enemigos por sala de combate según el tamaño del equipo (ajustado con la simulación de partidas).</summary>
-        private int CantidadDeEnemigos() => Miembros.Count switch { 1 => 1, 2 => 2, 3 => 3, _ => 5 };
+        /// <summary>
+        /// Enemigos por sala de combate según el tamaño del equipo, y uno más a partir del segundo combate ganado:
+        /// el equipo se hace fuerte con las mejoras y la burocracia responde (ajustado con la simulación de partidas).
+        /// </summary>
+        private int CantidadDeEnemigos() => Miembros.Count switch { 1 => 1, 2 => 2, 3 => 3, _ => 5 } + (_combatesGanados >= 1 ? 1 : 0) + (_combatesGanados >= 3 ? 1 : 0);
+
+        /// <summary>
+        /// Fama del estudio: cuantos más expedientes cerró, más se resiste la burocracia (más paciencia en los enemigos).
+        /// Compensa los desbloqueos para que el juego no se vuelva un paseo.
+        /// </summary>
+        private int Fama => Math.Min(6, Estudio.ExpedientesCerrados);
 
         private List<FichaCombatiente> NuevosEnemigos(int cantidad)
         {
@@ -192,9 +217,10 @@ namespace Expedientia.Logica.Expedientes
                 _contadorEnemigos++;
                 var id = $"e{_contadorEnemigos}";
                 var tirada = _azar.Entre(1, 3);
-                lista.Add(contrataciones
+                var ficha = contrataciones
                     ? tirada switch { 1 => Catalogo.VuelvaManiana(id), 2 => Catalogo.Fraccionador(id), _ => Catalogo.Formalismo(id) }
-                    : tirada switch { 1 => Catalogo.PlazoQueVence(id), 2 => Catalogo.NotificacionDefectuosa(id), _ => Catalogo.Formalismo(id) });
+                    : tirada switch { 1 => Catalogo.PlazoQueVence(id), 2 => Catalogo.NotificacionDefectuosa(id), _ => Catalogo.Formalismo(id) };
+                lista.Add(Fama > 0 ? ficha.Con(paciencia: ficha.PacienciaMaxima + Fama) : ficha);
             }
             return lista;
         }
@@ -222,6 +248,46 @@ namespace Expedientia.Logica.Expedientes
             eventos.AddRange(CombateActual.Iniciar());
         }
 
+        private void Ofrecer(List<EventoCombate> eventos)
+        {
+            _ofertas.Clear();
+            _ofertas.AddRange(Mejoras.Sortear(_azar, Estudio.Tiene(Desbloqueo.BibliotecaDelEstudio), _tomadas.Where(EsUnica).ToList()));
+            if (_ofertas.Count > 0) eventos.Add(new MejorasOfrecidas(_ofertas.ToList()));
+        }
+
+        /// <summary>Las que no se apilan no vuelven a salir (el resto sí: dos tazas de café se notan).</summary>
+        private static bool EsUnica(Mejora m) => m == Mejora.SelloDeUrgencia || m == Mejora.ZapatosComodos;
+
+        /// <summary>El equipo se queda con una de las mejoras ofrecidas.</summary>
+        public IReadOnlyList<EventoCombate> ElegirMejora(Mejora mejora)
+        {
+            if (Terminado) throw new InvalidOperationException("El expediente está cerrado.");
+            if (!_ofertas.Contains(mejora)) throw new InvalidOperationException("Esa mejora no está entre las ofrecidas.");
+            _ofertas.Clear();
+            _tomadas.Add(mejora);
+            if (mejora == Mejora.AgendaDePlazos)
+            {
+                if (MinutosRestantes.HasValue) MinutosRestantes += 25; else _honorariosGanados += 25;
+            }
+            else foreach (var c in _equipo.Values) Mejoras.Aplicar(mejora, c);
+            var eventos = new List<EventoCombate> { new MejoraElegida(mejora) };
+            if (mejora == Mejora.AgendaDePlazos && MinutosRestantes.HasValue) eventos.Add(new RelojAvanzo(MinutosRestantes.Value));
+            return eventos;
+        }
+
+        /// <summary>Segunda opinión (desbloqueo): una vez por expediente se vuelven a sortear las mejoras.</summary>
+        public IReadOnlyList<EventoCombate> VolverASortear()
+        {
+            if (!PuedeVolverASortear) throw new InvalidOperationException("No se puede volver a sortear ahora.");
+            _resorteoUsado = true;
+            var antes = _ofertas.ToList();
+            var eventos = new List<EventoCombate>();
+            Ofrecer(eventos);
+            // Que salga al menos una distinta si hay de dónde.
+            if (_ofertas.SequenceEqual(antes)) { eventos.Clear(); Ofrecer(eventos); }
+            return eventos;
+        }
+
         /// <summary>Después de cada acción de combate: si terminó, resuelve la sala o archiva el caso.</summary>
         public IReadOnlyList<EventoCombate> RevisarCombate()
         {
@@ -238,6 +304,8 @@ namespace Expedientia.Logica.Expedientes
                 foreach (var m in _equipo.Values.Where(x => x.Caido)) m.Paciencia = Math.Max(1, m.Ficha.PacienciaMaxima / 4);
                 eventos.Add(new SalaSuperada(IndiceSala, "Combate ganado"));
                 ConsumirMinutos(4 + rondas * 2, eventos);
+                _combatesGanados++;
+                if (SalaActual != TipoSala.Jefe && !Terminado) Ofrecer(eventos);
             }
             else
             {
@@ -420,8 +488,15 @@ namespace Expedientia.Logica.Expedientes
             Sentencia = new Sentencia(fundada, motivo, honorarios, experiencia);
             Estudio.Honorarios += honorarios;
             Estudio.Experiencia += experiencia;
-            if (fundada) { Estudio.ExpedientesCerrados++; Estudio.CambiarReputacion(+1); }
+            if (fundada)
+            {
+                Estudio.ExpedientesCerrados++;
+                Estudio.CambiarReputacion(+1);
+                var nuevo = EstadoEstudio.Desbloqueos.FirstOrDefault(d => d.ExpedientesNecesarios == Estudio.ExpedientesCerrados);
+                if (nuevo != null) eventos.Add(new DesbloqueoGanado(nuevo));
+            }
             CombateActual = null;
+            _ofertas.Clear();
             eventos.Add(new SentenciaDictada(Sentencia));
         }
 

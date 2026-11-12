@@ -37,6 +37,7 @@ namespace Expedientia.Cliente
         private readonly Image[,] _casillas = new Image[Columnas, Filas];
         private readonly Dictionary<string, FichaVisual> _fichas = new Dictionary<string, FichaVisual>();
         private bool _posicionesViejas;
+        private bool _saltarDialogos;
 
         // Preferencias del menú
         private string _alias = "Doctor(a)";
@@ -92,8 +93,24 @@ namespace Expedientia.Cliente
             _alias = PlayerPrefs.GetString("eyd.alias", _alias);
             _url = PlayerPrefs.GetString("eyd.url", _url);
             _enLinea = PlayerPrefs.GetInt("eyd.enlinea", 0) == 1;
-            MostrarMenu();
-            if (PlayerPrefs.GetInt(ClavePrologo, 0) == 0) _ = VerPrologo();
+            // Primera vez: directo a un combate, sin menús. El prólogo queda en el menú para quien lo quiera.
+            if (PlayerPrefs.GetInt(ClavePrologo, 0) == 0)
+            {
+                PlayerPrefs.SetInt(ClavePrologo, 1);
+                MostrarMenu();
+                _ = JugarYa();
+            }
+            else MostrarMenu();
+        }
+
+        /// <summary>Partida rápida: sin conexión, con la última especialidad y el caso más difícil que ya desbloqueó el estudio.</summary>
+        private Task JugarYa()
+        {
+            _enLinea = false;
+            var cerrados = FuenteLocal.LeerEstudio().ExpedientesCerrados;
+            var casos = CatalogoCasos.Todos;
+            _caso = casos[Math.Min(casos.Count - 1, cerrados / 2)].Id;
+            return Empezar();
         }
 
         // ───────────────────────────── Portada y menú ─────────────────────────────
@@ -114,13 +131,17 @@ namespace Expedientia.Cliente
             var est = FuenteLocal.LeerEstudio();
             var acto = est.ExpedientesCerrados < 3 ? "Acto 1 · El primer caso" : "Acto 1 · Algo despierta en el Archivo Central";
             Ui.Texto(Ui.Vacio(_raiz, "Acto").Anclar(0.05f, 0.245f, 0.95f, 0.285f), acto, 40, Ui.Dorado, TextAnchor.MiddleCenter, FontStyle.Bold);
+            var proximo = est.Proximo;
+            var meta = proximo == null ? "Todos los desbloqueos ganados."
+                : $"Próximo desbloqueo: {proximo.Nombre} (faltan {proximo.ExpedientesNecesarios - est.ExpedientesCerrados} expedientes)";
             Ui.Texto(Ui.Vacio(_raiz, "Estudio").Anclar(0.05f, 0.205f, 0.95f, 0.245f),
-                $"Tu estudio: nivel {est.Nivel} · reputación {est.Reputacion} · S/ {est.Honorarios} en honorarios del juego · {est.ExpedientesCerrados} expedientes cerrados", 28, Ui.Pergamino);
+                $"Tu estudio: nivel {est.Nivel} · reputación {est.Reputacion} · S/ {est.Honorarios} · {est.ExpedientesCerrados} cerrados\n{meta}", 28, Ui.Pergamino);
 
-            Ui.Boton(Ui.Vacio(_raiz, "Jugar").Anclar(0.12f, 0.115f, 0.88f, 0.195f), "ABRIR UN EXPEDIENTE", () => MostrarPreparacion(), Ui.Carmesi, Ui.Pergamino, 52);
-            Ui.Boton(Ui.Vacio(_raiz, "Prologo").Anclar(0.12f, 0.05f, 0.49f, 0.105f), "Ver el prólogo", () => _ = VerPrologo(), Ui.Tinta, Ui.Pergamino, 32);
-            Ui.Boton(Ui.Vacio(_raiz, "Sonido").Anclar(0.51f, 0.05f, 0.88f, 0.105f), Sonido.Silenciado ? "Sonido: no" : "Sonido: sí",
-                () => { Sonido.Silenciado = !Sonido.Silenciado; MostrarMenu(); }, Ui.Tinta, Ui.Pergamino, 32);
+            Ui.Boton(Ui.Vacio(_raiz, "Jugar").Anclar(0.12f, 0.115f, 0.88f, 0.195f), "¡JUGAR YA!", () => _ = JugarYa(), Ui.Carmesi, Ui.Pergamino, 56);
+            Ui.Boton(Ui.Vacio(_raiz, "Preparar").Anclar(0.04f, 0.05f, 0.36f, 0.105f), "Elegir caso", () => MostrarPreparacion(), Ui.Tinta, Ui.Pergamino, 30);
+            Ui.Boton(Ui.Vacio(_raiz, "Prologo").Anclar(0.37f, 0.05f, 0.65f, 0.105f), "Prólogo", () => _ = VerPrologo(), Ui.Tinta, Ui.Pergamino, 30);
+            Ui.Boton(Ui.Vacio(_raiz, "Sonido").Anclar(0.66f, 0.05f, 0.96f, 0.105f), Sonido.Silenciado ? "Sonido: no" : "Sonido: sí",
+                () => { Sonido.Silenciado = !Sonido.Silenciado; MostrarMenu(); }, Ui.Tinta, Ui.Pergamino, 30);
             if (aviso != null) Ui.Texto(Ui.PanelRedondeado(_raiz, "Aviso", Ui.Carmesi).Anclar(0.05f, 0.30f, 0.95f, 0.36f), aviso, 30, Ui.Pergamino);
             Ui.Texto(Ui.Vacio(_raiz, "Pie").Anclar(0.04f, 0.0f, 0.96f, 0.045f),
                 "Juego de entretenimiento y aprendizaje; no constituye asesoría legal. Incluye material del SRD 5.2 (CC-BY-4.0).", 22, new Color(1, 1, 1, 0.55f));
@@ -130,6 +151,7 @@ namespace Expedientia.Cliente
         {
             PlayerPrefs.SetInt(ClavePrologo, 1);
             foreach (var l in Guion.Prologo) await Dialogo(l.Personaje, l.Texto);
+            _saltarDialogos = false;
         }
 
         private void MostrarPreparacion(string? aviso = null)
@@ -221,6 +243,7 @@ namespace Expedientia.Cliente
             catch (Exception ex)
             {
                 Debug.LogException(ex);
+                if (_estado == null && !_enLinea) { MostrarMenu(ex.Message); return; }
                 MostrarPreparacion(_enLinea ? $"No se pudo conectar con {_url}. Revisa la red o juega sin conexión." : ex.Message);
             }
             finally { _ocupado = false; }
@@ -232,6 +255,7 @@ namespace Expedientia.Cliente
         {
             Ui.Limpiar(_raiz);
             _fichas.Clear();
+            _ofertaPintada = "";
             var cab = Ui.Panel(_raiz, "Cabecera", Ui.Tinta).Anclar(0, 0.92f, 1, 1);
             _cabecera = Ui.Texto(Ui.Vacio(cab, "T").Anclar(0.02f, 0.45f, 0.98f, 1), "", 42, Ui.Dorado, TextAnchor.MiddleLeft, FontStyle.Bold);
             _subcabecera = Ui.Texto(Ui.Vacio(cab, "S").Anclar(0.02f, 0, 0.98f, 0.5f), "", 28, Ui.Pergamino, TextAnchor.MiddleLeft);
@@ -311,10 +335,47 @@ namespace Expedientia.Cliente
             _textoSala.text = DescripcionSala(e);
             _textoBitacora.text = string.Join("\n", _bitacora.Skip(Math.Max(0, _bitacora.Count - 7)));
             PintarBarra();
+            PintarMejoras(e);
             if (e.Sentencia != null) MostrarSentencia(e);
         }
 
-        private static int AlcanceDe(CombatienteEstado c) => c.Especialidad == "Administrativista" ? 3 : c.Especialidad == "Civilista" ? 2 : 1;
+        private static int AlcanceDe(CombatienteEstado c) => c.Alcance > 0 ? c.Alcance : c.Especialidad == "Administrativista" ? 3 : c.Especialidad == "Civilista" ? 2 : 1;
+
+        // ── Mejoras: al ganar cada combate el equipo elige 1 de 3 (el gancho de cada partida) ──
+
+        private string _ofertaPintada = "";
+
+        private void PintarMejoras(EstadoPartida e)
+        {
+            var clave = string.Join(",", e.MejorasOfrecidas.Select(m => m.Id));
+            var actual = _capa.Find("Mejoras");
+            if (clave == _ofertaPintada && (actual != null) == (clave.Length > 0)) return;
+            if (actual != null) Destroy(actual.gameObject);
+            _ofertaPintada = clave;
+            if (clave.Length == 0 || e.Sentencia != null) return;
+
+            Sonido.Tocar("fundado", 1.15f, 0.6f);
+            var fondo = Ui.Panel(_capa, "Mejoras", new Color(0, 0, 0, 0.78f)).Anclar(0, 0, 1, 1);
+            var titulo = e.IndiceSala <= 0 && !e.SalaResuelta ? "MALETÍN DEL ESTUDIO" : "¡SALA GANADA!";
+            Ui.Texto(Ui.Vacio(fondo, "T").Anclar(0.04f, 0.83f, 0.96f, 0.92f), titulo, 72, Ui.Dorado, TextAnchor.MiddleCenter, FontStyle.Bold).ConSombra(4);
+            Ui.Texto(Ui.Vacio(fondo, "S").Anclar(0.04f, 0.77f, 0.96f, 0.83f), "Elige una mejora para todo el equipo", 40, Ui.Pergamino, TextAnchor.MiddleCenter, FontStyle.Italic);
+            for (var i = 0; i < e.MejorasOfrecidas.Count; i++)
+            {
+                var m = e.MejorasOfrecidas[i];
+                var indice = i;
+                var arriba = 0.74f - i * 0.19f;
+                var carta = Ui.Boton(Ui.Vacio(fondo, "M" + i).Anclar(0.06f, arriba - 0.17f, 0.94f, arriba, 4), "",
+                    () => Enviar(new AccionJuego { Tipo = "mejora", Indice = indice }), m.Rara ? Ui.Dorado : Ui.Pergamino, Ui.Noche, 30);
+                var tinta = m.Rara ? Ui.Noche : Ui.Carmesi;
+                Ui.Texto(Ui.Vacio(carta.transform, "N").Anclar(0.05f, 0.52f, 0.95f, 0.95f), (m.Rara ? "★ " : "") + m.Nombre.ToUpperInvariant(), 46, tinta, TextAnchor.MiddleLeft, FontStyle.Bold);
+                Ui.Texto(Ui.Vacio(carta.transform, "D").Anclar(0.05f, 0.06f, 0.95f, 0.52f), m.Descripcion, 32, Ui.Noche, TextAnchor.UpperLeft);
+                StartCoroutine(Aparecer((RectTransform)carta.transform));
+            }
+            if (e.PuedeVolverASortear)
+                Ui.Boton(Ui.Vacio(fondo, "R").Anclar(0.25f, 0.06f, 0.75f, 0.13f, 4), "Segunda opinión (resortear)", () => Enviar(new AccionJuego { Tipo = "resortear" }), Ui.Tinta, Ui.Pergamino, 32);
+            if (e.MejorasTomadas.Count > 0)
+                Ui.Texto(Ui.Vacio(fondo, "Ya").Anclar(0.04f, 0.0f, 0.96f, 0.06f), "Ya tienen: " + string.Join(" · ", e.MejorasTomadas.Select(t => t.Nombre)), 26, Ui.Pergamino);
+        }
 
         // ── Fichas del tablero: cada combatiente es un dibujo que se anima ──
 
@@ -408,6 +469,7 @@ namespace Expedientia.Cliente
             AccionJuego A(string tipo) => new AccionJuego { Tipo = tipo };
 
             if (e.Sentencia != null) { }
+            else if (e.SalaResuelta && e.MejorasOfrecidas.Count > 0) B("ELEGIR MEJORA", () => { _ofertaPintada = ""; PintarMejoras(e); }, Ui.Dorado);
             else if (e.SalaResuelta) B("SIGUIENTE SALA ▶", () => Enviar(A("avanzar")), Ui.Carmesi);
             else switch (e.SalaActual)
             {
@@ -533,6 +595,7 @@ namespace Expedientia.Cliente
             if (_estado?.SalaActual != r.Estado.SalaActual || _estado?.IndiceSala != r.Estado.IndiceSala) _objetivo = null;
             _posicionesViejas = false;
             foreach (var ev in r.Eventos) await Narrar(ev);
+            _saltarDialogos = false;
             _estado = r.Estado;
             if (_objetivo != null && (_estado.Combate == null || _estado.Combate.Combatientes.All(c => c.Id != _objetivo || c.Caido))) _objetivo = null;
             if (r.Extra?.Correccion != null) MostrarCorreccion(r.Extra.Correccion);
@@ -624,6 +687,20 @@ namespace Expedientia.Cliente
                 case "SalaSuperada": Anotar($"✓ {S("detalle")}"); break;
                 case "ComentarioDeDonEusebio": await Dialogo("Don Eusebio", S("texto")); break;
                 case "Dialogo": await Dialogo(S("personaje"), S("texto")); break;
+                case "MejorasOfrecidas":
+                    Anotar("¡Combate ganado! Elijan una mejora.");
+                    break;
+                case "MejoraElegida":
+                    Anotar($"★ Mejora: {S("nombre")}. {S("descripcion")}");
+                    Sonido.Tocar("moneda", 1.1f, 0.7f);
+                    Efectos.Chispas(Vector2.zero, Ui.Dorado, 24);
+                    Efectos.Texto(Vector2.zero, S("nombre"), Ui.Dorado);
+                    await Esperar(0.4f);
+                    break;
+                case "DesbloqueoGanado":
+                    Efectos.Confeti(90);
+                    await Dialogo(Guion.Gonzabio, $"¡El estudio crece! Desbloqueaste «{S("nombre")}»: {S("descripcion")}");
+                    break;
                 case "SentenciaDictada":
                     Sonido.Tocar((bool?)d["sentencia"]?["fundada"] == true ? "victoria" : "derrota");
                     break;
@@ -780,6 +857,7 @@ namespace Expedientia.Cliente
         private Task Dialogo(string personaje, string texto)
         {
             Anotar($"{personaje}: «{texto}»");
+            if (_saltarDialogos) return Task.CompletedTask;
             var tcs = new TaskCompletionSource<bool>();
             StartCoroutine(DialogoRutina(personaje, texto, tcs));
             return tcs.Task;
@@ -801,6 +879,7 @@ namespace Expedientia.Cliente
             var cuerpo = Ui.Texto(Ui.Vacio(caja, "Texto").Anclar(0.04f, 0.14f, 0.96f, 0.8f), "", 38, Ui.Noche, TextAnchor.UpperLeft);
             cuerpo.resizeTextForBestFit = false;
             Ui.Texto(Ui.Vacio(caja, "Seguir").Anclar(0.5f, 0.02f, 0.97f, 0.14f), "Toca para seguir ▸", 24, Ui.Carmesi, TextAnchor.MiddleRight, FontStyle.Italic);
+            Ui.Boton(Ui.Vacio(fondo, "Saltar").Anclar(0.74f, 0.29f, 0.97f, 0.34f), "Saltar ▸▸", () => { _saltarDialogos = true; tocado = true; }, Ui.Tinta, Ui.Pergamino, 28);
             var tono = personaje switch { "Don Eusebio" => 0.75f, "El Cliente" => 1.1f, "Rosita" => 1.35f, "Doctora Valdivia" => 1.2f, "El Coimero" => 0.85f, "Suboficial Quispe" => 0.9f, "Especialista Mendoza" => 1.3f, _ => 1f };
             for (var i = 1; i <= texto.Length && !tocado; i++)
             {
@@ -809,8 +888,11 @@ namespace Expedientia.Cliente
                 yield return new WaitForSeconds(0.022f);
             }
             cuerpo.text = texto;
-            tocado = false;
-            while (!tocado) yield return null;
+            if (!_saltarDialogos)
+            {
+                tocado = false;
+                while (!tocado) yield return null;
+            }
             Destroy(fondo.gameObject);
             fin.TrySetResult(true);
         }
@@ -931,8 +1013,12 @@ namespace Expedientia.Cliente
             zona.localRotation = Quaternion.Euler(0, 0, -7);
             Ui.Texto(Ui.Vacio(carta, "M").Anclar(0.04f, 0.47f, 0.96f, 0.56f), s.Motivo, 40, color, TextAnchor.MiddleCenter, FontStyle.Bold);
             Ui.Texto(Ui.Vacio(carta, "H").Anclar(0.04f, 0.33f, 0.96f, 0.47f), $"Honorarios: S/ {s.Honorarios} · Experiencia: {s.Experiencia}\nTu estudio: nivel {e.Estudio.Nivel} · reputación {e.Estudio.Reputacion}", 34, Ui.Noche);
-            Ui.Texto(Ui.Vacio(carta, "L").Anclar(0.04f, 0.17f, 0.96f, 0.33f), "Lo que aprendiste: la ficha jurídica de este caso se publicará cuando un abogado la verifique en la fuente oficial.", 28, Ui.Tinta, TextAnchor.MiddleCenter, FontStyle.Italic);
-            Ui.Boton(Ui.Vacio(carta, "V").Anclar(0.2f, 0.03f, 0.8f, 0.15f, 4), "Volver al estudio", () => MostrarMenu(), Ui.Carmesi, Ui.Pergamino, 40);
+            var meta = e.Estudio.ProximoDesbloqueo == null ? "Tu estudio ya tiene todos los desbloqueos."
+                : $"Próximo desbloqueo: {e.Estudio.ProximoDesbloqueo} (faltan {e.Estudio.FaltanParaDesbloqueo} expedientes Fundados)\n{e.Estudio.ProximoDesbloqueoDescripcion}";
+            var armado = e.MejorasTomadas.Count == 0 ? "" : "Tu armado: " + string.Join(" · ", e.MejorasTomadas.Select(t => t.Nombre)) + "\n";
+            Ui.Texto(Ui.Vacio(carta, "L").Anclar(0.04f, 0.17f, 0.96f, 0.33f), armado + meta, 28, Ui.Tinta, TextAnchor.MiddleCenter, FontStyle.Italic);
+            Ui.Boton(Ui.Vacio(carta, "V").Anclar(0.04f, 0.03f, 0.48f, 0.15f, 4), "Al estudio", () => MostrarMenu(), Ui.Tinta, Ui.Pergamino, 36);
+            Ui.Boton(Ui.Vacio(carta, "Otra").Anclar(0.52f, 0.03f, 0.96f, 0.15f, 4), "¡OTRA PARTIDA!", () => { MostrarMenu(); _ = JugarYa(); }, Ui.Carmesi, Ui.Pergamino, 40);
             StartCoroutine(Aparecer(zona));
             if (s.Fundada) Efectos.Confeti(160);
         }

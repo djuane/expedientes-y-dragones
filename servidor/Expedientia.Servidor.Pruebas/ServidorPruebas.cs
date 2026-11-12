@@ -91,7 +91,9 @@ public class ServidorPruebas : IClassFixture<Fabrica>
         {
             var sala = estado["sala_actual"]!.GetValue<string>();
             var resuelta = estado["sala_resuelta"]!.GetValue<bool>();
-            object accion = resuelta ? new { tipo = "avanzar" } : sala switch
+            var ofertas = estado["mejoras_ofrecidas"]!.AsArray();
+            object accion = ofertas.Count > 0 ? new { tipo = "mejora", objeto = ofertas[0]!["id"]!.GetValue<string>() }
+                : resuelta ? new { tipo = "avanzar" } : sala switch
             {
                 "Combate" or "Jefe" or "RedDelCoimero" => new { tipo = "piloto" },
                 "Tramite" => new { tipo = "tramite" },

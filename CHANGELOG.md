@@ -1,5 +1,18 @@
 # Cambios
 
+## v0.12.0 (12/11/2026)
+Jugabilidad: más enganche desde el primer minuto.
+
+- **Directo al combate:** la primera vez que se abre el juego empieza una partida sin pasar por menús. El botón principal del menú es **¡JUGAR YA!** (sin conexión, con el caso que corresponde al avance del estudio); «Elegir caso» abre la preparación de siempre.
+- **Diálogos saltables:** todos los diálogos tienen el botón «Saltar ▸▸», que salta el resto de la escena.
+- **Mejoras al ganar cada combate:** el equipo elige 1 de 3 mejoras (Doctrina actualizada, Terno a medida, Termo de café, Zapatos cómodos, Sello de urgencia, Agenda de plazos, Código comentado) y tres raras (Asistente practicante, Jurisprudencia vinculante, Argumento de cierre). Valen para todo el equipo durante el expediente, así que ninguna partida se arma igual. Si nadie elige, el juego elige como lo haría un bot.
+- **Desbloqueos del estudio entre partidas**, por expedientes cerrados como Fundado: Maletín del estudio (1: una mejora antes del primer combate), Biblioteca del estudio (2: mejoras raras), Segunda opinión (3: volver a sortear una vez por expediente) y Oficina propia (5: +4 de paciencia máxima). El menú y la sentencia muestran el próximo desbloqueo y cuántos expedientes faltan.
+- **Más tensión:** desde el primer combate ganado aparece un enemigo más por sala, y otro desde el tercero. El jefe gana paciencia por cada mejora del equipo y por la fama del estudio, y los enemigos también se vuelven más duros con la fama, para que los desbloqueos no conviertan el juego en un paseo.
+- Al terminar, la sentencia muestra el armado del equipo y el botón **¡OTRA PARTIDA!**.
+- Servidor 0.12.0: acciones `mejora` (índice o nombre) y `resortear`; `avanzar` exige elegir antes la mejora. El estado trae `mejoras_ofrecidas`, `mejoras_tomadas`, `puede_volver_a_sortear`, el próximo desbloqueo, y el alcance y movimiento de cada combatiente.
+- Balance con bots (1,000 partidas por caso, equipo de 2): caso 1 81 %, caso 2 63 %, caso 3 52 % (antes 85 %, 65 % y 59 %). Equipo de 4: 98 %, 83 % y 88 %. Con un estudio veterano (5 desbloqueos): 92 %, 61 % y 70 %.
+- 126 pruebas (117 de lógica, 9 del servidor), 8 nuevas sobre mejoras y desbloqueos.
+
 ## v0.10.3 (12/11/2026)
 - Portada ilustrada en alta resolución, con los cinco abogados del estudio frente al dragón de expedientes. A Gonzabio se le dibujaron los lentes, que no salieron en la imagen de Canva.
 - Retratos de Gonzabio (con lentes) y Lion en alta resolución.

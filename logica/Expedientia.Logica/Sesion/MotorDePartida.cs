@@ -70,7 +70,25 @@ namespace Expedientia.Logica.Sesion
                 {
                     case "avanzar":
                         if (!Expediente.SalaResuelta) return Rechazo("La sala no está resuelta.");
+                        if (Expediente.MejorasOfrecidas.Count > 0) return Rechazo("Elijan primero una mejora.");
                         eventos.AddRange(Expediente.Avanzar());
+                        break;
+
+                    case "mejora":
+                    {
+                        // Cualquiera del equipo puede elegir; vale la primera elección.
+                        var ofertas = Expediente.MejorasOfrecidas;
+                        if (ofertas.Count == 0) return Rechazo("No hay mejoras por elegir.");
+                        Mejora elegida;
+                        if (a.Indice is int i && i >= 0 && i < ofertas.Count) elegida = ofertas[i];
+                        else if (!Enum.TryParse(a.Objeto, true, out elegida) || !ofertas.Contains(elegida)) return Rechazo("Esa mejora no está entre las ofrecidas.");
+                        eventos.AddRange(Expediente.ElegirMejora(elegida));
+                        break;
+                    }
+
+                    case "resortear":
+                        if (!Expediente.PuedeVolverASortear) return Rechazo("No se puede volver a sortear.");
+                        eventos.AddRange(Expediente.VolverASortear());
                         break;
 
                     case "mover":
